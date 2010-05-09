@@ -96,26 +96,10 @@ Main body text
 
 
 <?php
-
-
-//CONNECT TO THE DATABASE SERVER
-$User = "***";
-$Password = "***";
-$DBConnect = @mysql_connect("localhost", $User, $Password)
-	Or die("<p>Unable to connect to the database server, please try entering a new record.</p>"
-	. "<p>Error code: " . mysql_connect_errno()
-	. ": " . mysql_connect_errno()) . "</p>";
-//echo "Successfully connected to the database server.";
-
-
-//CONNECT TO THE DATABASE
-$DBName = "gen";
-@mysql_select_db($DBName)
-//@mysql_select_db($DBConnect, $DBName)
-	Or die("<p>The database is not available, please try entering a new record.</p>");
-//echo "<p>Successfully opened the database: " . $DBName . ".</p>";
-
-
+    // This starts up the database connection.  Actual authentication is done in a different file to keep the
+    // authentication info out of the source repo.
+    require('database_opener.php');
+    $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
 
 //QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
 $SQLstring3 = "SELECT `2_conditions`.`Primary`, `2_conditions`.`Condition`\n"
