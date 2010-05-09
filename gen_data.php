@@ -30,69 +30,64 @@
 
 
 <html>
- <head>
+    <head>
 
- <title>PersonalGenomics Application </title>
- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
- <meta name="description" content="This is the home page of DIYgenomics" />
- <meta name="keywords" content="genomics, genome, personal genomes, personal genome, citizen science, science,
- technology, direct-to-consumer, consumer genomics, genomic testing, genetic testing, research" />
+        <title>PersonalGenomics Application </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <meta name="description" content="This is the home page of DIYgenomics" />
+        <meta name="keywords" content="genomics, genome, personal genomes, personal genome, citizen science, science, technology, direct-to-consumer, consumer genomics, genomic testing, genetic testing, research" />
 
- <link href="ms.css" rel="stylesheet" type="text/css" />
- <script type="text/javascript" src="http://www.diygenomics.org/ms.js"> </script>
+        <link href="ms.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="http://www.diygenomics.org/ms.js"> </script>
 
- <!-- Favicon Information -->
- <link rel="shortcut icon" type="image/x-icon" href="http://www.diygenomics.org/images/favicon.ico">
+        <!-- Favicon Information -->
+        <link rel="shortcut icon" type="image/x-icon" href="http://www.diygenomics.org/images/favicon.ico">
 
- <!-- JQuery Tablesorter -->
- <script type="text/javascript" src="jquery-1.4.2.js"></script>
- <script type="text/javascript" src="jquery-latest.js"></script>
- <script type="text/javascript" src="jquery.tablesorter.js"></script>
+        <!-- JQuery Tablesorter -->
+        <script type="text/javascript" src="jquery-1.4.2.js"></script>
+        <script type="text/javascript" src="jquery-latest.js"></script>
+        <script type="text/javascript" src="jquery.tablesorter.js"></script>
+    </head>
+    <body id="top" style="background-color: #FFFFFF;">
 
-</head>
+        <!--
+        ===================================================================
+        Image and Title Information
+        ===================================================================
+        -->
 
+        <script type="text/javascript">
+        <!-- hide from old browsers
+            displayHeader(); //call the displayHeader() function from ms.js
+        // stop hiding -->
+        </script>
 
-<body id="top" style="background-color: #FFFFFF;">
+        <!--
+        ===================================================================
+        Menu Navigation Information
+        ===================================================================
+        -->
 
-
-<!--
-===================================================================
-Image and Title Information
-===================================================================
--->
-
-	<script type="text/javascript">
-	<!-- hide from old browsers
-		displayHeader(); //call the displayHeader() function from ms.js
-	// stop hiding -->
-	</script>
-
-<!--
-===================================================================
-Menu Navigation Information
-===================================================================
--->
-
-	<script type="text/javascript">
-	<!-- hide from old browsers
-		displayMenu(); //call the displayMenu() function from ms.js
-	// stop hiding -->
-	</script>
+        <script type="text/javascript">
+        <!-- hide from old browsers
+            displayMenu(); //call the displayMenu() function from ms.js
+        // stop hiding -->
+        </script>
 
 
-<!--
-===================================================================
-Main body text
-===================================================================
--->
+        <!--
+        ===================================================================
+        Main body text
+        ===================================================================
+        -->
 
-<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;
-<b>Web app</b>
-<br />
-<br />
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;
+        <b>Web app</b>
+        <br />
+        <br />
 
 
 <?php
