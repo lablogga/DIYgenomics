@@ -145,18 +145,18 @@
 
                     <?php
                         }
+                    ?>
 
-                        echo "</select>";
-                        echo "</form>";
-                        echo "</td>";
-
-                        echo "</tr>";
-                        echo "</table>";
-
-
+                </select>
+            </form>
+        </td>
+    </tr>
+</table>
 
 
 
+
+<?php
 //SET FONT SIZE TO 10 pt
 echo("<div style=\"font-size: 10pt;\">");
 
