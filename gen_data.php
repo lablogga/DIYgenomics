@@ -128,7 +128,7 @@ if ($COND == "") {
   $COND="1";
 }
 
-echo "<td valign = 'top';>";
+echo "<td valign = 'top'>";
 echo "<form action='gen_data.php' method='post'>";
 echo "<select name='condition' onchange='this.form.submit();'>";
 //echo "<option value='gen_Local.php'>Choose a condition</option>";
