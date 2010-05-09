@@ -43,9 +43,8 @@
         <link rel="shortcut icon" type="image/x-icon" href="http://www.diygenomics.org/images/favicon.ico">
 
         <!-- JQuery Tablesorter -->
-        <script type="text/javascript" src="jquery-1.4.2.js"></script>
-        <script type="text/javascript" src="jquery-latest.js"></script>
-        <script type="text/javascript" src="jquery.tablesorter.js"></script>
+        <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="jquery.tablesorter.min.js"></script>
     </head>
     <body id="top" style="background-color: #FFFFFF;">
 
