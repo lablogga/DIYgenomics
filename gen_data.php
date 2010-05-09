@@ -78,12 +78,9 @@
     //QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
     $SQLstring3 = "SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;";
 
-$QueryResult3 = mysql_query($SQLstring3)   //same w/ @ or w/o
-//$QueryResult3 = mysql_query($DBConnect, $SQLstring3)   //same w/ @ or w/o
-	Or die("<p>Unable to execute the query, please try entering a new record.</p>"
-	. "<p>Error code " . mysql_errno($DBConnect)
-	. ": " . mysql_errno($DBConnect)) . "</p>";
-//echo "<p>Successfully queried the database: " . $DBName . ".</p>";
+    $QueryResult3 = mysql_query($SQLstring3)
+                        or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_connect_errno() . "</p>");
+
 
 //READ QUERY 3 RESULTS INTO ARRAY
 // conditions holds rows {condition_ix, condition_name}
