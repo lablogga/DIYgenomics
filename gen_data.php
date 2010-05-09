@@ -104,15 +104,15 @@
                         or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_connect_errno() . "</p>");
 
 
-//READ QUERY 3 RESULTS INTO ARRAY
-// conditions holds rows {condition_ix, condition_name}
-$Conditions = array();
-$CondRow = mysql_fetch_array($QueryResult3);
-while ($CondRow) {
-	$Rowdata3 = $CondRow;
-	$Conditions[] = $Rowdata3;
-	$CondRow = mysql_fetch_array($QueryResult3);
-}
+    //READ QUERY 3 RESULTS INTO ARRAY
+    // conditions holds rows {condition_ix, condition_name}
+    $Conditions = array();
+    $CondRow = mysql_fetch_array($QueryResult3);
+    while ($CondRow) {
+        $Rowdata3 = $CondRow;
+        $Conditions[] = $Rowdata3;
+        $CondRow = mysql_fetch_array($QueryResult3);
+    }
 
 
 
