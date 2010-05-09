@@ -107,11 +107,9 @@
     //READ QUERY 3 RESULTS INTO ARRAY
     // conditions holds rows {condition_ix, condition_name}
     $Conditions = array();
-    $CondRow = mysql_fetch_array($QueryResult3);
-    while ($CondRow) {
+    while ($CondRow = mysql_fetch_array($QueryResult3)) {
         $Rowdata3 = $CondRow;
         $Conditions[] = $Rowdata3;
-        $CondRow = mysql_fetch_array($QueryResult3);
     }
 
 
