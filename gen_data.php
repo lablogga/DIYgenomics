@@ -37,7 +37,6 @@
         <meta name="description" content="This is the home page of DIYgenomics" />
         <meta name="keywords" content="genomics, genome, personal genomes, personal genome, citizen science, science, technology, direct-to-consumer, consumer genomics, genomic testing, genetic testing, research" />
 
-        <link href="ms.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://www.diygenomics.org/ms.js"> </script>
 
         <!-- Favicon Information -->
