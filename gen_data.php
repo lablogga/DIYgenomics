@@ -138,9 +138,12 @@
                     <option value='<?=$COND?>'><?=$CurrentCondition?></option>
 
                     <?php
-
                         foreach ($Conditions as $cond) {
-                          echo "<option value='{$cond[0]}'>{$cond[1]}</option>";
+                    ?>
+
+                    <option value='<?=$cond[0]?>'><?=$cond[1]?></option>
+
+                    <?php
                         }
 
                         echo "</select>";
