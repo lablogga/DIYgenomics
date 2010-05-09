@@ -109,20 +109,18 @@
     while ($CondRow = mysql_fetch_array($QueryResult3)) {
         $Conditions[] = $CondRow;
     }
+?>
+<table border='0' cellspacing='0' cellpadding='0' style='margin-left: 1.4in; margin-right: 1in;'>
+    <tr>
+        <td style='text-align: left;'>
+            <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
+            (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
+            (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
+            underlying research reference cited by the company is posted in the table below.
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-
-
-echo "<table border='0' cellspacing='0' cellpadding='0' style='margin-left: 1.4in; margin-right: 1in;'>";
-echo "<tr>";
-echo "<td style='text-align: left;'>
-<b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
-(deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
-(diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
-underlying research reference cited by the company is posted in the table below.
-</td>";
-echo "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
-
-
+<?php
 //DROPDOWN MENU
 
 $COND = $_POST["condition"];
