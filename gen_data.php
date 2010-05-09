@@ -75,7 +75,29 @@
     require('database_opener.php');
     $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
 
-    //QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
+    /*  QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
+            Returns a list like this:
+            1   Alzheimer's disease
+            2   Atrial fibrillation
+            3   Breast cancer
+            4   Celiac disease
+            5   Colorectal cancer
+            6   Crohn's disease
+            7   Diabetes (type 1)
+            8   Diabetes (type 2)
+            9   Glaucoma
+            10  Heart attack
+            11  Lung cancer
+            12  Lupus
+            13  Macular degeneration
+            14  Multiple sclerosis
+            15  Obesity
+            16  Prostate cancer
+            17  Psoriasis
+            18  Restless legs syndrome
+            19  Rheumatoid arthritis
+            20  Ulcerative colitis
+    */
     $SQLstring3 = "SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;";
 
     $QueryResult3 = mysql_query($SQLstring3)
