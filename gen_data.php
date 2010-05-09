@@ -122,16 +122,14 @@
 
 <?php
 //DROPDOWN MENU
+echo "<td valign = 'top'>";
+echo "<form action='gen_data.php' method='post'>";
+echo "<select name='condition' onchange='this.form.submit();'>";
 
 $COND = $_POST["condition"];
 if ($COND == "") {
   $COND="1";
 }
-
-echo "<td valign = 'top'>";
-echo "<form action='gen_data.php' method='post'>";
-echo "<select name='condition' onchange='this.form.submit();'>";
-
 
 $CurrentCondition=$Conditions[$COND-1][1];
 
