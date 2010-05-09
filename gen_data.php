@@ -66,13 +66,7 @@
         ===================================================================
         -->
 
-        <br />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;
-        <b>Web app</b>
-        <br />
-        <br />
+        <h3>Web app</h3>
 
 
 <?php
