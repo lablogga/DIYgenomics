@@ -126,26 +126,26 @@
             <form action='gen_data.php' method='post'>
                 <select name='condition' onchange='this.form.submit()'>
 
-<?php
-$COND = $_POST["condition"];
-if ($COND == "") {
-  $COND="1";
-}
+                    <?php
+                        $COND = $_POST["condition"];
+                        if ($COND == "") {
+                          $COND="1";
+                        }
 
-$CurrentCondition=$Conditions[$COND-1][1];
+                        $CurrentCondition=$Conditions[$COND-1][1];
 
-echo "<option value='{$COND}'>{$CurrentCondition}</option>";
+                        echo "<option value='{$COND}'>{$CurrentCondition}</option>";
 
-foreach ($Conditions as $cond) {
-  echo "<option value='{$cond[0]}'>{$cond[1]}</option>";
-}
+                        foreach ($Conditions as $cond) {
+                          echo "<option value='{$cond[0]}'>{$cond[1]}</option>";
+                        }
 
-echo "</select>";
-echo "</form>";
-echo "</td>";
+                        echo "</select>";
+                        echo "</form>";
+                        echo "</td>";
 
-echo "</tr>";
-echo "</table>";
+                        echo "</tr>";
+                        echo "</table>";
 
 
 
