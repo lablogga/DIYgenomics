@@ -75,9 +75,8 @@
     require('database_opener.php');
     $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
 
-//QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
-$SQLstring3 = "SELECT `2_conditions`.`Primary`, `2_conditions`.`Condition`\n"
-    . "FROM `2_conditions`\n";
+    //QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
+    $SQLstring3 = "SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;";
 
 $QueryResult3 = mysql_query($SQLstring3)   //same w/ @ or w/o
 //$QueryResult3 = mysql_query($DBConnect, $SQLstring3)   //same w/ @ or w/o
