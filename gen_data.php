@@ -50,26 +50,12 @@
     </head>
     <body id="top" style="background-color: #FFFFFF;">
 
-        <!--
-        ===================================================================
-        Image and Title Information
-        ===================================================================
-        -->
-
         <script type="text/javascript">
         <!-- hide from old browsers
+            //  Image and Title Information
             displayHeader(); //call the displayHeader() function from ms.js
-        // stop hiding -->
-        </script>
 
-        <!--
-        ===================================================================
-        Menu Navigation Information
-        ===================================================================
-        -->
-
-        <script type="text/javascript">
-        <!-- hide from old browsers
+            //  Menu Navigation Information
             displayMenu(); //call the displayMenu() function from ms.js
         // stop hiding -->
         </script>
