@@ -1,7 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 <!--
- * Copyright (c) 2010 Melanie Swan mxswan@gmail
+ * Copyright (C) 2010 DIYgenomics           diygenomics.org
+ * Copyright (C) 2010 Melanie Swan          mxswan@gmail
+ * Copyright (C) 2010 Marat Nepomnyashy     maratbn@gmail
  *
  * Module: gen_data.php
  *
