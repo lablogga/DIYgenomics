@@ -30,6 +30,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+    /**
+     *  Returns the condition ID that the user is currently looking at.
+     */
+    function getCurrentConditionID() {
+        $COND = $_POST["condition"];
+        if ($COND == "") {
+          $COND="1";
+        }
+        return $COND;
+    }
 ?>
 
 <html>
@@ -76,11 +87,6 @@
     // authentication info out of the source repo.
     require('database_opener.php');
     $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
-
-    $COND = $_POST["condition"];
-    if ($COND == "") {
-      $COND="1";
-    }
 ?>
 <table border='0' cellspacing='0' cellpadding='0' style='margin-left: 1.4in; margin-right: 1in;'>
     <tr>
@@ -120,7 +126,7 @@ $SQLstring = "SELECT `8_map_variant_condition_entity_study`.`Variant_index`, `3_
     . " LEFT JOIN `gen`.`4_entities` ON `8_map_variant_condition_entity_study`.`Entity_index` = `4_entities`.`Primary` \n"
     . " LEFT JOIN `gen`.`1_studies` ON `8_map_variant_condition_entity_study`.`Study_index` = `1_studies`.`Primary` \n"
     . " LEFT JOIN `gen`.`3_variants` ON `8_map_variant_condition_entity_study`.`Variant_index` = `3_variants`.`Primary` \n"
-    . "WHERE (`2_conditions`.`Primary` = $COND)\n";
+    . "WHERE (`2_conditions`.`Primary` = " . getCurrentConditionID() . ")\n";
 
 $QueryResult = mysql_query($SQLstring)   //same w/ @ or w/o
 //$QueryResult = mysql_query($DBConnect, $SQLstring)   //same w/ @ or w/o
@@ -144,7 +150,7 @@ while ($Row) {
 $SQLstring2 = "SELECT `2_conditions`.`Primary`, `6_map_entity_condition`.`Entity_index`, `6_map_entity_condition`.`URL`\n"
     . "FROM `2_conditions`\n"
     . " LEFT JOIN `gen`.`6_map_entity_condition` ON `2_conditions`.`Primary` = `6_map_entity_condition`.`Condition_index` \n"
-    . "WHERE (`2_conditions`.`Primary` =$COND)\n";
+    . "WHERE (`2_conditions`.`Primary` = " . getCurrentConditionID() . ")\n";
 
 $QueryResult2 = mysql_query($SQLstring2)   //same w/ @ or w/o
 //$QueryResult2 = mysql_query($DBConnect, $SQLstring2)   //same w/ @ or w/o

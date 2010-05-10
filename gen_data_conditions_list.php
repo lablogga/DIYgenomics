@@ -73,10 +73,10 @@
                             $Conditions[] = $CondRow;
                         }
 
-                        $CurrentCondition=$Conditions[$COND-1][1];
+                        $CurrentCondition=$Conditions[getCurrentConditionID() - 1][1];
 
                         foreach ($Conditions as $cond) {
-                            $selected = (($cond[0] == $COND) ? "selected" : "");
+                            $selected = (($cond[0] == getCurrentConditionID()) ? "selected" : "");
                     ?>
 
                     <option value='<?=$cond[0]?>' <?=$selected?>><?=$cond[1]?></option>
