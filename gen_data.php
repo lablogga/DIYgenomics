@@ -35,7 +35,7 @@
      *  Returns the condition ID that the user is currently looking at.
      */
     function getCurrentConditionID() {
-        $COND = $_POST["condition"];
+        $COND = $_GET["condition"];
         if ($COND == "") {
           $COND = 1;
         }
