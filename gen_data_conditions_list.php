@@ -31,52 +31,15 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
  
-    function renderConditionsList() {
+    function renderConditionsList($Conditions) {
         ?>
             <form method='get'>
                 <select name='condition' onchange='this.form.submit()'>
 
                     <?php
-                        /*  QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
-                                Returns a list like this:
-                                1   Alzheimer's disease
-                                2   Atrial fibrillation
-                                3   Breast cancer
-                                4   Celiac disease
-                                5   Colorectal cancer
-                                6   Crohn's disease
-                                7   Diabetes (type 1)
-                                8   Diabetes (type 2)
-                                9   Glaucoma
-                                10  Heart attack
-                                11  Lung cancer
-                                12  Lupus
-                                13  Macular degeneration
-                                14  Multiple sclerosis
-                                15  Obesity
-                                16  Prostate cancer
-                                17  Psoriasis
-                                18  Restless legs syndrome
-                                19  Rheumatoid arthritis
-                                20  Ulcerative colitis
-                        */
-                        $SQLstring3 = "SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;";
-
-                        $QueryResult3 = mysql_query($SQLstring3)
-                                            or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_connect_errno() . "</p>");
-
-
-                        //READ QUERY 3 RESULTS INTO ARRAY
-                        // conditions holds rows {condition_ix, condition_name}
-                        $Conditions = array();
-                        while ($CondRow = mysql_fetch_array($QueryResult3)) {
-                            $Conditions[] = $CondRow;
-                        }
-
-                        $CurrentCondition=$Conditions[getCurrentConditionID() - 1][1];
-
+                        $conditionCurrent = getCurrentConditionID();
                         foreach ($Conditions as $cond) {
-                            $selected = (($cond[0] == getCurrentConditionID()) ? "selected" : "");
+                            $selected = (($cond[0] == $conditionCurrent) ? "selected" : "");
                     ?>
 
                     <option value='<?=$cond[0]?>' <?=$selected?>><?=$cond[1]?></option>

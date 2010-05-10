@@ -32,6 +32,49 @@
  */
 
     /**
+     *  Returns an array of conditions that the user can browse through.
+     */
+    function getArrayConditions() {
+        /*  QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
+                Returns a list like this:
+                1   Alzheimer's disease
+                2   Atrial fibrillation
+                3   Breast cancer
+                4   Celiac disease
+                5   Colorectal cancer
+                6   Crohn's disease
+                7   Diabetes (type 1)
+                8   Diabetes (type 2)
+                9   Glaucoma
+                10  Heart attack
+                11  Lung cancer
+                12  Lupus
+                13  Macular degeneration
+                14  Multiple sclerosis
+                15  Obesity
+                16  Prostate cancer
+                17  Psoriasis
+                18  Restless legs syndrome
+                19  Rheumatoid arthritis
+                20  Ulcerative colitis
+        */
+        $SQLstring3 = "SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;";
+
+        $QueryResult3 = mysql_query($SQLstring3)
+                            or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_connect_errno() . "</p>");
+
+
+        //READ QUERY 3 RESULTS INTO ARRAY
+        // conditions holds rows {condition_ix, condition_name}
+        $Conditions = array();
+        while ($CondRow = mysql_fetch_array($QueryResult3)) {
+            $Conditions[] = $CondRow;
+        }
+
+        return $Conditions;
+    }
+
+    /**
      *  Returns the condition ID that the user is currently looking at.
      */
     function getCurrentConditionID() {
@@ -87,6 +130,9 @@
     // authentication info out of the source repo.
     require('database_opener.php');
     $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
+    
+    $arrConditions = getArrayConditions();                                  // This is an array of all the conditions that the user can look at.
+    $CurrentCondition = $arrConditions[getCurrentConditionID() - 1][1];     // This is the name of the condition that the user is currently looking at.
 ?>
 <table border='0' cellspacing='0' cellpadding='0' style='margin-left: 1.4in; margin-right: 1in;'>
     <tr>
@@ -103,7 +149,7 @@
         <td valign = 'top'>
             <?php
                 require('gen_data_conditions_list.php');
-                renderConditionsList();
+                renderConditionsList($arrConditions);
             ?>
         </td>
     </tr>
