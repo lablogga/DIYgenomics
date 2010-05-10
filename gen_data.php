@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
-<!--
+<?php
+/**
  * Copyright (C) 2010 DIYgenomics           diygenomics.org
  * Copyright (C) 2010 Melanie Swan          mxswan@gmail
  * Copyright (C) 2010 Marat Nepomnyashy     maratbn@gmail
@@ -28,8 +29,8 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
+ */
+?>
 
 <html>
     <head>
