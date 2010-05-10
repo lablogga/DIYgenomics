@@ -33,7 +33,7 @@
  
     function renderConditionsList() {
         ?>
-            <form action='gen_data.php' method='post'>
+            <form method='post'>
                 <select name='condition' onchange='this.form.submit()'>
 
                     <?php
