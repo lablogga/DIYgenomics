@@ -133,9 +133,7 @@
                         }
 
                         $CurrentCondition=$Conditions[$COND-1][1];
-                    ?>
 
-                    <?php
                         foreach ($Conditions as $cond) {
                             $selected = (($cond[0] == $COND) ? "selected" : "");
                     ?>
