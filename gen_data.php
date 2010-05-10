@@ -37,7 +37,7 @@
     function getCurrentConditionID() {
         $COND = $_POST["condition"];
         if ($COND == "") {
-          $COND="1";
+          $COND = 1;
         }
         return $COND;
     }
