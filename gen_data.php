@@ -174,10 +174,10 @@ $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
                     . " 3_variants.dbSNP,"              // Column 7 'dbSNP'
                     . " 3_variants.23andme"             // Column 6 '23andme'
                     . " FROM 2_conditions"
-                    . " LEFT JOIN gen.8_map_variant_condition_entity_study ON 2_conditions.Primary = 8_map_variant_condition_entity_study.Condition_index"
-                    . " LEFT JOIN gen.4_entities ON 8_map_variant_condition_entity_study.Entity_index = 4_entities.Primary"
-                    . " LEFT JOIN gen.1_studies ON 8_map_variant_condition_entity_study.Study_index = 1_studies.Primary"
-                    . " LEFT JOIN gen.3_variants ON 8_map_variant_condition_entity_study.Variant_index = 3_variants.Primary"
+                    . " LEFT JOIN 8_map_variant_condition_entity_study ON 2_conditions.Primary = 8_map_variant_condition_entity_study.Condition_index"
+                    . " LEFT JOIN 4_entities ON 8_map_variant_condition_entity_study.Entity_index = 4_entities.Primary"
+                    . " LEFT JOIN 1_studies ON 8_map_variant_condition_entity_study.Study_index = 1_studies.Primary"
+                    . " LEFT JOIN 3_variants ON 8_map_variant_condition_entity_study.Variant_index = 3_variants.Primary"
                     . " WHERE (2_conditions.Primary = " . getCurrentConditionID() . ")";
 
 $QueryResult = mysql_query($SQLstring)
