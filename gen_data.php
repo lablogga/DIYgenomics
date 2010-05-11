@@ -154,15 +154,10 @@
             </tr>
         </table>
 
-
-
+        <!-- SET FONT SIZE TO 10 pt -->
+        <div style='font-size: 10pt;'>
 
 <?php
-//SET FONT SIZE TO 10 pt
-echo("<div style=\"font-size: 10pt;\">");
-
-
-
 
 //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
 $SQLstring = "SELECT `8_map_variant_condition_entity_study`.`Variant_index`, `3_variants`.`Locus`, `3_variants`.`Gene`, `3_variants`.`Variant`, `4_entities`.`Primary`, `1_studies`.`PMID`, `1_studies`.`PMID_URL`, `1_studies`.`Citation`, `3_variants`.`Locus_URL`, `3_variants`.`Gene_URL`, `3_variants`.`Variant_URL`, `3_variants`.`dbSNP`, `3_variants`.`23andme`\n"
