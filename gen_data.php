@@ -186,11 +186,8 @@ $QueryResult = mysql_query($SQLstring)
 //READ QUERY 1 RESULTS INTO ARRAY
 $Rows = array();
 
-$Row = mysql_fetch_array($QueryResult);
-while ($Row) {
-	$Rowdata = $Row;
-	$Rows[] = $Rowdata;
-	$Row = mysql_fetch_array($QueryResult);
+while ($Row = mysql_fetch_array($QueryResult)) {
+    $Rows[] = $Row;
 }
 
 
