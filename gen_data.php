@@ -180,12 +180,8 @@ $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
                     . " LEFT JOIN gen.3_variants ON 8_map_variant_condition_entity_study.Variant_index = 3_variants.Primary"
                     . " WHERE (2_conditions.Primary = " . getCurrentConditionID() . ")";
 
-$QueryResult = mysql_query($SQLstring)   //same w/ @ or w/o
-//$QueryResult = mysql_query($DBConnect, $SQLstring)   //same w/ @ or w/o
-	Or die("<p>Unable to execute the query, please try entering a new record.</p>"
-	. "<p>Error code " . mysql_errno($DBConnect)
-	. ": " . mysql_errno($DBConnect)) . "</p>";
-//echo "<p>Successfully queried the database: " . $DBName . ".</p>";
+$QueryResult = mysql_query($SQLstring)
+    or die("<p>Unable to query the database for variants.  Error code: " . mysql_connect_errno() . "</p>");
 
 //READ QUERY 1 RESULTS INTO ARRAY
 $Rows = array();
