@@ -160,13 +160,25 @@
 <?php
 
 //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
-$SQLstring = "SELECT `8_map_variant_condition_entity_study`.`Variant_index`, `3_variants`.`Locus`, `3_variants`.`Gene`, `3_variants`.`Variant`, `4_entities`.`Primary`, `1_studies`.`PMID`, `1_studies`.`PMID_URL`, `1_studies`.`Citation`, `3_variants`.`Locus_URL`, `3_variants`.`Gene_URL`, `3_variants`.`Variant_URL`, `3_variants`.`dbSNP`, `3_variants`.`23andme`\n"
-    . "FROM `2_conditions`\n"
-    . " LEFT JOIN `gen`.`8_map_variant_condition_entity_study` ON `2_conditions`.`Primary` = `8_map_variant_condition_entity_study`.`Condition_index` \n"
-    . " LEFT JOIN `gen`.`4_entities` ON `8_map_variant_condition_entity_study`.`Entity_index` = `4_entities`.`Primary` \n"
-    . " LEFT JOIN `gen`.`1_studies` ON `8_map_variant_condition_entity_study`.`Study_index` = `1_studies`.`Primary` \n"
-    . " LEFT JOIN `gen`.`3_variants` ON `8_map_variant_condition_entity_study`.`Variant_index` = `3_variants`.`Primary` \n"
-    . "WHERE (`2_conditions`.`Primary` = " . getCurrentConditionID() . ")\n";
+$SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
+                    . " 3_variants.Locus,"
+                    . " 3_variants.Gene,"
+                    . " 3_variants.Variant,"
+                    . " 4_entities.Primary,"
+                    . " 1_studies.PMID,"
+                    . " 1_studies.PMID_URL,"
+                    . " 1_studies.Citation,"
+                    . " 3_variants.Locus_URL,"
+                    . " 3_variants.Gene_URL,"
+                    . " 3_variants.Variant_URL,"
+                    . " 3_variants.dbSNP,"
+                    . " 3_variants.23andme"
+                    . " FROM 2_conditions"
+                    . " LEFT JOIN gen.8_map_variant_condition_entity_study ON 2_conditions.Primary = 8_map_variant_condition_entity_study.Condition_index"
+                    . " LEFT JOIN gen.4_entities ON 8_map_variant_condition_entity_study.Entity_index = 4_entities.Primary"
+                    . " LEFT JOIN gen.1_studies ON 8_map_variant_condition_entity_study.Study_index = 1_studies.Primary"
+                    . " LEFT JOIN gen.3_variants ON 8_map_variant_condition_entity_study.Variant_index = 3_variants.Primary"
+                    . " WHERE (2_conditions.Primary = " . getCurrentConditionID() . ")";
 
 $QueryResult = mysql_query($SQLstring)   //same w/ @ or w/o
 //$QueryResult = mysql_query($DBConnect, $SQLstring)   //same w/ @ or w/o
