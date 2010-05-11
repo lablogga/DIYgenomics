@@ -161,9 +161,9 @@
 
 //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
 $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
-                    . " 3_variants.Locus,"
-                    . " 3_variants.Gene,"
-                    . " 3_variants.Variant,"
+                    . " 3_variants.Locus,"              // Column 1 'Locus'
+                    . " 3_variants.Gene,"               // Column 2 'Gene'
+                    . " 3_variants.Variant,"            // Column 3 'Variant'
                     . " 4_entities.Primary,"
                     . " 1_studies.PMID,"
                     . " 1_studies.PMID_URL,"
@@ -171,8 +171,8 @@ $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
                     . " 3_variants.Locus_URL,"
                     . " 3_variants.Gene_URL,"
                     . " 3_variants.Variant_URL,"
-                    . " 3_variants.dbSNP,"
-                    . " 3_variants.23andme"
+                    . " 3_variants.dbSNP,"              // Column 7 'dbSNP'
+                    . " 3_variants.23andme"             // Column 6 '23andme'
                     . " FROM 2_conditions"
                     . " LEFT JOIN gen.8_map_variant_condition_entity_study ON 2_conditions.Primary = 8_map_variant_condition_entity_study.Condition_index"
                     . " LEFT JOIN gen.4_entities ON 8_map_variant_condition_entity_study.Entity_index = 4_entities.Primary"
