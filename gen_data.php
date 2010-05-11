@@ -58,9 +58,8 @@
                 19  Rheumatoid arthritis
                 20  Ulcerative colitis
         */
-        $SQLstring3 = "SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;";
 
-        $QueryResult3 = mysql_query($SQLstring3)
+        $QueryResult3 = mysql_query("SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;")
                             or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_connect_errno() . "</p>");
 
 
