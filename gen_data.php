@@ -59,14 +59,14 @@
                 20  Ulcerative colitis
         */
 
-        $QueryResult3 = mysql_query("SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;")
+        $QueryConditions = mysql_query("SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;")
                             or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_connect_errno() . "</p>");
 
 
         //READ QUERY 3 RESULTS INTO ARRAY
         // conditions holds rows {condition_ix, condition_name}
         $Conditions = array();
-        while ($CondRow = mysql_fetch_array($QueryResult3)) {
+        while ($CondRow = mysql_fetch_array($QueryConditions)) {
             $Conditions[] = $CondRow;
         }
 
