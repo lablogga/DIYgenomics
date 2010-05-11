@@ -125,35 +125,35 @@
         <h3>Web app</h3>
 
 
-<?php
-    // This starts up the database connection.  Actual authentication is done in a different file to keep the
-    // authentication info out of the source repo.
-    require('database_opener.php');
-    $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
-    
-    $arrConditions = getArrayConditions();                                  // This is an array of all the conditions that the user can look at.
-    $CurrentCondition = $arrConditions[getCurrentConditionID() - 1][1];     // This is the name of the condition that the user is currently looking at.
-?>
-<table border='0' cellspacing='0' cellpadding='0' style='margin-left: 1.4in; margin-right: 1in;'>
-    <tr>
-        <td style='text-align: left;'>
-            <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
-            (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
-            (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
-            underlying research reference cited by the company is posted in the table below.
-        </td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <?php
+            // This starts up the database connection.  Actual authentication is done in a different file to keep the
+            // authentication info out of the source repo.
+            require('database_opener.php');
+            $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
+            
+            $arrConditions = getArrayConditions();                                  // This is an array of all the conditions that the user can look at.
+            $CurrentCondition = $arrConditions[getCurrentConditionID() - 1][1];     // This is the name of the condition that the user is currently looking at.
+        ?>
+        <table border='0' cellspacing='0' cellpadding='0' style='margin-left: 1.4in; margin-right: 1in;'>
+            <tr>
+                <td style='text-align: left;'>
+                    <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
+                    (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
+                    (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
+                    underlying research reference cited by the company is posted in the table below.
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
 
-        <!-- DROPDOWN MENU -->
-        <td valign = 'top'>
-            <?php
-                require('gen_data_conditions_list.php');
-                renderConditionsList($arrConditions);
-            ?>
-        </td>
-    </tr>
-</table>
+                <!-- DROPDOWN MENU -->
+                <td valign = 'top'>
+                    <?php
+                        require('gen_data_conditions_list.php');
+                        renderConditionsList($arrConditions);
+                    ?>
+                </td>
+            </tr>
+        </table>
 
 
 
