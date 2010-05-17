@@ -291,14 +291,14 @@ function sortByCitation($r1,$r2) {
 $Studies = array();
 
 foreach ($Rows as $row) {
-  // each study is an array of pubmed, url, citation
-  if (getStudyIndex($Studies,$row[5]) == -1) {
-    $study = array();
-    $study["pubmedid"] = $row[5];
-    $study["url"] = $row[6];
-    $study["citation"] = $row[7];
-    $Studies[] = $study;
-  }
+    // each study is an array of pubmed, url, citation
+    if (getStudyIndex($Studies,$row[5]) == -1) {
+        $study = array();
+        $study["pubmedid"] = $row[5];
+        $study["url"] = $row[6];
+        $study["citation"] = $row[7];
+        $Studies[] = $study;
+    }
 }
 
 //ASSIGN KEY TO STUDY URL
