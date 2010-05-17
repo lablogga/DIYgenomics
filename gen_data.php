@@ -197,7 +197,7 @@
               }
               return $cmp1;
             }
-            usort($Rows,'sortByLocus');
+            usort($Rows, sortByLocus);
 
             //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
             $SQLstring2 = "SELECT 2_conditions.Primary, 6_map_entity_condition.Entity_index, 6_map_entity_condition.URL"
