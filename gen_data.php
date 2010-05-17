@@ -232,7 +232,8 @@
         <th style='background:white;'><a href='<?=$Rows2[1][2]?>'>Navigenics</a></th>
         <th style='background:white;'><a href='<?=$Rows2[2][2]?>'>23andme</a></th>
         <th style='background:white;'><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
-        <th style='background:white;'>Sample data</th></tr>
+        <th style='background:white;'>Sample data</th>
+    </tr>
 
 <?php
 
