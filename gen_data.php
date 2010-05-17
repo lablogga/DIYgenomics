@@ -206,7 +206,6 @@
                 $Rows2[] = $Row2;
             }
 
-//style=\"border:solid 1px #cccccc; margin-left: 1.4 in; background:#cccccc\">";
 
 
 echo("<h3>Variants reviewed for " . $CurrentCondition . "<br /></h3>");
