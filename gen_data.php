@@ -287,6 +287,15 @@ function sortByCitation($r1,$r2) {
   return strcmp($r1["citation"],$r2["citation"]);
 }
 
+function getStudyIndex($studies, $pubmedid) {
+    foreach ($studies as $key => $study) {
+        if ($study["pubmedid"] == $pubmedid) {
+            return $key;
+        }
+    }
+    return -1;
+}
+
 //FIRST LOOP TO COLLECT ALL STUDIES
 $Studies = array();
 
@@ -311,14 +320,7 @@ foreach ($Studies as $key => $study) {
 
 usort($Studies,'sortByCitation');
 
-function getStudyIndex($studies,$pubmedid) {
-  foreach ($studies as $key => $study) {
-    if ($study["pubmedid"] == $pubmedid) {
-      return $key;
-    }
-  }
-  return -1;
-}
+
 
 
 //READY MAIN QUERY DATA INTO ARRAY
