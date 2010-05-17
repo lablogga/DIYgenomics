@@ -369,8 +369,11 @@ foreach ($Rows as $rd) {
 printRow($Printrow,$Studies);
 ?>
 
-<tr><td style='background:white;' ALIGN='left' colspan='8'>&nbsp;</td></tr>
-<tr><td style='background:white;' ALIGN='left' colspan='8'><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Research references cited by consumer genomic companies:</i></td></tr>
+</table>
+
+
+<h4><i>Research references cited by consumer genomic companies:</i></h4>
+<ol>
 
 <?php
 foreach ($Studies as $key => $study) {
@@ -378,15 +381,15 @@ foreach ($Studies as $key => $study) {
     $cit = $study["citation"];
     $citurl = $study["url"];
     ?>
-        <tr>
-            <td style='background:white;' VALIGN='center'; ALIGN='right'><?=$ix?>.&nbsp;</td>
-            <td style='background:white;' colspan='7'><a href='<?=$citurl?>'><?=$cit?></a></td>
-        </tr>
+        <li>
+            <a href='<?=$citurl?>'><?=$cit?></a>
+        </li>
     <?php
 }
 ?>
 
-</table>
+</ol>
+
 
 <?php
 
