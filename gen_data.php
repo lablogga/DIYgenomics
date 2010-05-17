@@ -189,6 +189,15 @@
                 $Rows[] = $Row;
             }
 
+            //SORT BY LOCUS
+            function sortByLocus($p1,$p2) {
+              $cmp1 = strnatcmp($p1[1],$p2[1]);
+              if ($cmp1 == '0') {
+                return strcmp($p1[3],$p2[3]);
+              }
+              return $cmp1;
+            }
+            usort($Rows,'sortByLocus');
 
             //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
             $SQLstring2 = "SELECT 2_conditions.Primary, 6_map_entity_condition.Entity_index, 6_map_entity_condition.URL"
@@ -226,15 +235,7 @@
         <th style='background:white;'>Sample data</th></tr>
 
 <?php
-//SORT BY LOCUS
-function sortByLocus($p1,$p2) {
-  $cmp1 = strnatcmp($p1[1],$p2[1]);
-  if ($cmp1 == '0') {
-    return strcmp($p1[3],$p2[3]);
-  }
-  return $cmp1;
-}
-usort($Rows,'sortByLocus');
+
 
 
 $stack = array();
