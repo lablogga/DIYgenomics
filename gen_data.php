@@ -317,7 +317,6 @@ foreach ($Studies as $key => $study) {
     $cit_URL = $Studies[$ix-1]["url"];
 }
 
-
 usort($Studies, sortByCitation);
 
 
