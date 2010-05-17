@@ -384,9 +384,11 @@ foreach ($Studies as $key => $study) {
         </tr>
     <?php
 }
+?>
 
+</table>
 
-echo "</table>";
+<?php
 
 //CLOSE THE CONNECTION TO THE DATABASE
 mysql_close($DBConnect);
