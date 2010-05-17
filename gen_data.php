@@ -191,10 +191,10 @@
 
 
 //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
-$SQLstring2 = "SELECT `2_conditions`.`Primary`, `6_map_entity_condition`.`Entity_index`, `6_map_entity_condition`.`URL`\n"
-    . "FROM `2_conditions`\n"
-    . " LEFT JOIN `gen`.`6_map_entity_condition` ON `2_conditions`.`Primary` = `6_map_entity_condition`.`Condition_index` \n"
-    . "WHERE (`2_conditions`.`Primary` = " . getCurrentConditionID() . ")\n";
+$SQLstring2 = "SELECT 2_conditions.Primary, 6_map_entity_condition.Entity_index, 6_map_entity_condition.URL"
+                    . " FROM 2_conditions"
+                    . " LEFT JOIN gen.6_map_entity_condition ON 2_conditions.Primary = 6_map_entity_condition.Condition_index"
+                    . " WHERE (2_conditions.Primary = " . getCurrentConditionID() . ")";
 
 $QueryResult2 = mysql_query($SQLstring2)   //same w/ @ or w/o
 //$QueryResult2 = mysql_query($DBConnect, $SQLstring2)   //same w/ @ or w/o
