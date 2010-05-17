@@ -315,12 +315,6 @@
                 }
 
 
-
-
-
-
-
-
 //READY MAIN QUERY DATA INTO ARRAY
 $oldlocus ="";
 $oldvariant = "";
