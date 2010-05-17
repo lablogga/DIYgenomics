@@ -196,12 +196,8 @@ $SQLstring2 = "SELECT 2_conditions.Primary, 6_map_entity_condition.Entity_index,
                     . " LEFT JOIN gen.6_map_entity_condition ON 2_conditions.Primary = 6_map_entity_condition.Condition_index"
                     . " WHERE (2_conditions.Primary = " . getCurrentConditionID() . ")";
 
-$QueryResult2 = mysql_query($SQLstring2)   //same w/ @ or w/o
-//$QueryResult2 = mysql_query($DBConnect, $SQLstring2)   //same w/ @ or w/o
-	Or die("<p>Unable to execute the query, please try entering a new record.</p>"
-	. "<p>Error code " . mysql_errno($DBConnect)
-	. ": " . mysql_errno($DBConnect)) . "</p>";
-//echo "<p>Successfully queried the database: " . $DBName . ".</p>";
+$QueryResult2 = mysql_query($SQLstring2)
+    or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
 
 
 //READ QUERY 2 RESULTS INTO ARRAY
