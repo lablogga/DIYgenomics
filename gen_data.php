@@ -252,7 +252,9 @@ function printRow($row,$studies) {
     $comps[] = "comp2";
     $comps[] = "comp3";
     foreach ($comps as $comp) {   //deCodeme, Navigenics and 23andme fields
-        echo "<td align='center' style=\"background:white;\">";
+        ?>
+            <td align='center' style='background:white;'>
+        <?php
         $compdata = $row[$comp];
         sort($compdata);
         $n = count($compdata);
