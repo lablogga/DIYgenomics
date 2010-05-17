@@ -312,9 +312,9 @@ foreach ($Rows as $row) {
 
 //ASSIGN KEY TO STUDY URL
 foreach ($Studies as $key => $study) {
-  $ix = $key+1;
-  $cit = $study["citiation"];
-  $cit_URL = $Studies[$ix-1]["url"];
+    $ix = $key+1;
+    $cit = $study["citiation"];
+    $cit_URL = $Studies[$ix-1]["url"];
 }
 
 
