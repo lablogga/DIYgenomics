@@ -199,6 +199,43 @@
             }
             usort($Rows, sortByLocus);
 
+            function sortByCitation($r1,$r2) {
+                return strcmp($r1["citation"],$r2["citation"]);
+            }
+
+            function getStudyIndex($studies, $pubmedid) {
+                foreach ($studies as $key => $study) {
+                    if ($study["pubmedid"] == $pubmedid) {
+                        return $key;
+                    }
+                }
+                return -1;
+            }
+
+            //FIRST LOOP TO COLLECT ALL STUDIES
+            $Studies = array();
+
+            foreach ($Rows as $row) {
+                // each study is an array of pubmed, url, citation
+                if (getStudyIndex($Studies,$row[5]) == -1) {
+                    $study = array();
+                    $study["pubmedid"] = $row[5];
+                    $study["url"] = $row[6];
+                    $study["citation"] = $row[7];
+                    $Studies[] = $study;
+                }
+            }
+
+            //ASSIGN KEY TO STUDY URL
+            foreach ($Studies as $key => $study) {
+                $ix = $key+1;
+                $cit = $study["citiation"];
+                $cit_URL = $Studies[$ix-1]["url"];
+            }
+
+            usort($Studies, sortByCitation);
+
+
             //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
             $SQLstring2 = "SELECT 2_conditions.Primary, 6_map_entity_condition.Entity_index, 6_map_entity_condition.URL"
                                 . " FROM 2_conditions"
@@ -283,41 +320,6 @@ function printRow($row,$studies) {
 
 
 
-function sortByCitation($r1,$r2) {
-  return strcmp($r1["citation"],$r2["citation"]);
-}
-
-function getStudyIndex($studies, $pubmedid) {
-    foreach ($studies as $key => $study) {
-        if ($study["pubmedid"] == $pubmedid) {
-            return $key;
-        }
-    }
-    return -1;
-}
-
-//FIRST LOOP TO COLLECT ALL STUDIES
-$Studies = array();
-
-foreach ($Rows as $row) {
-    // each study is an array of pubmed, url, citation
-    if (getStudyIndex($Studies,$row[5]) == -1) {
-        $study = array();
-        $study["pubmedid"] = $row[5];
-        $study["url"] = $row[6];
-        $study["citation"] = $row[7];
-        $Studies[] = $study;
-    }
-}
-
-//ASSIGN KEY TO STUDY URL
-foreach ($Studies as $key => $study) {
-    $ix = $key+1;
-    $cit = $study["citiation"];
-    $cit_URL = $Studies[$ix-1]["url"];
-}
-
-usort($Studies, sortByCitation);
 
 
 
