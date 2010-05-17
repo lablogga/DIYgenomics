@@ -247,31 +247,31 @@ function printRow($row,$studies) {
             <td align='center' style='background:white;'><a href='<?=$row['gene_url']?>'><?=$row['gene']?></a></td>
             <td align='center' style='background:white;'><a href='<?=$row['variant_url']?>'><?=$row['variant']?></a></td>
     <?php
- $comps = array();
-  $comps[] = "comp1";
-  $comps[] = "comp2";
-  $comps[] = "comp3";
-  foreach ($comps as $comp) {   //deCodeme, Navigenics and 23andme fields
-    echo "<td align='center' style=\"background:white;\">";
-    $compdata = $row[$comp];
-    sort($compdata);
-    $n = count($compdata);
-    $i = 0;
-    foreach ($compdata as $index) {
-      $ix = $index+1;
-      $citurl = $studies[$index]["url"];
-      echo "<a href=\"{$citurl}\">{$ix}</a>";  //print the study number
-      if ($i < $n - 1) {
-        echo ",";
-      }
-      $i++;
+    $comps = array();
+    $comps[] = "comp1";
+    $comps[] = "comp2";
+    $comps[] = "comp3";
+    foreach ($comps as $comp) {   //deCodeme, Navigenics and 23andme fields
+        echo "<td align='center' style=\"background:white;\">";
+        $compdata = $row[$comp];
+        sort($compdata);
+        $n = count($compdata);
+        $i = 0;
+        foreach ($compdata as $index) {
+            $ix = $index+1;
+            $citurl = $studies[$index]["url"];
+            echo "<a href=\"{$citurl}\">{$ix}</a>";  //print the study number
+            if ($i < $n - 1) {
+                echo ",";
+            }
+            $i++;
+        }
+        echo "</td>";
     }
-    echo "</td>";
-  }
-//PRINT DBSNP and 23andme EXAMPLE VALUES
-  echo "<td align='center' style='background:white;'> <a href=\"{$row['variant_url']}\"> {$row['dbsnp']} </a> </td>";
-  echo "<td align='center' style='background:white;'>  {$row['23andme']} </a> </td>";
-  echo "</tr>";
+    //PRINT DBSNP and 23andme EXAMPLE VALUES
+    echo "<td align='center' style='background:white;'> <a href=\"{$row['variant_url']}\"> {$row['dbsnp']} </a> </td>";
+    echo "<td align='center' style='background:white;'>  {$row['23andme']} </a> </td>";
+    echo "</tr>";
 }
 
 
