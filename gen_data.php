@@ -323,47 +323,47 @@ $first = 1;
 $Printrow = array();
 
 foreach ($Rows as $rd) {
-  $locus = $rd[1];
-  $variant = $rd[3];
+    $locus = $rd[1];
+    $variant = $rd[3];
 
-  // oldlocus and oldvariant will hold the previous loc/var for the data we try to print
-  // locus and variant is the data from the current row
-  // Printrow has our accumulated data collected for oldlocus/oldvariant
-  if (($locus != $oldlocus) || ($variant != $oldvariant)) {
-    if ($first != 1) {
-      // print the printrow data
-      printRow($Printrow,$Studies);
-    } else {
-          $first = 0;
+    // oldlocus and oldvariant will hold the previous loc/var for the data we try to print
+    // locus and variant is the data from the current row
+    // Printrow has our accumulated data collected for oldlocus/oldvariant
+    if (($locus != $oldlocus) || ($variant != $oldvariant)) {
+        if ($first != 1) {
+            // print the printrow data
+            printRow($Printrow,$Studies);
+        } else {
+            $first = 0;
+        }
+        // reset printrow/oldlocus/oldvariant
+        $oldlocus = $locus;
+        $oldvariant = $variant;
+        $Printrow = array();   //declare new array
+        $Printrow["locus"] = $rd[1];    //read values into array
+        $Printrow["gene"] = $rd[2];
+        $Printrow["variant"] = $rd[3];
+        $Printrow["comp1"] = array();
+        $Printrow["comp2"] = array();
+        $Printrow["comp3"] = array();
+        $Printrow["locus_url"] = $rd[8];
+        $Printrow["gene_url"] = $rd[9];
+        $Printrow["variant_url"] = $rd[10];
+        $Printrow["dbsnp"] = $rd[11];
+        $Printrow["23andme"] = $rd[12];
+        //echo $rd[3];
+        //echo "<br />";
     }
-    // reset printrow/oldlocus/oldvariant
-    $oldlocus = $locus;
-    $oldvariant = $variant;
-    $Printrow = array();   //declare new array
-    $Printrow["locus"] = $rd[1];    //read values into array
-    $Printrow["gene"] = $rd[2];
-    $Printrow["variant"] = $rd[3];
-    $Printrow["comp1"] = array();
-    $Printrow["comp2"] = array();
-    $Printrow["comp3"] = array();
-    $Printrow["locus_url"] = $rd[8];
-    $Printrow["gene_url"] = $rd[9];
-    $Printrow["variant_url"] = $rd[10];
-    $Printrow["dbsnp"] = $rd[11];
-    $Printrow["23andme"] = $rd[12];
-//echo $rd[3];
-//echo "<br />";
- }
 
-  $company = $rd[4];
-  $pubmed = $rd[5];
-  $studylist = &$Printrow["comp1"];
-  if ($company == 2) {
-    $studylist = &$Printrow["comp2"];
-  } else if ($company == 3) {
-    $studylist = &$Printrow["comp3"];
-  }
-  $studylist[] = getStudyIndex($Studies,$pubmed);
+    $company = $rd[4];
+    $pubmed = $rd[5];
+    $studylist = &$Printrow["comp1"];
+    if ($company == 2) {
+        $studylist = &$Printrow["comp2"];
+    } else if ($company == 3) {
+        $studylist = &$Printrow["comp3"];
+    }
+    $studylist[] = getStudyIndex($Studies,$pubmed);
 
 }
 printRow($Printrow,$Studies);
