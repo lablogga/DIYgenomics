@@ -219,21 +219,21 @@
 
         <h3>Variants reviewed for <?=$CurrentCondition?></h3>
 
-<?php
-//CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
-?>
+        <?php
+        //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
+        ?>
 
-<table id='myTable' width='80%' cellspacing='1' cellpadding='0' style='border:solid 1px #cccccc; margin-left: 1.4 in; background:#cccccc'>
-    <tr ALIGN='center'>
-        <th style='background:white;'>Locus</th>
-        <th style='background:white;'>Gene</th>
-        <th style='background:white;'>Variant</th>
-        <th style='background:white;'><a href='<?=$Rows2[0][2]?>'>deCODEme</a></th>
-        <th style='background:white;'><a href='<?=$Rows2[1][2]?>'>Navigenics</a></th>
-        <th style='background:white;'><a href='<?=$Rows2[2][2]?>'>23andme</a></th>
-        <th style='background:white;'><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
-        <th style='background:white;'>Sample data</th>
-    </tr>
+        <table id='myTable' width='80%' cellspacing='1' cellpadding='0' style='border:solid 1px #cccccc; margin-left: 1.4 in; background:#cccccc'>
+            <tr ALIGN='center'>
+                <th style='background:white;'>Locus</th>
+                <th style='background:white;'>Gene</th>
+                <th style='background:white;'>Variant</th>
+                <th style='background:white;'><a href='<?=$Rows2[0][2]?>'>deCODEme</a></th>
+                <th style='background:white;'><a href='<?=$Rows2[1][2]?>'>Navigenics</a></th>
+                <th style='background:white;'><a href='<?=$Rows2[2][2]?>'>23andme</a></th>
+                <th style='background:white;'><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
+                <th style='background:white;'>Sample data</th>
+            </tr>
 
 <?php
 
