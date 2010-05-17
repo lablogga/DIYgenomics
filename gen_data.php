@@ -318,7 +318,7 @@ foreach ($Studies as $key => $study) {
 }
 
 
-usort($Studies,'sortByCitation');
+usort($Studies, sortByCitation);
 
 
 
