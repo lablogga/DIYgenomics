@@ -272,48 +272,47 @@
                 <th style='background:white;'>Sample data</th>
             </tr>
 
-<?php
-
-//PRINT OUT THE DATA TABLE
-function printRow($row,$studies) {
-    ?>
-        <tr>
-            <td align='center' style='background:white;'><a href='<?=$row['locus_url']?>'><?=$row['locus']?></a></td>
-            <td align='center' style='background:white;'><a href='<?=$row['gene_url']?>'><?=$row['gene']?></a></td>
-            <td align='center' style='background:white;'><a href='<?=$row['variant_url']?>'><?=$row['variant']?></a></td>
-    <?php
-    $comps = array();
-    $comps[] = "comp1";
-    $comps[] = "comp2";
-    $comps[] = "comp3";
-    foreach ($comps as $comp) {   //deCodeme, Navigenics and 23andme fields
-        ?>
-            <td align='center' style='background:white;'>
-        <?php
-        $compdata = $row[$comp];
-        sort($compdata);
-        $n = count($compdata);
-        $i = 0;
-        foreach ($compdata as $index) {
-            $ix = $index+1;
-            $citurl = $studies[$index]["url"];
-            echo "<a href=\"{$citurl}\">{$ix}</a>";  //print the study number
-            if ($i < $n - 1) {
-                echo ",";
-            }
-            $i++;
-        }
-        ?>
-            </td>
-        <?php
-    }
-    //PRINT DBSNP and 23andme EXAMPLE VALUES
-    ?>
-            <td align='center' style='background:white;'><a href='<?=$row['variant_url']?>'><?=$row['dbsnp']?></a></td>
-            <td align='center' style='background:white;'><?=$row['23andme']?></a></td>
-        </tr>
-    <?php
-}
+            <?php
+                //PRINT OUT THE DATA TABLE
+                function printRow($row,$studies) {
+                    ?>
+                        <tr>
+                            <td align='center' style='background:white;'><a href='<?=$row['locus_url']?>'><?=$row['locus']?></a></td>
+                            <td align='center' style='background:white;'><a href='<?=$row['gene_url']?>'><?=$row['gene']?></a></td>
+                            <td align='center' style='background:white;'><a href='<?=$row['variant_url']?>'><?=$row['variant']?></a></td>
+                    <?php
+                    $comps = array();
+                    $comps[] = "comp1";
+                    $comps[] = "comp2";
+                    $comps[] = "comp3";
+                    foreach ($comps as $comp) {   //deCodeme, Navigenics and 23andme fields
+                        ?>
+                            <td align='center' style='background:white;'>
+                        <?php
+                        $compdata = $row[$comp];
+                        sort($compdata);
+                        $n = count($compdata);
+                        $i = 0;
+                        foreach ($compdata as $index) {
+                            $ix = $index+1;
+                            $citurl = $studies[$index]["url"];
+                            echo "<a href=\"{$citurl}\">{$ix}</a>";  //print the study number
+                            if ($i < $n - 1) {
+                                echo ",";
+                            }
+                            $i++;
+                        }
+                        ?>
+                            </td>
+                        <?php
+                    }
+                    //PRINT DBSNP and 23andme EXAMPLE VALUES
+                    ?>
+                            <td align='center' style='background:white;'><a href='<?=$row['variant_url']?>'><?=$row['dbsnp']?></a></td>
+                            <td align='center' style='background:white;'><?=$row['23andme']?></a></td>
+                        </tr>
+                    <?php
+                }
 
 
 
