@@ -367,8 +367,9 @@ foreach ($Rows as $rd) {
 
 }
 printRow($Printrow,$Studies);
-    echo "<tr><td style='background:white;' ALIGN='left' colspan='8'>&nbsp;</td></tr>\n";
-    echo "<tr><td style='background:white;' ALIGN='left' colspan='8'><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Research references cited by consumer genomic companies:</i></td></tr>\n";
+
+echo "<tr><td style='background:white;' ALIGN='left' colspan='8'>&nbsp;</td></tr>\n";
+echo "<tr><td style='background:white;' ALIGN='left' colspan='8'><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Research references cited by consumer genomic companies:</i></td></tr>\n";
 
 foreach ($Studies as $key => $study) {
   $ix = $key+1;
