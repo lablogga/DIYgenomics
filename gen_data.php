@@ -281,12 +281,14 @@ function printRow($row,$studies) {
 }
 
 
-//FIRST LOOP TO COLLECT ALL STUDIES
-$Studies = array();
+
 
 function sortByCitation($r1,$r2) {
   return strcmp($r1["citation"],$r2["citation"]);
 }
+
+//FIRST LOOP TO COLLECT ALL STUDIES
+$Studies = array();
 
 foreach ($Rows as $row) {
   // each study is an array of pubmed, url, citation
