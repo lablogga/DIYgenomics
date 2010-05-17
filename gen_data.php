@@ -389,15 +389,7 @@ foreach ($Studies as $key => $study) {
 ?>
 
 </ol>
-
-
-<?php
-
-
-echo("</div>");
-
-//END PHP
-?>
+</div>
 
 	<script type="text/javascript">
 	<!-- hide from old browsers
