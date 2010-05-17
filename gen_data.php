@@ -239,7 +239,6 @@
 
 
 
-$stack = array();
 //PRINT OUT THE DATA TABLE
 function printRow($row,$studies) {
 
