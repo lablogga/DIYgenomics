@@ -202,11 +202,8 @@ $QueryResult2 = mysql_query($SQLstring2)
 
 //READ QUERY 2 RESULTS INTO ARRAY
 $Rows2 = array();
-$Row2 = mysql_fetch_array($QueryResult2);
-while ($Row2) {
-	$Rowdata2 = $Row2;
-	$Rows2[] = $Rowdata2;
-	$Row2 = mysql_fetch_array($QueryResult2);
+while ($Row2 = mysql_fetch_array($QueryResult2)) {
+    $Rows2[] = $Row2;
 }
 
 //style=\"border:solid 1px #cccccc; margin-left: 1.4 in; background:#cccccc\">";
