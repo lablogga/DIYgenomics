@@ -377,8 +377,12 @@ foreach ($Studies as $key => $study) {
     $ix = $key+1;
     $cit = $study["citation"];
     $citurl = $study["url"];
-    echo "<tr><td style='background:white;' VALIGN='center'; ALIGN='right'>{$ix}.&nbsp;</td>
-    <td style='background:white;' colspan=\"7\"><a href=\"{$citurl}\">{$cit}</a></td></tr>\n";
+    ?>
+        <tr>
+            <td style='background:white;' VALIGN='center'; ALIGN='right'><?=$ix?>.&nbsp;</td>
+            <td style='background:white;' colspan='7'><a href='<?=$citurl?>'><?=$cit?></a></td>
+        </tr>
+    <?php
 }
 
 
