@@ -241,11 +241,12 @@
 
 //PRINT OUT THE DATA TABLE
 function printRow($row,$studies) {
-
-  echo "<tr>";
-  echo "<td align='center' style='background:white;'> <a href=\"{$row['locus_url']}\"> {$row['locus']} </a> </td>";
-  echo "<td align='center' style='background:white;'> <a href=\"{$row['gene_url']}\"> {$row['gene']} </a> </td>";
-  echo "<td align='center' style='background:white;'> <a href=\"{$row['variant_url']}\"> {$row['variant']} </a> </td>";
+    ?>
+        <tr>
+            <td align='center' style='background:white;'><a href='<?=$row['locus_url']?>'><?=$row['locus']?></a></td>
+            <td align='center' style='background:white;'><a href='<?=$row['gene_url']?>'><?=$row['gene']?></a></td>
+            <td align='center' style='background:white;'><a href='<?=$row['variant_url']?>'><?=$row['variant']?></a></td>
+    <?php
  $comps = array();
   $comps[] = "comp1";
   $comps[] = "comp2";
