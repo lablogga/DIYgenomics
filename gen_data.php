@@ -205,11 +205,12 @@
             while ($Row2 = mysql_fetch_array($QueryResult2)) {
                 $Rows2[] = $Row2;
             }
+        ?>
 
 
+        <h3>Variants reviewed for <?=$CurrentCondition?></h3>
 
-echo("<h3>Variants reviewed for " . $CurrentCondition . "<br /></h3>");
-
+<?php
 //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
 echo "<table id=\"myTable\" width='80%' cellspacing='1' cellpadding='0'
 style=\"border:solid 1px #cccccc; margin-left: 1.4 in; background:#cccccc\">";
