@@ -273,9 +273,11 @@ function printRow($row,$studies) {
         <?php
     }
     //PRINT DBSNP and 23andme EXAMPLE VALUES
-    echo "<td align='center' style='background:white;'> <a href=\"{$row['variant_url']}\"> {$row['dbsnp']} </a> </td>";
-    echo "<td align='center' style='background:white;'>  {$row['23andme']} </a> </td>";
-    echo "</tr>";
+    ?>
+            <td align='center' style='background:white;'><a href='<?=$row['variant_url']?>'><?=$row['dbsnp']?></a></td>
+            <td align='center' style='background:white;'><?=$row['23andme']?></a></td>
+        </tr>
+    <?php
 }
 
 
