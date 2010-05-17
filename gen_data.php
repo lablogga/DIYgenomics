@@ -393,8 +393,6 @@ foreach ($Studies as $key => $study) {
 
 <?php
 
-//CLOSE THE CONNECTION TO THE DATABASE
-mysql_close($DBConnect);
 
 echo("</div>");
 
