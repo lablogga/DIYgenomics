@@ -377,7 +377,6 @@
 
             <?php
                 foreach ($Studies as $key => $study) {
-                    $ix = $key+1;
                     $cit = $study["citation"];
                     $citurl = $study["url"];
                     ?>
