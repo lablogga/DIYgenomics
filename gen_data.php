@@ -133,26 +133,22 @@
             $arrConditions = getArrayConditions();                                  // This is an array of all the conditions that the user can look at.
             $CurrentCondition = $arrConditions[getCurrentConditionID() - 1][1];     // This is the name of the condition that the user is currently looking at.
         ?>
-        <table border='0' cellspacing='0' cellpadding='0' style='margin-left: 1.4in; margin-right: 1in;'>
-            <tr>
-                <td style='text-align: left;'>
-                    <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
-                    (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
-                    (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
-                    underlying research reference cited by the company is posted in the table below.
-                </td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-
-
+        <div>
+            <div style='float:left;width:70%;'>
+                <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
+                (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
+                (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
+                underlying research reference cited by the company is posted in the table below.
+            </div>
+            <div style='float:left;margin-left:20px;'>
                 <!-- DROPDOWN MENU -->
-                <td valign = 'top'>
-                    <?php
-                        require('gen_data_conditions_list.php');
-                        renderConditionsList($arrConditions);
-                    ?>
-                </td>
-            </tr>
-        </table>
+                <?php
+                    require('gen_data_conditions_list.php');
+                    renderConditionsList($arrConditions);
+                ?>
+            </div>
+            <div style='clear:both;'></div>
+        </div>
 
         <!-- SET FONT SIZE TO 10 pt -->
         <div style='font-size: 10pt;'>
