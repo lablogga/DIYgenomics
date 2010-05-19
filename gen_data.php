@@ -321,6 +321,8 @@
                 foreach ($Rows as $rd) {
                     $locus = $rd[1];
                     $variant = $rd[3];
+                    $company = $rd[4];
+                    $pubmed = $rd[5];
 
                     // oldlocus and oldvariant will hold the previous loc/var for the data we try to print
                     // locus and variant is the data from the current row
@@ -351,8 +353,6 @@
                         //echo "<br />";
                     }
 
-                    $company = $rd[4];
-                    $pubmed = $rd[5];
                     $studylist = &$Printrow["comp1"];
                     if ($company == 2) {
                         $studylist = &$Printrow["comp2"];
