@@ -261,7 +261,7 @@
                 <th style='background:white;'>Variant</th>
                 <th style='background:white;'><a href='<?=$mapDiseaseURLs["deCODEme"]?>'>deCODEme</a></th>
                 <th style='background:white;'><a href='<?=$mapDiseaseURLs["Navigenics"]?>'>Navigenics</a></th>
-                <th style='background:white;'><a href='<?=$mapDiseaseURLs["23andMe"]?>'>23andme</a></th>
+                <th style='background:white;'><a href='<?=$mapDiseaseURLs["23andMe"]?>'>23andMe</a></th>
                 <th style='background:white;'><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
                 <th style='background:white;'>Sample data</th>
             </tr>
