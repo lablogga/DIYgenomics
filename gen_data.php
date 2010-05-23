@@ -233,12 +233,12 @@
 
 
             //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
-            $SQLstring2 = "SELECT 2_conditions.Primary, 6_map_entity_condition.Entity_index, 6_map_entity_condition.URL"
+            $strQueryDiseaseURL = "SELECT 2_conditions.Primary, 6_map_entity_condition.Entity_index, 6_map_entity_condition.URL"
                                 . " FROM 2_conditions"
                                 . " LEFT JOIN gen.6_map_entity_condition ON 2_conditions.Primary = 6_map_entity_condition.Condition_index"
                                 . " WHERE (2_conditions.Primary = " . getCurrentConditionID() . ")";
 
-            $QueryResult2 = mysql_query($SQLstring2)
+            $QueryResult2 = mysql_query($strQueryDiseaseURL)
                 or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
 
 
