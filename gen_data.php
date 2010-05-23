@@ -238,13 +238,13 @@
                                     . " LEFT JOIN gen.6_map_entity_condition ON 2_conditions.Primary = 6_map_entity_condition.Condition_index"
                                     . " WHERE (2_conditions.Primary = " . getCurrentConditionID() . ")";
 
-            $QueryResult2 = mysql_query($strQueryDiseaseURLs)
+            $resultQueryDiseaseURLs = mysql_query($strQueryDiseaseURLs)
                 or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
 
 
             //READ QUERY 2 RESULTS INTO ARRAY
             $Rows2 = array();
-            while ($Row2 = mysql_fetch_array($QueryResult2)) {
+            while ($Row2 = mysql_fetch_array($resultQueryDiseaseURLs)) {
                 $Rows2[] = $Row2;
             }
         ?>
