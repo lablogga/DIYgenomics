@@ -243,9 +243,9 @@
 
 
             //READ QUERY 2 RESULTS INTO ARRAY
-            $Rows2 = array();
+            $arrDiseaseURLs = array();
             while ($arrDiseaseURL = mysql_fetch_array($resultQueryDiseaseURLs)) {
-                $Rows2[] = $arrDiseaseURL;
+                $arrDiseaseURLs[] = $arrDiseaseURL;
             }
         ?>
 
@@ -261,9 +261,9 @@
                 <th style='background:white;'>Locus</th>
                 <th style='background:white;'>Gene</th>
                 <th style='background:white;'>Variant</th>
-                <th style='background:white;'><a href='<?=$Rows2[0][2]?>'>deCODEme</a></th>
-                <th style='background:white;'><a href='<?=$Rows2[1][2]?>'>Navigenics</a></th>
-                <th style='background:white;'><a href='<?=$Rows2[2][2]?>'>23andme</a></th>
+                <th style='background:white;'><a href='<?=$arrDiseaseURLs[0][2]?>'>deCODEme</a></th>
+                <th style='background:white;'><a href='<?=$arrDiseaseURLs[1][2]?>'>Navigenics</a></th>
+                <th style='background:white;'><a href='<?=$arrDiseaseURLs[2][2]?>'>23andme</a></th>
                 <th style='background:white;'><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
                 <th style='background:white;'>Sample data</th>
             </tr>
