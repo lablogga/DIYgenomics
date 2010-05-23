@@ -233,19 +233,15 @@
 
 
             //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
-            $strQueryDiseaseURLs = "SELECT 2_conditions.Primary, 6_map_entity_condition.Entity_index, 6_map_entity_condition.URL"
-                                    . " FROM 2_conditions"
-                                    . " LEFT JOIN gen.6_map_entity_condition ON 2_conditions.Primary = 6_map_entity_condition.Condition_index"
-                                    . " WHERE (2_conditions.Primary = " . getCurrentConditionID() . ")";
+            $strQueryDiseaseURLs = "SELECT URL FROM 6_map_entity_condition WHERE Condition_index = " . getCurrentConditionID() . " ORDER BY Entity_index";
 
             $resultQueryDiseaseURLs = mysql_query($strQueryDiseaseURLs)
                 or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
 
-
             //READ QUERY 2 RESULTS INTO ARRAY
             $arrDiseaseURLs = array();
             while ($arrDiseaseURL = mysql_fetch_array($resultQueryDiseaseURLs)) {
-                $arrDiseaseURLs[] = $arrDiseaseURL;
+                $arrDiseaseURLs[] = $arrDiseaseURL[0];
             }
         ?>
 
@@ -261,9 +257,9 @@
                 <th style='background:white;'>Locus</th>
                 <th style='background:white;'>Gene</th>
                 <th style='background:white;'>Variant</th>
-                <th style='background:white;'><a href='<?=$arrDiseaseURLs[0][2]?>'>deCODEme</a></th>
-                <th style='background:white;'><a href='<?=$arrDiseaseURLs[1][2]?>'>Navigenics</a></th>
-                <th style='background:white;'><a href='<?=$arrDiseaseURLs[2][2]?>'>23andme</a></th>
+                <th style='background:white;'><a href='<?=$arrDiseaseURLs[0]?>'>deCODEme</a></th>
+                <th style='background:white;'><a href='<?=$arrDiseaseURLs[1]?>'>Navigenics</a></th>
+                <th style='background:white;'><a href='<?=$arrDiseaseURLs[2]?>'>23andme</a></th>
                 <th style='background:white;'><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
                 <th style='background:white;'>Sample data</th>
             </tr>
