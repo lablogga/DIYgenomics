@@ -244,8 +244,8 @@
 
             //READ QUERY 2 RESULTS INTO ARRAY
             $Rows2 = array();
-            while ($Row2 = mysql_fetch_array($resultQueryDiseaseURLs)) {
-                $Rows2[] = $Row2;
+            while ($arrDiseaseURL = mysql_fetch_array($resultQueryDiseaseURLs)) {
+                $Rows2[] = $arrDiseaseURL;
             }
         ?>
 
