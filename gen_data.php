@@ -233,15 +233,17 @@
 
 
             //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
-            $strQueryDiseaseURLs = "SELECT URL FROM 6_map_entity_condition WHERE Condition_index = " . getCurrentConditionID() . " ORDER BY Entity_index";
-
+            $strQueryDiseaseURLs = "SELECT 4_entities.Entity, 6_map_entity_condition.URL"
+                                        . " FROM 6_map_entity_condition JOIN 4_entities"
+                                        . " WHERE Condition_index = " . getCurrentConditionID() . " AND 6_map_entity_condition.Entity_index = 4_entities.Primary"
+                                        . " ORDER BY 6_map_entity_condition.Entity_index";
             $resultQueryDiseaseURLs = mysql_query($strQueryDiseaseURLs)
                 or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
 
             //READ QUERY 2 RESULTS INTO ARRAY
-            $arrDiseaseURLs = array();
+            $mapDiseaseURLs = array();
             while ($arrDiseaseURL = mysql_fetch_array($resultQueryDiseaseURLs)) {
-                $arrDiseaseURLs[] = $arrDiseaseURL[0];
+                $mapDiseaseURLs[$arrDiseaseURL[0]] = $arrDiseaseURL[1];
             }
         ?>
 
@@ -257,9 +259,9 @@
                 <th style='background:white;'>Locus</th>
                 <th style='background:white;'>Gene</th>
                 <th style='background:white;'>Variant</th>
-                <th style='background:white;'><a href='<?=$arrDiseaseURLs[0]?>'>deCODEme</a></th>
-                <th style='background:white;'><a href='<?=$arrDiseaseURLs[1]?>'>Navigenics</a></th>
-                <th style='background:white;'><a href='<?=$arrDiseaseURLs[2]?>'>23andme</a></th>
+                <th style='background:white;'><a href='<?=$mapDiseaseURLs["deCODEme"]?>'>deCODEme</a></th>
+                <th style='background:white;'><a href='<?=$mapDiseaseURLs["Navigenics"]?>'>Navigenics</a></th>
+                <th style='background:white;'><a href='<?=$mapDiseaseURLs["23andMe"]?>'>23andme</a></th>
                 <th style='background:white;'><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
                 <th style='background:white;'>Sample data</th>
             </tr>
