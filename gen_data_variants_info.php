@@ -61,20 +61,7 @@
             $Rows[] = $Row;
         }
 
-        //SORT BY LOCUS
-        function sortByLocus($p1,$p2) {
-          $cmp1 = strnatcmp($p1[1],$p2[1]);
-          if ($cmp1 == '0') {
-            return strcmp($p1[3],$p2[3]);
-          }
-          return $cmp1;
-        }
-        usort($Rows, sortByLocus);
-
-        function sortByCitation($r1,$r2) {
-            return strcmp($r1["citation"],$r2["citation"]);
-        }
-
+        //FIRST LOOP TO COLLECT ALL STUDIES
         function getStudyIndex($studies, $pubmedid) {
             foreach ($studies as $key => $study) {
                 if ($study["pubmedid"] == $pubmedid) {
@@ -84,7 +71,6 @@
             return -1;
         }
 
-        //FIRST LOOP TO COLLECT ALL STUDIES
         $Studies = array();
 
         foreach ($Rows as $row) {
@@ -105,7 +91,21 @@
             $cit_URL = $Studies[$ix-1]["url"];
         }
 
+        function sortByCitation($r1,$r2) {
+            return strcmp($r1["citation"],$r2["citation"]);
+        }
+
         usort($Studies, sortByCitation);
+
+        //SORT BY LOCUS
+        function sortByLocus($p1,$p2) {
+          $cmp1 = strnatcmp($p1[1],$p2[1]);
+          if ($cmp1 == '0') {
+            return strcmp($p1[3],$p2[3]);
+          }
+          return $cmp1;
+        }
+        usort($Rows, sortByLocus);
 
 
         //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
