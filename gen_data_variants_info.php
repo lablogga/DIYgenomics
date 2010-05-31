@@ -73,6 +73,7 @@
                 $Row['locus']       = $Row[1];
                 $Row['gene']        = $Row[2];
                 $Row['variant']     = $Row[3];
+                $Row['company']     = $Row[4];
                 $arrRowsVariantsTableQuery[] = $Row;
             }
 
@@ -242,7 +243,7 @@
             foreach ($arrRowsVariantsTableQuery as $rd) {
                 $locus = $rd['locus'];
                 $variant = $rd['variant'];
-                $company = $rd[4];
+                $company = $rd['company'];
                 $pubmed = $rd[5];
 
                 // oldlocus and oldvariant will hold the previous loc/var for the data we try to print
