@@ -35,9 +35,9 @@
 
             //SORT BY LOCUS
             function sortByLocus($p1,$p2) {
-              $cmp1 = strnatcmp($p1[1],$p2[1]);
+              $cmp1 = strnatcmp($p1['locus'],$p2['locus']);
               if ($cmp1 == '0') {
-                return strcmp($p1[3],$p2[3]);
+                return strcmp($p1['variant'],$p2['variant']);
               }
               return $cmp1;
             }
