@@ -77,6 +77,7 @@
                 $Row['pubmed']      = $Row[5];
                 $Row['locus_url']   = $Row[8];
                 $Row['gene_url']    = $Row[9];
+                $Row['variant_url'] = $Row[10];
                 $arrRowsVariantsTableQuery[] = $Row;
             }
 
@@ -271,7 +272,7 @@
                     $Printrow["comp3"] = array();
                     $Printrow["locus_url"] = $rd['locus_url'];
                     $Printrow["gene_url"] = $rd['gene_url'];
-                    $Printrow["variant_url"] = $rd[10];
+                    $Printrow["variant_url"] = $rd['variant_url'];
                     $Printrow["dbsnp"] = $rd[11];
                     $Printrow["23andme"] = $rd[12];
                     //echo $rd['variant'];
