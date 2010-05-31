@@ -70,6 +70,7 @@
             $arrRowsVariantsTableQuery = array();
 
             while ($Row = mysql_fetch_array($QueryResult)) {
+                $Row['locus'] = $Row[1];
                 $arrRowsVariantsTableQuery[] = $Row;
             }
 
@@ -237,7 +238,7 @@
             $Printrow = array();
 
             foreach ($arrRowsVariantsTableQuery as $rd) {
-                $locus = $rd[1];
+                $locus = $rd['locus'];
                 $variant = $rd[3];
                 $company = $rd[4];
                 $pubmed = $rd[5];
@@ -256,7 +257,7 @@
                     $oldlocus = $locus;
                     $oldvariant = $variant;
                     $Printrow = array();   //declare new array
-                    $Printrow["locus"] = $rd[1];    //read values into array
+                    $Printrow["locus"] = $rd['locus'];    //read values into array
                     $Printrow["gene"] = $rd[2];
                     $Printrow["variant"] = $rd[3];
                     $Printrow["comp1"] = array();
