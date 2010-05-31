@@ -107,31 +107,31 @@
             return -1;
         }
 
-        $Studies = array();
+        $arrStudies = array();
 
         foreach ($arrRowsVariantsTableQuery as $row) {
             // each study is an array of pubmed, url, citation
-            if (getStudyIndex($Studies,$row[5]) == -1) {
+            if (getStudyIndex($arrStudies,$row[5]) == -1) {
                 $study = array();
                 $study["pubmedid"] = $row[5];
                 $study["url"] = $row[6];
                 $study["citation"] = $row[7];
-                $Studies[] = $study;
+                $arrStudies[] = $study;
             }
         }
 
         //ASSIGN KEY TO STUDY URL
-        foreach ($Studies as $key => $study) {
+        foreach ($arrStudies as $key => $study) {
             $ix = $key+1;
             $cit = $study["citiation"];
-            $cit_URL = $Studies[$ix-1]["url"];
+            $cit_URL = $arrStudies[$ix-1]["url"];
         }
 
         function sortByCitation($r1,$r2) {
             return strcmp($r1["citation"],$r2["citation"]);
         }
 
-        usort($Studies, sortByCitation);
+        usort($arrStudies, sortByCitation);
 
         //SORT BY LOCUS
         function sortByLocus($p1,$p2) {
@@ -222,7 +222,7 @@
                 if (($locus != $oldlocus) || ($variant != $oldvariant)) {
                     if ($first != 1) {
                         // print the printrow data
-                        printRow($Printrow,$Studies);
+                        printRow($Printrow,$arrStudies);
                     } else {
                         $first = 0;
                     }
@@ -251,10 +251,10 @@
                 } else if ($company == 3) {
                     $studylist = &$Printrow["comp3"];
                 }
-                $studylist[] = getStudyIndex($Studies,$pubmed);
+                $studylist[] = getStudyIndex($arrStudies,$pubmed);
 
             }
-            printRow($Printrow,$Studies);
+            printRow($Printrow,$arrStudies);
         ?>
     </table>
 
@@ -262,7 +262,7 @@
 
     <ol>
         <?php
-            foreach ($Studies as $key => $study) {
+            foreach ($arrStudies as $key => $study) {
                 $cit = $study["citation"];
                 $citurl = $study["url"];
                 ?>
