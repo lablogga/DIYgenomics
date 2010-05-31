@@ -74,6 +74,7 @@
                 $Row['gene']        = $Row[2];
                 $Row['variant']     = $Row[3];
                 $Row['company']     = $Row[4];
+                $Row['pubmed']      = $Row[5];
                 $arrRowsVariantsTableQuery[] = $Row;
             }
 
@@ -244,7 +245,7 @@
                 $locus = $rd['locus'];
                 $variant = $rd['variant'];
                 $company = $rd['company'];
-                $pubmed = $rd[5];
+                $pubmed = $rd['pubmed'];
 
                 // oldlocus and oldvariant will hold the previous loc/var for the data we try to print
                 // locus and variant is the data from the current row
