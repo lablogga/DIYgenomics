@@ -144,8 +144,6 @@
             return $mapDiseaseURLs;
         }
 
-        $arrRowsVariantsTableQuery = getArrRowsVariantsTableQuery();
-
         //FIRST LOOP TO COLLECT ALL STUDIES
         function getStudyIndex($studies, $pubmedid) {
             foreach ($studies as $key => $study) {
@@ -166,6 +164,8 @@
           }
           return $cmp1;
         }
+
+        $arrRowsVariantsTableQuery = getArrRowsVariantsTableQuery();
         usort($arrRowsVariantsTableQuery, sortByLocus);
         
         $mapDiseaseURLs = getMapDiseaseURLs();
