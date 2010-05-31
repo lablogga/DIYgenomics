@@ -85,10 +85,10 @@
             or die("<p>Unable to query the database for variants.  Error code: " . mysql_connect_errno() . "</p>");
 
         //READ QUERY 1 RESULTS INTO ARRAY
-        $Rows = array();
+        $arrRowsVariantsTableQuery = array();
 
         while ($Row = mysql_fetch_array($QueryResult)) {
-            $Rows[] = $Row;
+            $arrRowsVariantsTableQuery[] = $Row;
         }
 
         //FIRST LOOP TO COLLECT ALL STUDIES
@@ -103,7 +103,7 @@
 
         $Studies = array();
 
-        foreach ($Rows as $row) {
+        foreach ($arrRowsVariantsTableQuery as $row) {
             // each study is an array of pubmed, url, citation
             if (getStudyIndex($Studies,$row[5]) == -1) {
                 $study = array();
@@ -135,7 +135,7 @@
           }
           return $cmp1;
         }
-        usort($Rows, sortByLocus);
+        usort($arrRowsVariantsTableQuery, sortByLocus);
         
         $mapDiseaseURLs = getMapDiseaseURLs();
 
@@ -204,7 +204,7 @@
 
             $Printrow = array();
 
-            foreach ($Rows as $rd) {
+            foreach ($arrRowsVariantsTableQuery as $rd) {
                 $locus = $rd[1];
                 $variant = $rd[3];
                 $company = $rd[4];
