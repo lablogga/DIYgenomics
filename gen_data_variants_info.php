@@ -70,8 +70,9 @@
             $arrRowsVariantsTableQuery = array();
 
             while ($Row = mysql_fetch_array($QueryResult)) {
-                $Row['locus']   = $Row[1];
-                $Row['gene']    = $Row[2];
+                $Row['locus']       = $Row[1];
+                $Row['gene']        = $Row[2];
+                $Row['variant']     = $Row[3];
                 $arrRowsVariantsTableQuery[] = $Row;
             }
 
@@ -240,7 +241,7 @@
 
             foreach ($arrRowsVariantsTableQuery as $rd) {
                 $locus = $rd['locus'];
-                $variant = $rd[3];
+                $variant = $rd['variant'];
                 $company = $rd[4];
                 $pubmed = $rd[5];
 
@@ -260,7 +261,7 @@
                     $Printrow = array();   //declare new array
                     $Printrow["locus"] = $rd['locus'];    //read values into array
                     $Printrow["gene"] = $rd['gene'];
-                    $Printrow["variant"] = $rd[3];
+                    $Printrow["variant"] = $rd['variant'];
                     $Printrow["comp1"] = array();
                     $Printrow["comp2"] = array();
                     $Printrow["comp3"] = array();
@@ -269,7 +270,7 @@
                     $Printrow["variant_url"] = $rd[10];
                     $Printrow["dbsnp"] = $rd[11];
                     $Printrow["23andme"] = $rd[12];
-                    //echo $rd[3];
+                    //echo $rd['variant'];
                     //echo "<br />";
                 }
 
