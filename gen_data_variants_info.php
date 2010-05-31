@@ -31,6 +31,54 @@
 
     function printVariantsInfo($CurrentCondition) {
         /**
+         *  This function queries the database for a list of studies on the currently selected health condition, and
+         *  returns this list in an array.
+         *
+         *  The array looks like this:
+         *
+         *  [
+         *      {
+         *          "pubmedid":     "17474819",
+         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
+         *          "citation":     "Coon KD et al.; A high-density whole-genome association study reveals that APOE is the major susceptibility gene for sporadic late-onset Alzheimer's disease; J ClinPsychiatry; 2007 Apr;68(4):613-8."
+         *      },
+         *      {
+         *          "pubmedid":     "9343467",
+         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/9343467",
+         *          "citation":     "Farrer LA et al.; Effects of age sex and ethnicity on the association between apolipoprotein E genotype and Alzheimer disease. A meta-analysis. APOE and Alzheimer Disease Meta Analysis Consortium; JAMA; 1997 Oct 22-29;278(16):1349-56."
+         *      },
+         *      {
+         *          "pubmedid":     "19734902",
+         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
+         *          "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
+         *      }
+         *  ]
+         */
+        function getArrStudiesInfo() {
+            $strQueryStudiesInfo = "SELECT DISTINCT 1_studies.PMID,"
+                                . " 1_studies.PMID_URL,"
+                                . " 1_studies.Citation"
+                                . " FROM 1_studies"
+                                . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
+                                . " WHERE 8_map_variant_condition_entity_study.Condition_index = " . getCurrentConditionID()
+                                . " ORDER BY 1_studies.Citation";
+
+            $resultQueryStudiesInfo = mysql_query($strQueryStudiesInfo)
+                or die("<p>Unable to query the database for studies information.  Error code: " . mysql_connect_errno() . "</p>");
+
+            $arrStudiesInfo = array();
+            while ($arrStudyInfo = mysql_fetch_array($resultQueryStudiesInfo)) {
+                $mapStudy = array();
+                $mapStudy['pubmedid']   = $arrStudyInfo[0];
+                $mapStudy['url']        = $arrStudyInfo[1];
+                $mapStudy['citation']   = $arrStudyInfo[2];
+                $arrStudiesInfo[] = $mapStudy;
+            }
+
+            return $arrStudiesInfo;
+        }
+
+        /**
          *  This function returns a map of disease URLs keyed by their providers.  The URLs are available to the user
          *  by clicking on the provider column name in the variants table header.
          *
@@ -105,54 +153,6 @@
                 }
             }
             return -1;
-        }
-
-        /**
-         *  This function queries the database for a list of studies on the currently selected health condition, and
-         *  returns this list in an array.
-         *
-         *  The array looks like this:
-         *
-         *  [
-         *      {
-         *          "pubmedid":     "17474819",
-         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
-         *          "citation":     "Coon KD et al.; A high-density whole-genome association study reveals that APOE is the major susceptibility gene for sporadic late-onset Alzheimer's disease; J ClinPsychiatry; 2007 Apr;68(4):613-8."
-         *      },
-         *      {
-         *          "pubmedid":     "9343467",
-         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/9343467",
-         *          "citation":     "Farrer LA et al.; Effects of age sex and ethnicity on the association between apolipoprotein E genotype and Alzheimer disease. A meta-analysis. APOE and Alzheimer Disease Meta Analysis Consortium; JAMA; 1997 Oct 22-29;278(16):1349-56."
-         *      },
-         *      {
-         *          "pubmedid":     "19734902",
-         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
-         *          "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
-         *      }
-         *  ]
-         */
-        function getArrStudiesInfo() {
-            $strQueryStudiesInfo = "SELECT DISTINCT 1_studies.PMID,"
-                                . " 1_studies.PMID_URL,"
-                                . " 1_studies.Citation"
-                                . " FROM 1_studies"
-                                . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
-                                . " WHERE 8_map_variant_condition_entity_study.Condition_index = " . getCurrentConditionID()
-                                . " ORDER BY 1_studies.Citation";
-
-            $resultQueryStudiesInfo = mysql_query($strQueryStudiesInfo)
-                or die("<p>Unable to query the database for studies information.  Error code: " . mysql_connect_errno() . "</p>");
-
-            $arrStudiesInfo = array();
-            while ($arrStudyInfo = mysql_fetch_array($resultQueryStudiesInfo)) {
-                $mapStudy = array();
-                $mapStudy['pubmedid']   = $arrStudyInfo[0];
-                $mapStudy['url']        = $arrStudyInfo[1];
-                $mapStudy['citation']   = $arrStudyInfo[2];
-                $arrStudiesInfo[] = $mapStudy;
-            }
-
-            return $arrStudiesInfo;
         }
 
         $arrStudies = getArrStudiesInfo();
