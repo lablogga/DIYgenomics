@@ -49,8 +49,6 @@
                                 . " 3_variants.Variant,"                                // Column 3 'Variant'
                                 . " 4_entities.Primary,"                                // Entity ID
                                 . " 1_studies.PMID,"                                    // Research study ID
-                                . " 1_studies.PMID_URL,"                                // Research study URL
-                                . " 1_studies.Citation,"                                // Research study citation
                                 . " 3_variants.Locus_URL,"                              // Column 1 'Locus' URL
                                 . " 3_variants.Gene_URL,"                               // Column 2 'Gene' URL
                                 . " 3_variants.Variant_URL,"                            // Column 3 'Variant' URL
@@ -75,11 +73,11 @@
                 $Row['variant']     = $Row[3];
                 $Row['company']     = $Row[4];
                 $Row['pubmed']      = $Row[5];
-                $Row['locus_url']   = $Row[8];
-                $Row['gene_url']    = $Row[9];
-                $Row['variant_url'] = $Row[10];
-                $Row['dbsnp']       = $Row[11];
-                $Row['23andme']     = $Row[12];
+                $Row['locus_url']   = $Row[6];
+                $Row['gene_url']    = $Row[7];
+                $Row['variant_url'] = $Row[8];
+                $Row['dbsnp']       = $Row[9];
+                $Row['23andme']     = $Row[10];
                 $arrRowsVariantsTableQuery[] = $Row;
             }
 
