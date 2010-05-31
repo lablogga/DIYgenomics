@@ -60,36 +60,42 @@
             return $mapDiseaseURLs;
         }
 
-        //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
-        $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
-                            . " 3_variants.Locus,"              // Column 1 'Locus'
-                            . " 3_variants.Gene,"               // Column 2 'Gene'
-                            . " 3_variants.Variant,"            // Column 3 'Variant'
-                            . " 4_entities.Primary,"
-                            . " 1_studies.PMID,"
-                            . " 1_studies.PMID_URL,"
-                            . " 1_studies.Citation,"
-                            . " 3_variants.Locus_URL,"
-                            . " 3_variants.Gene_URL,"
-                            . " 3_variants.Variant_URL,"
-                            . " 3_variants.dbSNP,"              // Column 7 'dbSNP'
-                            . " 3_variants.23andme"             // Column 6 '23andme'
-                            . " FROM 2_conditions"
-                            . " LEFT JOIN 8_map_variant_condition_entity_study ON 2_conditions.Primary = 8_map_variant_condition_entity_study.Condition_index"
-                            . " LEFT JOIN 4_entities ON 8_map_variant_condition_entity_study.Entity_index = 4_entities.Primary"
-                            . " LEFT JOIN 1_studies ON 8_map_variant_condition_entity_study.Study_index = 1_studies.Primary"
-                            . " LEFT JOIN 3_variants ON 8_map_variant_condition_entity_study.Variant_index = 3_variants.Primary"
-                            . " WHERE (2_conditions.Primary = " . getCurrentConditionID() . ")";
+        function getArrRowsVariantsTableQuery() {
+            //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
+            $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
+                                . " 3_variants.Locus,"              // Column 1 'Locus'
+                                . " 3_variants.Gene,"               // Column 2 'Gene'
+                                . " 3_variants.Variant,"            // Column 3 'Variant'
+                                . " 4_entities.Primary,"
+                                . " 1_studies.PMID,"
+                                . " 1_studies.PMID_URL,"
+                                . " 1_studies.Citation,"
+                                . " 3_variants.Locus_URL,"
+                                . " 3_variants.Gene_URL,"
+                                . " 3_variants.Variant_URL,"
+                                . " 3_variants.dbSNP,"              // Column 7 'dbSNP'
+                                . " 3_variants.23andme"             // Column 6 '23andme'
+                                . " FROM 2_conditions"
+                                . " LEFT JOIN 8_map_variant_condition_entity_study ON 2_conditions.Primary = 8_map_variant_condition_entity_study.Condition_index"
+                                . " LEFT JOIN 4_entities ON 8_map_variant_condition_entity_study.Entity_index = 4_entities.Primary"
+                                . " LEFT JOIN 1_studies ON 8_map_variant_condition_entity_study.Study_index = 1_studies.Primary"
+                                . " LEFT JOIN 3_variants ON 8_map_variant_condition_entity_study.Variant_index = 3_variants.Primary"
+                                . " WHERE (2_conditions.Primary = " . getCurrentConditionID() . ")";
 
-        $QueryResult = mysql_query($SQLstring)
-            or die("<p>Unable to query the database for variants.  Error code: " . mysql_connect_errno() . "</p>");
+            $QueryResult = mysql_query($SQLstring)
+                or die("<p>Unable to query the database for variants.  Error code: " . mysql_connect_errno() . "</p>");
 
-        //READ QUERY 1 RESULTS INTO ARRAY
-        $arrRowsVariantsTableQuery = array();
+            //READ QUERY 1 RESULTS INTO ARRAY
+            $arrRowsVariantsTableQuery = array();
 
-        while ($Row = mysql_fetch_array($QueryResult)) {
-            $arrRowsVariantsTableQuery[] = $Row;
+            while ($Row = mysql_fetch_array($QueryResult)) {
+                $arrRowsVariantsTableQuery[] = $Row;
+            }
+
+            return $arrRowsVariantsTableQuery;
         }
+
+        $arrRowsVariantsTableQuery = getArrRowsVariantsTableQuery();
 
         //FIRST LOOP TO COLLECT ALL STUDIES
         function getStudyIndex($studies, $pubmedid) {
