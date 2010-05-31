@@ -76,6 +76,7 @@
                 $Row['company']     = $Row[4];
                 $Row['pubmed']      = $Row[5];
                 $Row['locus_url']   = $Row[8];
+                $Row['gene_url']    = $Row[9];
                 $arrRowsVariantsTableQuery[] = $Row;
             }
 
@@ -269,7 +270,7 @@
                     $Printrow["comp2"] = array();
                     $Printrow["comp3"] = array();
                     $Printrow["locus_url"] = $rd['locus_url'];
-                    $Printrow["gene_url"] = $rd[9];
+                    $Printrow["gene_url"] = $rd['gene_url'];
                     $Printrow["variant_url"] = $rd[10];
                     $Printrow["dbsnp"] = $rd[11];
                     $Printrow["23andme"] = $rd[12];
