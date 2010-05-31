@@ -32,7 +32,7 @@
     function printVariantsInfo($CurrentCondition) {
         /**
          *  This function returns a map of disease URLs keyed by their providers.  The URLs are available to the user
-         *  by clicking on the provider name in the variants table header.
+         *  by clicking on the provider column name in the variants table header.
          *
          *  The map looks like this:
          *
