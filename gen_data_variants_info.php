@@ -44,18 +44,18 @@
 
             //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
             $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
-                                . " 3_variants.Locus,"              // Column 1 'Locus'
-                                . " 3_variants.Gene,"               // Column 2 'Gene'
-                                . " 3_variants.Variant,"            // Column 3 'Variant'
-                                . " 4_entities.Primary,"            // Entity ID
-                                . " 1_studies.PMID,"                // Research study ID
-                                . " 1_studies.PMID_URL,"            // Research study URL
-                                . " 1_studies.Citation,"            // Research study citation
-                                . " 3_variants.Locus_URL,"          // Column 1 'Locus' URL
-                                . " 3_variants.Gene_URL,"           // Column 2 'Gene' URL
-                                . " 3_variants.Variant_URL,"        // Column 3 'Variant' URL
-                                . " 3_variants.dbSNP,"              // Column 7 'dbSNP'
-                                . " 3_variants.23andme"             // Column 6 '23andme'
+                                . " 3_variants.Locus,"                                  // Column 1 'Locus'
+                                . " 3_variants.Gene,"                                   // Column 2 'Gene'
+                                . " 3_variants.Variant,"                                // Column 3 'Variant'
+                                . " 4_entities.Primary,"                                // Entity ID
+                                . " 1_studies.PMID,"                                    // Research study ID
+                                . " 1_studies.PMID_URL,"                                // Research study URL
+                                . " 1_studies.Citation,"                                // Research study citation
+                                . " 3_variants.Locus_URL,"                              // Column 1 'Locus' URL
+                                . " 3_variants.Gene_URL,"                               // Column 2 'Gene' URL
+                                . " 3_variants.Variant_URL,"                            // Column 3 'Variant' URL
+                                . " 3_variants.dbSNP,"                                  // Column 7 'dbSNP'
+                                . " 3_variants.23andme"                                 // Column 6 '23andme'
                                 . " FROM 2_conditions"
                                 . " LEFT JOIN 8_map_variant_condition_entity_study ON 2_conditions.Primary = 8_map_variant_condition_entity_study.Condition_index"
                                 . " LEFT JOIN 4_entities ON 8_map_variant_condition_entity_study.Entity_index = 4_entities.Primary"
