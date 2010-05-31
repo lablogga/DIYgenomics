@@ -43,8 +43,7 @@
             }
 
             //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
-            $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"   // Variant index (not displayed)
-                                . " 3_variants.Locus,"                                  // Column 1 'Locus'
+            $SQLstring = "SELECT 3_variants.Locus,"                                     // Column 1 'Locus'
                                 . " 3_variants.Gene,"                                   // Column 2 'Gene'
                                 . " 3_variants.Variant,"                                // Column 3 'Variant'
                                 . " 4_entities.Primary,"                                // Entity ID
@@ -68,16 +67,16 @@
             $arrRowsVariantsTableQuery = array();
 
             while ($Row = mysql_fetch_array($QueryResult)) {
-                $Row['locus']       = $Row[1];
-                $Row['gene']        = $Row[2];
-                $Row['variant']     = $Row[3];
-                $Row['company']     = $Row[4];
-                $Row['pubmed']      = $Row[5];
-                $Row['locus_url']   = $Row[6];
-                $Row['gene_url']    = $Row[7];
-                $Row['variant_url'] = $Row[8];
-                $Row['dbsnp']       = $Row[9];
-                $Row['23andme']     = $Row[10];
+                $Row['locus']       = $Row[0];
+                $Row['gene']        = $Row[1];
+                $Row['variant']     = $Row[2];
+                $Row['company']     = $Row[3];
+                $Row['pubmed']      = $Row[4];
+                $Row['locus_url']   = $Row[5];
+                $Row['gene_url']    = $Row[6];
+                $Row['variant_url'] = $Row[7];
+                $Row['dbsnp']       = $Row[8];
+                $Row['23andme']     = $Row[9];
                 $arrRowsVariantsTableQuery[] = $Row;
             }
 
