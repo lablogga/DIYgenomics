@@ -43,7 +43,7 @@
             }
 
             //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
-            $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
+            $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"   // Variant index (not displayed)
                                 . " 3_variants.Locus,"                                  // Column 1 'Locus'
                                 . " 3_variants.Gene,"                                   // Column 2 'Gene'
                                 . " 3_variants.Variant,"                                // Column 3 'Variant'
