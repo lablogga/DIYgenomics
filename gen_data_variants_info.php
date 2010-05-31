@@ -131,7 +131,7 @@
          *      }
          *  ]
          */
-        function getArrStudies() {
+        function getArrStudiesInfo() {
             $strQueryStudiesInfo = "SELECT DISTINCT 1_studies.PMID,"
                                 . " 1_studies.PMID_URL,"
                                 . " 1_studies.Citation"
@@ -155,7 +155,7 @@
             return $arrStudiesInfo;
         }
 
-        $arrStudies = getArrStudies();
+        $arrStudies = getArrStudiesInfo();
 
         //SORT BY LOCUS
         function sortByLocus($p1,$p2) {
