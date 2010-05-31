@@ -93,26 +93,11 @@
         <meta name="description" content="This is the home page of DIYgenomics" />
         <meta name="keywords" content="genomics, genome, personal genomes, personal genome, citizen science, science, technology, direct-to-consumer, consumer genomics, genomic testing, genetic testing, research" />
 
-        <script type="text/javascript" src="http://www.diygenomics.org/ms.js"> </script>
-
-        <!-- Favicon Information -->
+         <!-- Favicon Information -->
         <link rel="shortcut icon" type="image/x-icon" href="http://www.diygenomics.org/images/favicon.ico">
 
-        <!-- JQuery Tablesorter -->
-        <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
-        <script type="text/javascript" src="jquery.tablesorter.min.js"></script>
     </head>
     <body id="top" style="background-color: #FFFFFF;">
-
-        <script type="text/javascript">
-        <!-- hide from old browsers
-            //  Image and Title Information
-            displayHeader(); //call the displayHeader() function from ms.js
-
-            //  Menu Navigation Information
-            displayMenu(); //call the displayMenu() function from ms.js
-        // stop hiding -->
-        </script>
 
 
         <!--
@@ -121,24 +106,28 @@
         ===================================================================
         -->
 
-        <h3>Web app</h3>
-
 
         <?php
+
+			//Call PHP function to display page header and menus
+        	require('../header.php');
+
             // This starts up the database connection.  Actual authentication is done in a different file to keep the
             // authentication info out of the source repo.
             require('database_opener.php');
             $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
-            
+
             $arrConditions = getArrayConditions();                                  // This is an array of all the conditions that the user can look at.
             $CurrentCondition = $arrConditions[getCurrentConditionID() - 1][1];     // This is the name of the condition that the user is currently looking at.
         ?>
+        <br /><h3>Web app</h3>
         <div>
             <div style='float:left;width:70%;'>
                 <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
                 (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
                 (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
                 underlying research reference cited by the company is posted in the table below.
+                NOTE: This information is provided by non-medical professionals.
             </div>
             <div style='float:left;margin-left:20px;'>
                 <!-- DROPDOWN MENU -->
@@ -156,68 +145,16 @@
         <?php
             require('gen_data_variants_info.php');
             printVariantsInfo($CurrentCondition);
-        ?>
+	     ?>
     </div>
 
-	<script type="text/javascript">
-	<!-- hide from old browsers
+         <?php
+			//Call PHP functions
+			require('../glossary.php');
+    		require('../footer_site.php');
+    		require('footer_webapp.php');
+	     ?>
 
-	$(document).ready(function()
-	    {
-	        $("#myTable").tablesorter();
-	    }
-	);
-	// stop hiding -->
-	</script>
-
-
-	<script type="text/javascript">
-	<!-- hide from old browsers
-    $(document).ready(function()
-	    {
-	        $("#myTable").tablesorter( {sortList: [[0,0], [1,0]]} );
-	    }
-	);
-	// stop hiding -->
-	</script>
-
-
-	<script type="text/javascript">
-	<!-- hide from old browsers
-		displayFooter(); //call the displayFooter() function from ms.js
-	// stop hiding -->
-	</script>
-
-
-
-<!--
-===================================================================
-Glossary
-===================================================================
--->
-<br />
-<div style="margin-left: .5in; margin-right: 1in; clear: left; max-width:100em; font-size: 10pt;">
-<i>Glossary:</i><br />
-<a href="http://en.wikipedia.org/wiki/Locus_%28genetics%29">Locus</a> (plural loci):
-the specific location of a gene or DNA sequence on a chromosome, (e.g.; 8p21.1 is the p21.1 region on Chromosome 8).<br />
-
-<a href="http://en.wikipedia.org/wiki/Gene">Gene</a>: a series of variants at a locus that code for proteins or RNA chains.<br />
-
-Variant: the specific location with two <a href="http://en.wikipedia.org/wiki/Allele">alleles</a> (e.g.; 'CG')
-or genotype values. Companies may check different variants in the same gene and locus.<br />
-</div>
-
-
-<!--
-===================================================================
-Footer
-===================================================================
--->
-	<script type="text/javascript">
-	<!-- hide from old browsers
-		displayFooter(); //call the displayFooter() function from ms.js
-	// stop hiding -->
-	</script>
 
 </body>
 </html>
