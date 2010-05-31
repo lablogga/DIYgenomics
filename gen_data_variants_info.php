@@ -43,7 +43,7 @@
          *  }
          */
         function getMapDiseaseURLs() {
-            //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
+            // Query the disease / condition URLs from the database:
             $strQueryDiseaseURLs = "SELECT 4_entities.Entity, 6_map_entity_condition.URL"
                                         . " FROM 6_map_entity_condition JOIN 4_entities"
                                         . " WHERE Condition_index = " . getCurrentConditionID() . " AND 6_map_entity_condition.Entity_index = 4_entities.Primary"
@@ -51,7 +51,7 @@
             $resultQueryDiseaseURLs = mysql_query($strQueryDiseaseURLs)
                 or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
 
-            //READ QUERY 2 RESULTS INTO ARRAY
+            // Process the query results into the map / associative array:
             $mapDiseaseURLs = array();
             while ($arrDiseaseURL = mysql_fetch_array($resultQueryDiseaseURLs)) {
                 $mapDiseaseURLs[$arrDiseaseURL[0]] = $arrDiseaseURL[1];
