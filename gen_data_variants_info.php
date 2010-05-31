@@ -107,37 +107,55 @@
             return -1;
         }
 
-        function getArrStudies($arrRowsVariantsTableQuery) {
-            $arrStudies = array();
+        /**
+         *  This function queries the database for a list of studies on the currently selected health condition, and
+         *  returns this list in an array.
+         *
+         *  The array looks like this:
+         *
+         *  [
+         *      {
+         *          "pubmedid":     "17474819",
+         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
+         *          "citation":     "Coon KD et al.; A high-density whole-genome association study reveals that APOE is the major susceptibility gene for sporadic late-onset Alzheimer's disease; J ClinPsychiatry; 2007 Apr;68(4):613-8."
+         *      },
+         *      {
+         *          "pubmedid":     "9343467",
+         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/9343467",
+         *          "citation":     "Farrer LA et al.; Effects of age sex and ethnicity on the association between apolipoprotein E genotype and Alzheimer disease. A meta-analysis. APOE and Alzheimer Disease Meta Analysis Consortium; JAMA; 1997 Oct 22-29;278(16):1349-56."
+         *      },
+         *      {
+         *          "pubmedid":     "19734902",
+         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
+         *          "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
+         *      }
+         *  ]
+         */
+        function getArrStudies() {
+            $strQueryStudiesInfo = "SELECT DISTINCT 1_studies.PMID,"
+                                . " 1_studies.PMID_URL,"
+                                . " 1_studies.Citation"
+                                . " FROM 1_studies"
+                                . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
+                                . " WHERE 8_map_variant_condition_entity_study.Condition_index = " . getCurrentConditionID()
+                                . " ORDER BY 1_studies.Citation";
 
-            foreach ($arrRowsVariantsTableQuery as $row) {
-                // each study is an array of pubmed, url, citation
-                if (getStudyIndex($arrStudies,$row[5]) == -1) {
-                    $study = array();
-                    $study["pubmedid"] = $row[5];
-                    $study["url"] = $row[6];
-                    $study["citation"] = $row[7];
-                    $arrStudies[] = $study;
-                }
+            $resultQueryStudiesInfo = mysql_query($strQueryStudiesInfo)
+                or die("<p>Unable to query the database for studies information.  Error code: " . mysql_connect_errno() . "</p>");
+
+            $arrStudiesInfo = array();
+            while ($arrStudyInfo = mysql_fetch_array($resultQueryStudiesInfo)) {
+                $mapStudy = array();
+                $mapStudy['pubmedid']   = $arrStudyInfo[0];
+                $mapStudy['url']        = $arrStudyInfo[1];
+                $mapStudy['citation']   = $arrStudyInfo[2];
+                $arrStudiesInfo[] = $mapStudy;
             }
 
-            //ASSIGN KEY TO STUDY URL
-            foreach ($arrStudies as $key => $study) {
-                $ix = $key+1;
-                $cit = $study["citiation"];
-                $cit_URL = $arrStudies[$ix-1]["url"];
-            }
-
-            function sortByCitation($r1,$r2) {
-                return strcmp($r1["citation"],$r2["citation"]);
-            }
-
-            usort($arrStudies, sortByCitation);
-
-            return $arrStudies;
+            return $arrStudiesInfo;
         }
 
-        $arrStudies = getArrStudies($arrRowsVariantsTableQuery);
+        $arrStudies = getArrStudies();
 
         //SORT BY LOCUS
         function sortByLocus($p1,$p2) {
