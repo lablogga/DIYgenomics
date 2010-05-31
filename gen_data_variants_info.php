@@ -107,31 +107,37 @@
             return -1;
         }
 
-        $arrStudies = array();
+        function getArrStudies($arrRowsVariantsTableQuery) {
+            $arrStudies = array();
 
-        foreach ($arrRowsVariantsTableQuery as $row) {
-            // each study is an array of pubmed, url, citation
-            if (getStudyIndex($arrStudies,$row[5]) == -1) {
-                $study = array();
-                $study["pubmedid"] = $row[5];
-                $study["url"] = $row[6];
-                $study["citation"] = $row[7];
-                $arrStudies[] = $study;
+            foreach ($arrRowsVariantsTableQuery as $row) {
+                // each study is an array of pubmed, url, citation
+                if (getStudyIndex($arrStudies,$row[5]) == -1) {
+                    $study = array();
+                    $study["pubmedid"] = $row[5];
+                    $study["url"] = $row[6];
+                    $study["citation"] = $row[7];
+                    $arrStudies[] = $study;
+                }
             }
+
+            //ASSIGN KEY TO STUDY URL
+            foreach ($arrStudies as $key => $study) {
+                $ix = $key+1;
+                $cit = $study["citiation"];
+                $cit_URL = $arrStudies[$ix-1]["url"];
+            }
+
+            function sortByCitation($r1,$r2) {
+                return strcmp($r1["citation"],$r2["citation"]);
+            }
+
+            usort($arrStudies, sortByCitation);
+
+            return $arrStudies;
         }
 
-        //ASSIGN KEY TO STUDY URL
-        foreach ($arrStudies as $key => $study) {
-            $ix = $key+1;
-            $cit = $study["citiation"];
-            $cit_URL = $arrStudies[$ix-1]["url"];
-        }
-
-        function sortByCitation($r1,$r2) {
-            return strcmp($r1["citation"],$r2["citation"]);
-        }
-
-        usort($arrStudies, sortByCitation);
+        $arrStudies = getArrStudies($arrRowsVariantsTableQuery);
 
         //SORT BY LOCUS
         function sortByLocus($p1,$p2) {
