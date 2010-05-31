@@ -30,6 +30,36 @@
      */
 
     function printVariantsInfo($CurrentCondition) {
+        /**
+         *  This function returns a map of disease URLs keyed by their providers.  The URLs are available to the user
+         *  by clicking on the provider name in the variants table header.
+         *
+         *  The map looks like this:
+         *
+         *  {
+         *      "deCODEme":     "http://demo.decodeme.com/health-watch/details/BCRS",
+         *      "Navigenics":   "http://www.navigenics.com/demo/for_scientists/d/breast_cancer/",
+         *      "23andMe":      "https://www.23andme.com/health/Breast-Cancer/"
+         *  }
+         */
+        function getMapDiseaseURLs() {
+            //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
+            $strQueryDiseaseURLs = "SELECT 4_entities.Entity, 6_map_entity_condition.URL"
+                                        . " FROM 6_map_entity_condition JOIN 4_entities"
+                                        . " WHERE Condition_index = " . getCurrentConditionID() . " AND 6_map_entity_condition.Entity_index = 4_entities.Primary"
+                                        . " ORDER BY 6_map_entity_condition.Entity_index";
+            $resultQueryDiseaseURLs = mysql_query($strQueryDiseaseURLs)
+                or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
+
+            //READ QUERY 2 RESULTS INTO ARRAY
+            $mapDiseaseURLs = array();
+            while ($arrDiseaseURL = mysql_fetch_array($resultQueryDiseaseURLs)) {
+                $mapDiseaseURLs[$arrDiseaseURL[0]] = $arrDiseaseURL[1];
+            }
+
+            return $mapDiseaseURLs;
+        }
+
         //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
         $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
                             . " 3_variants.Locus,"              // Column 1 'Locus'
@@ -106,36 +136,6 @@
           return $cmp1;
         }
         usort($Rows, sortByLocus);
-
-        /**
-         *  This function returns a map of disease URLs keyed by their providers.  The URLs are available to the user
-         *  by clicking on the provider name in the variants table header.
-         *
-         *  The map looks like this:
-         *
-         *  {
-         *      "deCODEme":     "http://demo.decodeme.com/health-watch/details/BCRS",
-         *      "Navigenics":   "http://www.navigenics.com/demo/for_scientists/d/breast_cancer/",
-         *      "23andMe":      "https://www.23andme.com/health/Breast-Cancer/"
-         *  }
-         */
-        function getMapDiseaseURLs() {
-            //QUERY THE DATABASE - QUERY 2 (CONDITION URLs)
-            $strQueryDiseaseURLs = "SELECT 4_entities.Entity, 6_map_entity_condition.URL"
-                                        . " FROM 6_map_entity_condition JOIN 4_entities"
-                                        . " WHERE Condition_index = " . getCurrentConditionID() . " AND 6_map_entity_condition.Entity_index = 4_entities.Primary"
-                                        . " ORDER BY 6_map_entity_condition.Entity_index";
-            $resultQueryDiseaseURLs = mysql_query($strQueryDiseaseURLs)
-                or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
-
-            //READ QUERY 2 RESULTS INTO ARRAY
-            $mapDiseaseURLs = array();
-            while ($arrDiseaseURL = mysql_fetch_array($resultQueryDiseaseURLs)) {
-                $mapDiseaseURLs[$arrDiseaseURL[0]] = $arrDiseaseURL[1];
-            }
-
-            return $mapDiseaseURLs;
-        }
         
         $mapDiseaseURLs = getMapDiseaseURLs();
 
