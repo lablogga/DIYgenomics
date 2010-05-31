@@ -32,6 +32,16 @@
     function printVariantsInfo($CurrentCondition) {
 
         function getArrRowsVariantsTableQuery() {
+
+            //SORT BY LOCUS
+            function sortByLocus($p1,$p2) {
+              $cmp1 = strnatcmp($p1[1],$p2[1]);
+              if ($cmp1 == '0') {
+                return strcmp($p1[3],$p2[3]);
+              }
+              return $cmp1;
+            }
+
             //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
             $SQLstring = "SELECT 8_map_variant_condition_entity_study.Variant_index,"
                                 . " 3_variants.Locus,"              // Column 1 'Locus'
@@ -62,6 +72,8 @@
             while ($Row = mysql_fetch_array($QueryResult)) {
                 $arrRowsVariantsTableQuery[] = $Row;
             }
+
+            usort($arrRowsVariantsTableQuery, sortByLocus);
 
             return $arrRowsVariantsTableQuery;
         }
@@ -156,18 +168,8 @@
 
         $arrStudies = getArrStudiesInfo();
 
-        //SORT BY LOCUS
-        function sortByLocus($p1,$p2) {
-          $cmp1 = strnatcmp($p1[1],$p2[1]);
-          if ($cmp1 == '0') {
-            return strcmp($p1[3],$p2[3]);
-          }
-          return $cmp1;
-        }
-
         $arrRowsVariantsTableQuery = getArrRowsVariantsTableQuery();
-        usort($arrRowsVariantsTableQuery, sortByLocus);
-        
+
         $mapDiseaseURLs = getMapDiseaseURLs();
 
         //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
