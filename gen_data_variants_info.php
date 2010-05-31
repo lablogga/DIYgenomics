@@ -166,10 +166,6 @@
             return -1;
         }
 
-        $arrStudies = getArrStudiesInfo();
-
-        $arrRowsVariantsTableQuery = getArrRowsVariantsTableQuery();
-
         $mapDiseaseURLs = getMapDiseaseURLs();
 
         //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
@@ -229,6 +225,9 @@
                 <?php
             }
 
+            $arrStudies = getArrStudiesInfo();
+
+            $arrRowsVariantsTableQuery = getArrRowsVariantsTableQuery();
 
             //READY MAIN QUERY DATA INTO ARRAY
             $oldlocus ="";
