@@ -44,11 +44,11 @@
 
             //QUERY THE DATABASE - QUERY 1 (MAIN QUERY)
             $SQLstring = "SELECT 3_variants.Locus,"                                     // Column 1 'Locus'
+                                . " 3_variants.Locus_URL,"                              // Column 1 'Locus' URL
                                 . " 3_variants.Gene,"                                   // Column 2 'Gene'
                                 . " 3_variants.Variant,"                                // Column 3 'Variant'
                                 . " 4_entities.Primary,"                                // Entity ID
                                 . " 1_studies.PMID,"                                    // Research study ID
-                                . " 3_variants.Locus_URL,"                              // Column 1 'Locus' URL
                                 . " 3_variants.Gene_URL,"                               // Column 2 'Gene' URL
                                 . " 3_variants.Variant_URL,"                            // Column 3 'Variant' URL
                                 . " 3_variants.dbSNP,"                                  // Column 7 'dbSNP'
@@ -68,11 +68,11 @@
 
             while ($Row = mysql_fetch_array($QueryResult)) {
                 $Row['locus']       = $Row[0];
-                $Row['gene']        = $Row[1];
-                $Row['variant']     = $Row[2];
-                $Row['company']     = $Row[3];
-                $Row['pubmed']      = $Row[4];
-                $Row['locus_url']   = $Row[5];
+                $Row['locus_url']   = $Row[1];
+                $Row['gene']        = $Row[2];
+                $Row['variant']     = $Row[3];
+                $Row['company']     = $Row[4];
+                $Row['pubmed']      = $Row[5];
                 $Row['gene_url']    = $Row[6];
                 $Row['variant_url'] = $Row[7];
                 $Row['dbsnp']       = $Row[8];
