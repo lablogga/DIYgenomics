@@ -122,6 +122,8 @@
          *      variants:                           ["rs11136000", "rs429358", "rs7412"],
          *      variants_keyed: [
          *          {
+         *              "locus":                    "8p21.1",
+         *              "locus_url":                "http://www.ncbi.nlm.nih.gov/Omim/getmap.cgi?chromosome=8p21.1",
          *              "studies": [
          *                  "19734902": [
          *                      "entities": [
@@ -133,6 +135,8 @@
          *              "variant_url":              "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11136000"
          *          },
          *          {
+         *              "locus":                    "19q13.32",
+         *              "locus_url":                "http://www.ncbi.nlm.nih.gov/Omim/getmap.cgi?chromosome=19q13.32",
          *              "studies": [
          *                  "17474819": [
          *                      "entities": [
@@ -149,6 +153,8 @@
          *              "variant_url":              "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs429358"
          *          },
          *          {
+         *              "locus":                    "19q13.32",
+         *              "locus_url":                "http://www.ncbi.nlm.nih.gov/Omim/getmap.cgi?chromosome=19q13.32",
          *              "studies": [
          *                  "17474819": [
          *                      "entities": [
@@ -173,6 +179,8 @@
                                 . " 1_studies.Citation,"
                                 . " 3_variants.Variant,"
                                 . " 3_variants.Variant_URL,"
+                                . " 3_variants.Locus,"
+                                . " 3_variants.Locus_URL,"
                                 . " 4_entities.Entity"
                                 . " FROM 1_studies"
                                 . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
@@ -198,7 +206,9 @@
                 $field_citation     = $arrStudyInfo[2];
                 $field_variant      = $arrStudyInfo[3];
                 $field_variant_url  = $arrStudyInfo[4];
-                $field_entity       = $arrStudyInfo[5];
+                $field_locus        = $arrStudyInfo[5];
+                $field_locus_url    = $arrStudyInfo[6];
+                $field_entity       = $arrStudyInfo[7];
 
                 if (!$mapDataCurrentCondition['entities_keyed'][$field_entity]) {
                     $mapDataCurrentCondition['entities_keyed'][$field_entity] = array(
@@ -216,6 +226,8 @@
 
                 if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]) {
                     $mapDataCurrentCondition['variants_keyed'][$field_variant] = array(
+                                                                                    'locus'         => $field_locus,
+                                                                                    'locus_url'     => $field_locus_url,
                                                                                     'studies'       => array(),
                                                                                     'variant'       => $field_variant,
                                                                                     'variant_url'   => $field_variant_url);
