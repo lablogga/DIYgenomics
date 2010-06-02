@@ -123,15 +123,13 @@
             $resultQueryStudiesInfo = mysql_query($strQueryStudiesInfo)
                 or die("<p>Unable to query the database for studies information.  Error code: " . mysql_connect_errno() . "</p>");
 
-            $mapDataCurrentCondition = array();
-            $mapDataCurrentCondition['studies'] = array();
+            $mapDataCurrentCondition = array('studies' => array());
 
             while ($arrStudyInfo = mysql_fetch_array($resultQueryStudiesInfo)) {
-                $mapStudy = array();
-                $mapStudy['pubmedid']   = $arrStudyInfo[0];
-                $mapStudy['url']        = $arrStudyInfo[1];
-                $mapStudy['citation']   = $arrStudyInfo[2];
-                $mapDataCurrentCondition['studies'][] = $mapStudy;
+                $mapDataCurrentCondition['studies'][] = array(
+                                                            'pubmedid'  => $arrStudyInfo[0],
+                                                            'url'       => $arrStudyInfo[1],
+                                                            'citation'  => $arrStudyInfo[2]);
             }
 
             return $mapDataCurrentCondition;
