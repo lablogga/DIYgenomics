@@ -124,7 +124,9 @@
          *          {
          *              "studies": [
          *                  "19734902": [
-         *                      "entity":   "deCODEme"
+         *                      "entities": [
+         *                          "deCODEme":     true
+         *                      ]
          *                  ]
          *              ],
          *              "variant":          "rs11136000",
@@ -133,10 +135,14 @@
          *          {
          *              "studies": [
          *                  "17474819": [
-         *                      "entity":   "Navigenics"
+         *                      "entities": [
+         *                          "Navigenics":   true
+         *                      ]
          *                  ],
          *                  "9343467": [
-         *                      "entity":   "deCODEme"
+         *                      "entities": [
+         *                          "deCODEme":     true
+         *                      ]
          *                  ]
          *              ],
          *              "variant":          "rs429358",
@@ -145,10 +151,14 @@
          *          {
          *              "studies": [
          *                  "17474819": [
-         *                      "entity":   "Navigenics"
+         *                      "entities": [
+         *                          "Navigenics":   true
+         *                      ]
          *                  ],
          *                  "9343467": [
-         *                      "entity":   "deCODEme"
+         *                      "entities": [
+         *                          "deCODEme":     true
+         *                      ]
          *                  ]
          *              ],
          *              "variant":          "rs7412",
@@ -220,8 +230,7 @@
 
                 if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]['studies'][$field_pubmedid]['entities'][$field_entity]) {
                     $mapDataCurrentCondition['variants_keyed'][$field_variant]['studies'][$field_pubmedid]['entities'][$field_entity]
-                                                                                = array(
-                                                                                    'entity'        => $field_entity);
+                                                                                = true;
                 }
             }
 
