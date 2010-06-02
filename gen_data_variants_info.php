@@ -125,15 +125,33 @@
          *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
          *              "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
          *          }
+         *      ],
+         *      variants: ["rs11136000", "rs429358", "rs7412"],
+         *      variants_keyed: [
+         *          {
+         *              "variant":      "rs11136000",
+         *              "variant_url":  "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11136000"
+         *          },
+         *          {
+         *              "variant":      "rs429358",
+         *              "variant_url":  "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs429358"
+         *          },
+         *          {
+         *              "variant":      "rs7412",
+         *              "variant_url":  "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs7412"
+         *          }
          *      ]
          *  }
          */
         function getDataCurrentCondition() {
-            $strQueryStudiesInfo = "SELECT DISTINCT 1_studies.PMID,"
+            $strQueryStudiesInfo = "SELECT 1_studies.PMID,"
                                 . " 1_studies.PMID_URL,"
-                                . " 1_studies.Citation"
+                                . " 1_studies.Citation,"
+                                . " 3_variants.Variant,"
+                                . " 3_variants.Variant_URL"
                                 . " FROM 1_studies"
                                 . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
+                                . " JOIN 3_variants ON 3_variants.Primary = 8_map_variant_condition_entity_study.Variant_index"
                                 . " WHERE 8_map_variant_condition_entity_study.Condition_index = " . getCurrentConditionID()
                                 . " ORDER BY 1_studies.Citation";
 
@@ -142,19 +160,32 @@
 
             $mapDataCurrentCondition = array(
                                             'studies'           => array(),
-                                            'studies_keyed'     => array());
+                                            'studies_keyed'     => array(),
+                                            'variants'          => array(),
+                                            'variants_keyed'    => array());
 
             while ($arrStudyInfo = mysql_fetch_array($resultQueryStudiesInfo)) {
-                $field_pubmedid = $arrStudyInfo[0];
+                $field_pubmedid     = $arrStudyInfo[0];
+                $field_url          = $arrStudyInfo[1];
+                $field_citation     = $arrStudyInfo[2];
+                $field_variant      = $arrStudyInfo[3];
+                $field_variant_url  = $arrStudyInfo[4];
 
                 if (!$mapDataCurrentCondition['studies_keyed'][$field_pubmedid]) {
                     $mapStudy = array(
                                     'pubmedid'  => $field_pubmedid,
-                                    'url'       => $arrStudyInfo[1],
-                                    'citation'  => $arrStudyInfo[2]);
+                                    'url'       => $field_url,
+                                    'citation'  => $field_citation);
 
                     $mapDataCurrentCondition['studies_keyed'][$field_pubmedid] = $mapStudy;
                     $mapDataCurrentCondition['studies'][] = $mapStudy;
+                }
+
+                if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]) {
+                    $mapDataCurrentCondition['variants_keyed'][$field_variant] = array(
+                                                                                    'variant'       => $field_variant,
+                                                                                    'variant_url'   => $field_variant_url);
+                    $mapDataCurrentCondition['variants'][] = $field_variant;
                 }
             }
 
