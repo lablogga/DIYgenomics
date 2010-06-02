@@ -92,6 +92,15 @@
          *  The data structure looks like this:
          *
          *  {
+         *      entities:               ["Navigenics", "deCODEme"],
+         *      entities_keyed: [
+         *          "Navigenics": {
+         *              "entity":       "Navigenics"
+         *          },
+         *          "deCODEme": {
+         *              "entity":       "deCODEme"
+         *          }
+         *      ],
          *      studies:                ["17474819", "9343467", "19734902"],
          *      studies_keyed: [
          *          "17474819": {
@@ -113,14 +122,35 @@
          *      variants:               ["rs11136000", "rs429358", "rs7412"],
          *      variants_keyed: [
          *          {
+         *              "studies": [
+         *                  "19734902": [
+         *                      "entity":   "deCODEme"
+         *                  ]
+         *              ],
          *              "variant":      "rs11136000",
          *              "variant_url":  "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11136000"
          *          },
          *          {
+         *              "studies": [
+         *                  "17474819": [
+         *                      "entity":   "Navigenics"
+         *                  ],
+         *                  "9343467": [
+         *                      "entity":   "deCODEme"
+         *                  ]
+         *              ],
          *              "variant":      "rs429358",
          *              "variant_url":  "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs429358"
          *          },
          *          {
+         *              "studies": [
+         *                  "17474819": [
+         *                      "entity":   "Navigenics"
+         *                  ],
+         *                  "9343467": [
+         *                      "entity":   "deCODEme"
+         *                  ]
+         *              ],
          *              "variant":      "rs7412",
          *              "variant_url":  "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs7412"
          *          }
@@ -132,10 +162,12 @@
                                 . " 1_studies.PMID_URL,"
                                 . " 1_studies.Citation,"
                                 . " 3_variants.Variant,"
-                                . " 3_variants.Variant_URL"
+                                . " 3_variants.Variant_URL,"
+                                . " 4_entities.Entity"
                                 . " FROM 1_studies"
                                 . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
                                 . " JOIN 3_variants ON 3_variants.Primary = 8_map_variant_condition_entity_study.Variant_index"
+                                . " JOIN 4_entities ON 4_entities.Primary = 8_map_variant_condition_entity_study.Entity_index"
                                 . " WHERE 8_map_variant_condition_entity_study.Condition_index = " . getCurrentConditionID()
                                 . " ORDER BY 1_studies.Citation";
 
@@ -143,6 +175,8 @@
                 or die("<p>Unable to query the database for studies information.  Error code: " . mysql_connect_errno() . "</p>");
 
             $mapDataCurrentCondition = array(
+                                            'entities'          => array(),
+                                            'entities_keyed'    => array(),
                                             'studies'           => array(),
                                             'studies_keyed'     => array(),
                                             'variants'          => array(),
@@ -154,6 +188,13 @@
                 $field_citation     = $arrStudyInfo[2];
                 $field_variant      = $arrStudyInfo[3];
                 $field_variant_url  = $arrStudyInfo[4];
+                $field_entity       = $arrStudyInfo[5];
+
+                if (!$mapDataCurrentCondition['entities_keyed'][$field_entity]) {
+                    $mapDataCurrentCondition['entities_keyed'][$field_entity] = array(
+                                                                                    'entity'        => $field_entity);
+                    $mapDataCurrentCondition['entities'][] = $field_entity;
+                }
 
                 if (!$mapDataCurrentCondition['studies_keyed'][$field_pubmedid]) {
                     $mapDataCurrentCondition['studies_keyed'][$field_pubmedid] = array(
@@ -165,9 +206,22 @@
 
                 if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]) {
                     $mapDataCurrentCondition['variants_keyed'][$field_variant] = array(
+                                                                                    'studies'       => array(),
                                                                                     'variant'       => $field_variant,
                                                                                     'variant_url'   => $field_variant_url);
                     $mapDataCurrentCondition['variants'][] = $field_variant;
+                }
+
+                if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]['studies'][$field_pubmedid]) {
+                    $mapDataCurrentCondition['variants_keyed'][$field_variant]['studies'][$field_pubmedid]
+                                                                                = array(
+                                                                                    'entities'      => array());
+                }
+
+                if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]['studies'][$field_pubmedid]['entities'][$field_entity]) {
+                    $mapDataCurrentCondition['variants_keyed'][$field_variant]['studies'][$field_pubmedid]['entities'][$field_entity]
+                                                                                = array(
+                                                                                    'entity'        => $field_entity);
                 }
             }
 
