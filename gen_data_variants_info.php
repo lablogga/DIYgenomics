@@ -86,30 +86,32 @@
         }
 
         /**
-         *  This function queries the database for a list of studies on the currently selected health condition, and
-         *  returns this list in an array.
+         *  This function queries the database for data associated with the currently selected health condition, and
+         *  returns this data in a hierarchial data structure.
          *
-         *  The array looks like this:
+         *  The data structure looks like this:
          *
-         *  [
-         *      {
-         *          "pubmedid":     "17474819",
-         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
-         *          "citation":     "Coon KD et al.; A high-density whole-genome association study reveals that APOE is the major susceptibility gene for sporadic late-onset Alzheimer's disease; J ClinPsychiatry; 2007 Apr;68(4):613-8."
-         *      },
-         *      {
-         *          "pubmedid":     "9343467",
-         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/9343467",
-         *          "citation":     "Farrer LA et al.; Effects of age sex and ethnicity on the association between apolipoprotein E genotype and Alzheimer disease. A meta-analysis. APOE and Alzheimer Disease Meta Analysis Consortium; JAMA; 1997 Oct 22-29;278(16):1349-56."
-         *      },
-         *      {
-         *          "pubmedid":     "19734902",
-         *          "url":          "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
-         *          "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
-         *      }
-         *  ]
+         *  {
+         *      studies: [
+         *          {
+         *              "pubmedid":     "17474819",
+         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
+         *              "citation":     "Coon KD et al.; A high-density whole-genome association study reveals that APOE is the major susceptibility gene for sporadic late-onset Alzheimer's disease; J ClinPsychiatry; 2007 Apr;68(4):613-8."
+         *          },
+         *          {
+         *              "pubmedid":     "9343467",
+         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/9343467",
+         *              "citation":     "Farrer LA et al.; Effects of age sex and ethnicity on the association between apolipoprotein E genotype and Alzheimer disease. A meta-analysis. APOE and Alzheimer Disease Meta Analysis Consortium; JAMA; 1997 Oct 22-29;278(16):1349-56."
+         *          },
+         *          {
+         *              "pubmedid":     "19734902",
+         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
+         *              "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
+         *          }
+         *      ]
+         *  }
          */
-        function getArrStudiesInfo() {
+        function getDataCurrentCondition() {
             $strQueryStudiesInfo = "SELECT DISTINCT 1_studies.PMID,"
                                 . " 1_studies.PMID_URL,"
                                 . " 1_studies.Citation"
@@ -121,16 +123,18 @@
             $resultQueryStudiesInfo = mysql_query($strQueryStudiesInfo)
                 or die("<p>Unable to query the database for studies information.  Error code: " . mysql_connect_errno() . "</p>");
 
-            $arrStudiesInfo = array();
+            $mapDataCurrentCondition = array();
+            $mapDataCurrentCondition['studies'] = array();
+
             while ($arrStudyInfo = mysql_fetch_array($resultQueryStudiesInfo)) {
                 $mapStudy = array();
                 $mapStudy['pubmedid']   = $arrStudyInfo[0];
                 $mapStudy['url']        = $arrStudyInfo[1];
                 $mapStudy['citation']   = $arrStudyInfo[2];
-                $arrStudiesInfo[] = $mapStudy;
+                $mapDataCurrentCondition['studies'][] = $mapStudy;
             }
 
-            return $arrStudiesInfo;
+            return $mapDataCurrentCondition;
         }
 
         /**
@@ -232,7 +236,7 @@
                 <?php
             }
 
-            $arrStudies = getArrStudiesInfo();
+            $mapDataCurrentCondition = getDataCurrentCondition();
 
             $arrRowsVariantsTableQuery = getArrRowsVariantsTableQuery();
 
@@ -255,7 +259,7 @@
                 if (($locus != $oldlocus) || ($variant != $oldvariant)) {
                     if ($first != 1) {
                         // print the printrow data
-                        printRow($Printrow,$arrStudies);
+                        printRow($Printrow,$mapDataCurrentCondition['studies']);
                     } else {
                         $first = 0;
                     }
@@ -284,10 +288,10 @@
                 } else if ($company == 3) {
                     $studylist = &$Printrow["comp3"];
                 }
-                $studylist[] = getStudyIndex($arrStudies,$pubmed);
+                $studylist[] = getStudyIndex($mapDataCurrentCondition['studies'],$pubmed);
 
             }
-            printRow($Printrow,$arrStudies);
+            printRow($Printrow,$mapDataCurrentCondition['studies']);
         ?>
     </table>
 
@@ -295,7 +299,7 @@
 
     <ol>
         <?php
-            foreach ($arrStudies as $key => $study) {
+            foreach ($mapDataCurrentCondition['studies'] as $key => $study) {
                 $cit = $study["citation"];
                 $citurl = $study["url"];
                 ?>
