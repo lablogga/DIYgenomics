@@ -234,6 +234,23 @@
                 }
             }
 
+            // Query the disease / condition URLs from the database:
+            $strQueryDiseaseURLs = "SELECT 4_entities.Entity, 6_map_entity_condition.URL"
+                                        . " FROM 6_map_entity_condition JOIN 4_entities"
+                                        . " WHERE Condition_index = " . getCurrentConditionID() . " AND 6_map_entity_condition.Entity_index = 4_entities.Primary";
+            $resultQueryDiseaseURLs = mysql_query($strQueryDiseaseURLs)
+                or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
+
+            // Process the query results into the current condition data:
+            while ($arrDiseaseURL = mysql_fetch_array($resultQueryDiseaseURLs)) {
+                $field_entity           = $arrDiseaseURL[0];
+                $field_entity_cond_url  = $arrDiseaseURL[1];
+
+                if ($mapDataCurrentCondition['entities_keyed'][$field_entity]) {
+                    $mapDataCurrentCondition['entities_keyed'][$field_entity]['cond_url'] = field_entity_cond_url;
+                }
+            }
+
             return $mapDataCurrentCondition;
         }
 
