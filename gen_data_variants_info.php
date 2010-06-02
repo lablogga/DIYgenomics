@@ -108,6 +108,23 @@
          *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
          *              "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
          *          }
+         *      ],
+         *      studies_keyed: [
+         *          "17474819": {
+         *              "pubmedid":     "17474819",
+         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
+         *              "citation":     "Coon KD et al.; A high-density whole-genome association study reveals that APOE is the major susceptibility gene for sporadic late-onset Alzheimer's disease; J ClinPsychiatry; 2007 Apr;68(4):613-8."
+         *          },
+         *          "9343467": {
+         *              "pubmedid":     "9343467",
+         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/9343467",
+         *              "citation":     "Farrer LA et al.; Effects of age sex and ethnicity on the association between apolipoprotein E genotype and Alzheimer disease. A meta-analysis. APOE and Alzheimer Disease Meta Analysis Consortium; JAMA; 1997 Oct 22-29;278(16):1349-56."
+         *          },
+         *          "19734902": {
+         *              "pubmedid":     "19734902",
+         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
+         *              "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
+         *          }
          *      ]
          *  }
          */
@@ -123,13 +140,22 @@
             $resultQueryStudiesInfo = mysql_query($strQueryStudiesInfo)
                 or die("<p>Unable to query the database for studies information.  Error code: " . mysql_connect_errno() . "</p>");
 
-            $mapDataCurrentCondition = array('studies' => array());
+            $mapDataCurrentCondition = array(
+                                            'studies'           => array(),
+                                            'studies_keyed'     => array());
 
             while ($arrStudyInfo = mysql_fetch_array($resultQueryStudiesInfo)) {
-                $mapDataCurrentCondition['studies'][] = array(
-                                                            'pubmedid'  => $arrStudyInfo[0],
-                                                            'url'       => $arrStudyInfo[1],
-                                                            'citation'  => $arrStudyInfo[2]);
+                $field_pubmedid = $arrStudyInfo[0];
+
+                if (!$mapDataCurrentCondition['studies_keyed'][$field_pubmedid]) {
+                    $mapStudy = array(
+                                    'pubmedid'  => $field_pubmedid,
+                                    'url'       => $arrStudyInfo[1],
+                                    'citation'  => $arrStudyInfo[2]);
+
+                    $mapDataCurrentCondition['studies_keyed'][$field_pubmedid] = $mapStudy;
+                    $mapDataCurrentCondition['studies'][] = $mapStudy;
+                }
             }
 
             return $mapDataCurrentCondition;
