@@ -92,34 +92,34 @@
          *  The data structure looks like this:
          *
          *  {
-         *      entities:               ["Navigenics", "deCODEme"],
+         *      entities:                   ["Navigenics", "deCODEme"],
          *      entities_keyed: [
          *          "Navigenics": {
-         *              "entity":       "Navigenics"
+         *              "entity":           "Navigenics"
          *          },
          *          "deCODEme": {
-         *              "entity":       "deCODEme"
+         *              "entity":           "deCODEme"
          *          }
          *      ],
-         *      studies:                ["17474819", "9343467", "19734902"],
+         *      studies:                    ["17474819", "9343467", "19734902"],
          *      studies_keyed: [
          *          "17474819": {
-         *              "pubmedid":     "17474819",
-         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
-         *              "citation":     "Coon KD et al.; A high-density whole-genome association study reveals that APOE is the major susceptibility gene for sporadic late-onset Alzheimer's disease; J ClinPsychiatry; 2007 Apr;68(4):613-8."
+         *              "pubmedid":         "17474819",
+         *              "url":              "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
+         *              "citation":         "Coon KD et al.; A high-density whole-genome association study reveals that APOE is the major susceptibility gene for sporadic late-onset Alzheimer's disease; J ClinPsychiatry; 2007 Apr;68(4):613-8."
          *          },
          *          "9343467": {
-         *              "pubmedid":     "9343467",
-         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/9343467",
-         *              "citation":     "Farrer LA et al.; Effects of age sex and ethnicity on the association between apolipoprotein E genotype and Alzheimer disease. A meta-analysis. APOE and Alzheimer Disease Meta Analysis Consortium; JAMA; 1997 Oct 22-29;278(16):1349-56."
+         *              "pubmedid":         "9343467",
+         *              "url":              "http://www.ncbi.nlm.nih.gov/pubmed/9343467",
+         *              "citation":         "Farrer LA et al.; Effects of age sex and ethnicity on the association between apolipoprotein E genotype and Alzheimer disease. A meta-analysis. APOE and Alzheimer Disease Meta Analysis Consortium; JAMA; 1997 Oct 22-29;278(16):1349-56."
          *          },
          *          "19734902": {
-         *              "pubmedid":     "19734902",
-         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
-         *              "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
+         *              "pubmedid":         "19734902",
+         *              "url":              "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
+         *              "citation":         "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
          *          }
          *      ],
-         *      variants:               ["rs11136000", "rs429358", "rs7412"],
+         *      variants:                   ["rs11136000", "rs429358", "rs7412"],
          *      variants_keyed: [
          *          {
          *              "studies": [
@@ -127,8 +127,8 @@
          *                      "entity":   "deCODEme"
          *                  ]
          *              ],
-         *              "variant":      "rs11136000",
-         *              "variant_url":  "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11136000"
+         *              "variant":          "rs11136000",
+         *              "variant_url":      "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11136000"
          *          },
          *          {
          *              "studies": [
@@ -139,8 +139,8 @@
          *                      "entity":   "deCODEme"
          *                  ]
          *              ],
-         *              "variant":      "rs429358",
-         *              "variant_url":  "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs429358"
+         *              "variant":          "rs429358",
+         *              "variant_url":      "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs429358"
          *          },
          *          {
          *              "studies": [
@@ -151,8 +151,8 @@
          *                      "entity":   "deCODEme"
          *                  ]
          *              ],
-         *              "variant":      "rs7412",
-         *              "variant_url":  "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs7412"
+         *              "variant":          "rs7412",
+         *              "variant_url":      "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs7412"
          *          }
          *      ]
          *  }
