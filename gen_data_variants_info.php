@@ -92,23 +92,7 @@
          *  The data structure looks like this:
          *
          *  {
-         *      studies: [
-         *          {
-         *              "pubmedid":     "17474819",
-         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
-         *              "citation":     "Coon KD et al.; A high-density whole-genome association study reveals that APOE is the major susceptibility gene for sporadic late-onset Alzheimer's disease; J ClinPsychiatry; 2007 Apr;68(4):613-8."
-         *          },
-         *          {
-         *              "pubmedid":     "9343467",
-         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/9343467",
-         *              "citation":     "Farrer LA et al.; Effects of age sex and ethnicity on the association between apolipoprotein E genotype and Alzheimer disease. A meta-analysis. APOE and Alzheimer Disease Meta Analysis Consortium; JAMA; 1997 Oct 22-29;278(16):1349-56."
-         *          },
-         *          {
-         *              "pubmedid":     "19734902",
-         *              "url":          "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
-         *              "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
-         *          }
-         *      ],
+         *      studies:                ["17474819", "9343467", "19734902"],
          *      studies_keyed: [
          *          "17474819": {
          *              "pubmedid":     "17474819",
@@ -126,7 +110,7 @@
          *              "citation":     "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
          *          }
          *      ],
-         *      variants: ["rs11136000", "rs429358", "rs7412"],
+         *      variants:               ["rs11136000", "rs429358", "rs7412"],
          *      variants_keyed: [
          *          {
          *              "variant":      "rs11136000",
@@ -172,13 +156,11 @@
                 $field_variant_url  = $arrStudyInfo[4];
 
                 if (!$mapDataCurrentCondition['studies_keyed'][$field_pubmedid]) {
-                    $mapStudy = array(
-                                    'pubmedid'  => $field_pubmedid,
-                                    'url'       => $field_url,
-                                    'citation'  => $field_citation);
-
-                    $mapDataCurrentCondition['studies_keyed'][$field_pubmedid] = $mapStudy;
-                    $mapDataCurrentCondition['studies'][] = $mapStudy;
+                    $mapDataCurrentCondition['studies_keyed'][$field_pubmedid] = array(
+                                                                                    'pubmedid'      => $field_pubmedid,
+                                                                                    'url'           => $field_url,
+                                                                                    'citation'      => $field_citation);
+                    $mapDataCurrentCondition['studies'][] = $field_pubmedid;
                 }
 
                 if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]) {
@@ -354,7 +336,8 @@
 
     <ol>
         <?php
-            foreach ($mapDataCurrentCondition['studies'] as $key => $study) {
+            foreach ($mapDataCurrentCondition['studies'] as $key => $field_pubmedid) {
+                $study = $mapDataCurrentCondition['studies_keyed'][$field_pubmedid];
                 $cit = $study["citation"];
                 $citurl = $study["url"];
                 ?>
