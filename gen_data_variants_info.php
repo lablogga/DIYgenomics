@@ -95,10 +95,12 @@
          *      entities:                           ["Navigenics", "deCODEme"],
          *      entities_keyed: {
          *          "Navigenics": {
-         *              "entity":                   "Navigenics"
+         *              "entity":                   "Navigenics",
+         *              "entity_cond_url":          "http://www.navigenics.com/demo/for_scientists/d/alzheimers_disease/"
          *          },
          *          "deCODEme": {
-         *              "entity":                   "deCODEme"
+         *              "entity":                   "deCODEme",
+         *              "entity_cond_url":          "http://demo.decodeme.com/health-watch/details/ALZ"
          *          }
          *      },
          *      studies:                            ["17474819", "9343467", "19734902"],
@@ -271,7 +273,7 @@
                 $field_entity_cond_url  = $arrDiseaseURL[1];
 
                 if ($mapDataCurrentCondition['entities_keyed'][$field_entity]) {
-                    $mapDataCurrentCondition['entities_keyed'][$field_entity]['cond_url'] = field_entity_cond_url;
+                    $mapDataCurrentCondition['entities_keyed'][$field_entity]['entity_cond_url'] = field_entity_cond_url;
                 }
             }
 
