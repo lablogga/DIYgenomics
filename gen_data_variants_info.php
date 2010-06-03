@@ -93,16 +93,16 @@
          *
          *  {
          *      entities:                           ["Navigenics", "deCODEme"],
-         *      entities_keyed: [
+         *      entities_keyed: {
          *          "Navigenics": {
          *              "entity":                   "Navigenics"
          *          },
          *          "deCODEme": {
          *              "entity":                   "deCODEme"
          *          }
-         *      ],
+         *      },
          *      studies:                            ["17474819", "9343467", "19734902"],
-         *      studies_keyed: [
+         *      studies_keyed: {
          *          "17474819": {
          *              "pubmedid":                 "17474819",
          *              "url":                      "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
@@ -118,10 +118,10 @@
          *              "url":                      "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
          *              "citation":                 "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
          *          }
-         *      ],
+         *      },
          *      variants:                           ["rs11136000", "rs429358", "rs7412"],
-         *      variants_keyed: [
-         *          {
+         *      variants_keyed: {
+         *          "rs11136000": {
          *              "gene":                     "CLU",
          *              "gene_url":                 "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=search&term=CLU",
          *              "locus":                    "8p21.1",
@@ -136,7 +136,7 @@
          *              "variant":                  "rs11136000",
          *              "variant_url":              "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11136000"
          *          },
-         *          {
+         *          "rs429358": {
          *              "gene":                     "APOE",
          *              "gene_url":                 "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=search&term=APOE",
          *              "locus":                    "19q13.32",
@@ -156,7 +156,7 @@
          *              "variant":                  "rs429358",
          *              "variant_url":              "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs429358"
          *          },
-         *          {
+         *          "rs7412": {
          *              "gene":                     "APOE",
          *              "gene_url":                 "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=search&term=APOE",
          *              "locus":                    "19q13.32",
@@ -176,7 +176,7 @@
          *              "variant":                  "rs7412",
          *              "variant_url":              "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs7412"
          *          }
-         *      ]
+         *      }
          *  }
          */
         function getDataCurrentCondition() {
