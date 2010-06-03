@@ -273,7 +273,7 @@
                 $field_entity_cond_url  = $arrDiseaseURL[1];
 
                 if ($mapDataCurrentCondition['entities_keyed'][$field_entity]) {
-                    $mapDataCurrentCondition['entities_keyed'][$field_entity]['entity_cond_url'] = field_entity_cond_url;
+                    $mapDataCurrentCondition['entities_keyed'][$field_entity]['entity_cond_url'] = $field_entity_cond_url;
                 }
             }
 
@@ -281,33 +281,12 @@
         }
 
         /**
-         *  This function returns a map of disease URLs keyed by their providers.  The URLs are available to the user
-         *  by clicking on the provider column name in the variants table header.
-         *
-         *  The map looks like this:
-         *
-         *  {
-         *      "deCODEme":     "http://demo.decodeme.com/health-watch/details/BCRS",
-         *      "Navigenics":   "http://www.navigenics.com/demo/for_scientists/d/breast_cancer/",
-         *      "23andMe":      "https://www.23andme.com/health/Breast-Cancer/"
-         *  }
+         *  Returns the URL about the current condition provided by the entity specified.  The URLs are available to
+         *  the user by clicking on the provider column name in the variants table header.
          */
-        function getMapDiseaseURLs() {
-            // Query the disease / condition URLs from the database:
-            $strQueryDiseaseURLs = "SELECT 4_entities.Entity, 6_map_entity_condition.URL"
-                                        . " FROM 6_map_entity_condition JOIN 4_entities"
-                                        . " WHERE Condition_index = " . getCurrentConditionID() . " AND 6_map_entity_condition.Entity_index = 4_entities.Primary"
-                                        . " ORDER BY 6_map_entity_condition.Entity_index";
-            $resultQueryDiseaseURLs = mysql_query($strQueryDiseaseURLs)
-                or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
-
-            // Process the query results into the map / associative array:
-            $mapDiseaseURLs = array();
-            while ($arrDiseaseURL = mysql_fetch_array($resultQueryDiseaseURLs)) {
-                $mapDiseaseURLs[$arrDiseaseURL[0]] = $arrDiseaseURL[1];
-            }
-
-            return $mapDiseaseURLs;
+        function getEntityConditionURL($mapDataCurrentCondition, $strEntity) {
+            if (!$mapDataCurrentCondition["entities_keyed"][$strEntity]) return "";
+            return $mapDataCurrentCondition["entities_keyed"][$strEntity]["entity_cond_url"];
         }
 
         //FIRST LOOP TO COLLECT ALL STUDIES
@@ -320,7 +299,7 @@
             return -1;
         }
 
-        $mapDiseaseURLs = getMapDiseaseURLs();
+        $mapDataCurrentCondition = getDataCurrentCondition();
 
         //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
     ?>
@@ -330,9 +309,9 @@
             <th style='background:white;'>Locus</th>
             <th style='background:white;'>Gene</th>
             <th style='background:white;'>Variant</th>
-            <th style='background:white;'><a href='<?=$mapDiseaseURLs["deCODEme"]?>'>deCODEme</a></th>
-            <th style='background:white;'><a href='<?=$mapDiseaseURLs["Navigenics"]?>'>Navigenics</a></th>
-            <th style='background:white;'><a href='<?=$mapDiseaseURLs["23andMe"]?>'>23andMe</a></th>
+            <th style='background:white;'><a href='<?=getEntityConditionURL($mapDataCurrentCondition, "deCODEme")?>'>deCODEme</a></th>
+            <th style='background:white;'><a href='<?=getEntityConditionURL($mapDataCurrentCondition, "Navigenics")?>'>Navigenics</a></th>
+            <th style='background:white;'><a href='<?=getEntityConditionURL($mapDataCurrentCondition, "23andMe")?>'>23andMe</a></th>
             <th style='background:white;'><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
             <th style='background:white;'>Sample data</th>
         </tr>
@@ -378,8 +357,6 @@
                     </tr>
                 <?php
             }
-
-            $mapDataCurrentCondition = getDataCurrentCondition();
 
             $arrRowsVariantsTableQuery = getArrRowsVariantsTableQuery();
 
