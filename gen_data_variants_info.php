@@ -122,6 +122,8 @@
          *      variants:                           ["rs11136000", "rs429358", "rs7412"],
          *      variants_keyed: [
          *          {
+         *              "gene":                     "CLU",
+         *              "gene_url":                 "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=search&term=CLU",
          *              "locus":                    "8p21.1",
          *              "locus_url":                "http://www.ncbi.nlm.nih.gov/Omim/getmap.cgi?chromosome=8p21.1",
          *              "studies": [
@@ -135,6 +137,8 @@
          *              "variant_url":              "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11136000"
          *          },
          *          {
+         *              "gene":                     "APOE",
+         *              "gene_url":                 "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=search&term=APOE",
          *              "locus":                    "19q13.32",
          *              "locus_url":                "http://www.ncbi.nlm.nih.gov/Omim/getmap.cgi?chromosome=19q13.32",
          *              "studies": [
@@ -153,6 +157,8 @@
          *              "variant_url":              "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs429358"
          *          },
          *          {
+         *              "gene":                     "APOE",
+         *              "gene_url":                 "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=search&term=APOE",
          *              "locus":                    "19q13.32",
          *              "locus_url":                "http://www.ncbi.nlm.nih.gov/Omim/getmap.cgi?chromosome=19q13.32",
          *              "studies": [
@@ -181,6 +187,8 @@
                                 . " 3_variants.Variant_URL,"
                                 . " 3_variants.Locus,"
                                 . " 3_variants.Locus_URL,"
+                                . " 3_variants.Gene,"
+                                . " 3_variants.Gene_URL,"
                                 . " 4_entities.Entity"
                                 . " FROM 1_studies"
                                 . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
@@ -208,7 +216,9 @@
                 $field_variant_url  = $arrStudyInfo[4];
                 $field_locus        = $arrStudyInfo[5];
                 $field_locus_url    = $arrStudyInfo[6];
-                $field_entity       = $arrStudyInfo[7];
+                $field_gene         = $arrStudyInfo[7];
+                $field_gene_url     = $arrStudyInfo[8];
+                $field_entity       = $arrStudyInfo[9];
 
                 if (!$mapDataCurrentCondition['entities_keyed'][$field_entity]) {
                     $mapDataCurrentCondition['entities_keyed'][$field_entity] = array(
@@ -226,6 +236,8 @@
 
                 if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]) {
                     $mapDataCurrentCondition['variants_keyed'][$field_variant] = array(
+                                                                                    'gene'          => $field_gene,
+                                                                                    'gene_url'      => $field_gene_url,
                                                                                     'locus'         => $field_locus,
                                                                                     'locus_url'     => $field_locus_url,
                                                                                     'studies'       => array(),
