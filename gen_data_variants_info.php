@@ -280,15 +280,6 @@
             return $mapDataCurrentCondition;
         }
 
-        /**
-         *  Returns the URL about the current condition provided by the entity specified.  The URLs are available to
-         *  the user by clicking on the provider column name in the variants table header.
-         */
-        function getEntityConditionURL($mapDataCurrentCondition, $strEntity) {
-            if (!$mapDataCurrentCondition["entities_keyed"][$strEntity]) return "";
-            return $mapDataCurrentCondition["entities_keyed"][$strEntity]["entity_cond_url"];
-        }
-
         //FIRST LOOP TO COLLECT ALL STUDIES
         function getStudyIndex($studies, $pubmedid) {
             foreach ($studies as $key => $study) {
@@ -309,9 +300,9 @@
             <th style='background:white;'>Locus</th>
             <th style='background:white;'>Gene</th>
             <th style='background:white;'>Variant</th>
-            <th style='background:white;'><a href='<?=getEntityConditionURL($mapDataCurrentCondition, "deCODEme")?>'>deCODEme</a></th>
-            <th style='background:white;'><a href='<?=getEntityConditionURL($mapDataCurrentCondition, "Navigenics")?>'>Navigenics</a></th>
-            <th style='background:white;'><a href='<?=getEntityConditionURL($mapDataCurrentCondition, "23andMe")?>'>23andMe</a></th>
+            <th style='background:white;'><a href='<?=$mapDataCurrentCondition['entities_keyed']['deCODEme']['entity_cond_url']?>'>deCODEme</a></th>
+            <th style='background:white;'><a href='<?=$mapDataCurrentCondition['entities_keyed']['Navigenics']['entity_cond_url']?>'>Navigenics</a></th>
+            <th style='background:white;'><a href='<?=$mapDataCurrentCondition['entities_keyed']['23andMe']['entity_cond_url']?>'>23andMe</a></th>
             <th style='background:white;'><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
             <th style='background:white;'>Sample data</th>
         </tr>
