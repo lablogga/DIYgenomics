@@ -295,16 +295,16 @@
         //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
     ?>
     <h3>Variants reviewed for <?=$CurrentCondition?></h3>
-    <table id='myTable' width='80%' cellspacing='1' cellpadding='0' style='border:solid 1px #cccccc; margin-left: 1.4 in; background:#cccccc'>
+    <table id='myTable' width='80%' cellspacing='1' cellpadding='0' style='border:solid 1px #cccccc; margin-left: 1.4 in;'>
         <tr ALIGN='center'>
-            <th style='background:white;'>Locus</th>
-            <th style='background:white;'>Gene</th>
-            <th style='background:white;'>Variant</th>
-            <th style='background:white;'><a href='<?=$mapDataCurrentCondition['entities_keyed']['deCODEme']['entity_cond_url']?>'>deCODEme</a></th>
-            <th style='background:white;'><a href='<?=$mapDataCurrentCondition['entities_keyed']['Navigenics']['entity_cond_url']?>'>Navigenics</a></th>
-            <th style='background:white;'><a href='<?=$mapDataCurrentCondition['entities_keyed']['23andMe']['entity_cond_url']?>'>23andMe</a></th>
-            <th style='background:white;'><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
-            <th style='background:white;'>Sample data</th>
+            <th>Locus</th>
+            <th>Gene</th>
+            <th>Variant</th>
+            <th><a href='<?=$mapDataCurrentCondition['entities_keyed']['deCODEme']['entity_cond_url']?>'>deCODEme</a></th>
+            <th><a href='<?=$mapDataCurrentCondition['entities_keyed']['Navigenics']['entity_cond_url']?>'>Navigenics</a></th>
+            <th><a href='<?=$mapDataCurrentCondition['entities_keyed']['23andMe']['entity_cond_url']?>'>23andMe</a></th>
+            <th><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
+            <th>Sample data</th>
         </tr>
 
         <?php
@@ -312,9 +312,9 @@
             function printRow($row,$studies) {
                 ?>
                     <tr>
-                        <td align='center' style='background:white;'><a href='<?=$row['locus_url']?>'><?=$row['locus']?></a></td>
-                        <td align='center' style='background:white;'><a href='<?=$row['gene_url']?>'><?=$row['gene']?></a></td>
-                        <td align='center' style='background:white;'><a href='<?=$row['variant_url']?>'><?=$row['variant']?></a></td>
+                        <td align='center'><a href='<?=$row['locus_url']?>'><?=$row['locus']?></a></td>
+                        <td align='center'><a href='<?=$row['gene_url']?>'><?=$row['gene']?></a></td>
+                        <td align='center'><a href='<?=$row['variant_url']?>'><?=$row['variant']?></a></td>
                 <?php
                     $comps = array();
                     $comps[] = "comp1";
@@ -322,7 +322,7 @@
                     $comps[] = "comp3";
                     foreach ($comps as $comp) {   //deCodeme, Navigenics and 23andme fields
                         ?>
-                        <td align='center' style='background:white;'>
+                        <td align='center'>
                         <?php
                             $compdata = $row[$comp];
                             sort($compdata);
@@ -343,8 +343,8 @@
                     }
                     //PRINT DBSNP and 23andme EXAMPLE VALUES
                 ?>
-                        <td align='center' style='background:white;'><a href='<?=$row['variant_url']?>'><?=$row['dbsnp']?></a></td>
-                        <td align='center' style='background:white;'><?=$row['23andme']?></a></td>
+                        <td align='center'><a href='<?=$row['variant_url']?>'><?=$row['dbsnp']?></a></td>
+                        <td align='center'><?=$row['23andme']?></a></td>
                     </tr>
                 <?php
             }
