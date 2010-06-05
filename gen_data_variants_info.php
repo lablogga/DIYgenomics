@@ -338,7 +338,20 @@
                             </a>
                         </td>
                         <td align='center'>
-                            <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1']?><?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2']?>
+                            <?php
+                                $strColor1 = $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1']
+                                                ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']
+                                                ?   "green"
+                                                :   "red";
+
+                                $strColor2 = $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2']
+                                                ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']
+                                                ?   "green"
+                                                :   "red";
+
+                                echo "<span style='color:$strColor1;'>" . $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1'] . "</span>";
+                                echo "<span style='color:$strColor2;'>" . $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2'] . "</span>";
+                            ?>
                         </td>
                     </tr>
                 <?php
