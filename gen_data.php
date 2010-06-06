@@ -96,8 +96,13 @@
          <!-- Favicon Information -->
         <link rel="shortcut icon" type="image/x-icon" href="http://www.diygenomics.org/images/favicon.ico">
 
+        <style type='text/css'>
+            .DIYgenomics_health_app {
+                background-color:               #ffffff;
+            }
+        </style>
     </head>
-    <body id="top" style="background-color: #FFFFFF;">
+    <body id="top" class='DIYgenomics_health_app'>
 
 
         <!--
