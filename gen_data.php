@@ -90,7 +90,7 @@
 
         <title>PersonalGenomics Application </title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <meta name="description" content="This is the home page of DIYgenomics" />
+        <meta name="description" content="DIYgenomics Genome Health Risk Web Application" />
         <meta name="keywords" content="genomics, genome, personal genomes, personal genome, citizen science, science, technology, direct-to-consumer, consumer genomics, genomic testing, genetic testing, research" />
 
          <!-- Favicon Information -->
@@ -120,7 +120,8 @@
             $arrConditions = getArrayConditions();                                  // This is an array of all the conditions that the user can look at.
             $CurrentCondition = $arrConditions[getCurrentConditionID() - 1][1];     // This is the name of the condition that the user is currently looking at.
         ?>
-        <br /><h3>Web app</h3>
+        <br />
+        <h3>DIYgenomics Genome Health Risk Web Application</h3>
         <div>
             <div style='float:left;width:70%;'>
                 <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
