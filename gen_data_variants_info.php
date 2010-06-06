@@ -34,7 +34,7 @@
         /**
          *  Returns an array of conditions that the user can browse through.
          */
-        function getArrayConditions() {
+        function queryArrayConditions() {
             /*  QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
                     Returns a list like this:
                     1   Alzheimer's disease
@@ -325,7 +325,7 @@
             return $mapDataCurrentCondition;
         }
 
-        $arrConditions = getArrayConditions();                                  // This is an array of all the conditions that the user can look at.
+        $arrConditions = queryArrayConditions();                                // This is an array of all the conditions that the user can look at.
         $CurrentCondition = $arrConditions[getCurrentConditionID() - 1][1];     // This is the name of the condition that the user is currently looking at.
 
         $mapDataCurrentCondition = getDataCurrentCondition();
