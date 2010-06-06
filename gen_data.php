@@ -47,6 +47,11 @@
             .DIYgenomics_health_app {
                 background-color:               #ffffff;
             }
+
+            .DIYgenomics_health_app .layout {
+                margin:                         auto;
+                width:                          85%;
+            }
         </style>
     </head>
     <body class='DIYgenomics_health_app'>
@@ -70,8 +75,8 @@
             $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
         ?>
         <br />
-        <h3>DIYgenomics Genome Health Risk Web Application</h3>
-        <div>
+        <div class='layout'>
+            <h3>DIYgenomics Genome Health Risk Web Application</h3>
             <div>
                 <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
                 (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
