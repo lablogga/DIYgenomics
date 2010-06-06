@@ -74,7 +74,7 @@
             require('database_opener.php');
             $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
         ?>
-        <br />
+
         <div class='layout'>
             <h3>DIYgenomics Genome Health Risk Web Application</h3>
             <div>
