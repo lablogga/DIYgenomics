@@ -29,7 +29,60 @@
      * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
      */
 
-    function printVariantsInfo($CurrentCondition) {
+    function printVariantsInfo() {
+
+        /**
+         *  Returns an array of conditions that the user can browse through.
+         */
+        function getArrayConditions() {
+            /*  QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
+                    Returns a list like this:
+                    1   Alzheimer's disease
+                    2   Atrial fibrillation
+                    3   Breast cancer
+                    4   Celiac disease
+                    5   Colorectal cancer
+                    6   Crohn's disease
+                    7   Diabetes (type 1)
+                    8   Diabetes (type 2)
+                    9   Glaucoma
+                    10  Heart attack
+                    11  Lung cancer
+                    12  Lupus
+                    13  Macular degeneration
+                    14  Multiple sclerosis
+                    15  Obesity
+                    16  Prostate cancer
+                    17  Psoriasis
+                    18  Restless legs syndrome
+                    19  Rheumatoid arthritis
+                    20  Ulcerative colitis
+            */
+
+            $QueryConditions = mysql_query("SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;")
+                                or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_connect_errno() . "</p>");
+
+
+            //READ QUERY 3 RESULTS INTO ARRAY
+            // conditions holds rows {condition_ix, condition_name}
+            $Conditions = array();
+            while ($CondRow = mysql_fetch_array($QueryConditions)) {
+                $Conditions[] = $CondRow;
+            }
+
+            return $Conditions;
+        }
+
+        /**
+         *  Returns the condition ID that the user is currently looking at.
+         */
+        function getCurrentConditionID() {
+            $COND = $_GET["condition"];
+            if ($COND == "") {
+              $COND = 1;
+            }
+            return $COND;
+        }
 
         /**
          *  This function queries the database for data associated with the currently selected health condition, and
@@ -272,11 +325,22 @@
             return $mapDataCurrentCondition;
         }
 
-        $mapDataCurrentCondition = getDataCurrentCondition();
+        $arrConditions = getArrayConditions();                                  // This is an array of all the conditions that the user can look at.
+        $CurrentCondition = $arrConditions[getCurrentConditionID() - 1][1];     // This is the name of the condition that the user is currently looking at.
 
+        $mapDataCurrentCondition = getDataCurrentCondition();
+    ?>
+    <div style='float:right;margin-left:20px;'>
+        <!-- DROPDOWN MENU -->
+        <?php
+            require('gen_data_conditions_list.php');
+            renderConditionsList($arrConditions);
+        ?>
+    </div>
+    <h3>Variants reviewed for <?=$CurrentCondition?></h3>
+    <?php
         //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
     ?>
-    <h3>Variants reviewed for <?=$CurrentCondition?></h3>
     <table id='myTable' width='80%' cellspacing='1' cellpadding='0' style='border:solid 1px #cccccc; margin-left: 1.4 in;'>
         <tr ALIGN='center'>
             <th>Locus</th>
