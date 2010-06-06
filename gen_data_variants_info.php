@@ -42,6 +42,28 @@
             return $COND;
         }
 
+        function renderConditionsList($Conditions) {
+            ?>
+                <form method='get'>
+                    <select name='condition' onchange='this.form.submit()'>
+
+                        <?php
+                            $conditionCurrent = getCurrentConditionID();
+                            foreach ($Conditions as $cond) {
+                                $selected = (($cond[0] == $conditionCurrent) ? "selected" : "");
+                        ?>
+
+                        <option value='<?=$cond[0]?>' <?=$selected?>><?=$cond[1]?></option>
+
+                        <?php
+                            }
+                        ?>
+
+                    </select>
+                </form>
+            <?php
+        }
+
         // Include the utility functions involving database queries:
         require ('gen_data_queries.php');
 
@@ -54,7 +76,6 @@
     <div style='float:right;margin-left:20px;'>
         <!-- DROPDOWN MENU -->
         <?php
-            require('gen_data_conditions_list.php');
             renderConditionsList($arrConditions);
         ?>
     </div>
