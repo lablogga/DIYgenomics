@@ -55,6 +55,7 @@
             
             .DIYgenomics_health_app .layout .variants_table {
                 border:                         1px solid #cccccc;
+                text-align:                     center;
                 width:                          100%;
             }
         </style>

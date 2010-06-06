@@ -342,7 +342,7 @@
         //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
     ?>
     <table class='variants_table'>
-        <tr ALIGN='center'>
+        <tr>
             <th>Locus</th>
             <th>Gene</th>
             <th>Variant</th>
@@ -361,17 +361,17 @@
             foreach ($mapDataCurrentCondition['variants'] as $strVariant) {
                 ?>
                     <tr>
-                        <td align='center'>
+                        <td>
                             <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['locus_url']?>'>
                                 <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['locus']?>
                             </a>
                         </td>
-                        <td align='center'>
+                        <td>
                             <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['gene_url']?>'>
                                 <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['gene']?>
                             </a>
                         </td>
-                        <td align='center'>
+                        <td>
                             <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant_url']?>'>
                                 <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant']?>
                             </a>
@@ -380,7 +380,7 @@
                         <?php
                             foreach ($arrEntityColumns as $strEntity) {
                                 ?>
-                                <td align='center'>
+                                <td>
                                     <?php
                                         $totalStudies = 0;
                                         foreach ($mapDataCurrentCondition['variants_keyed'][$strVariant]['studies'] as $strStudy) {
@@ -396,12 +396,12 @@
                             }
                         ?>
 
-                        <td align='center'>
+                        <td>
                             <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant_url']?>'>
                                 <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']?>/<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_risk']?>
                             </a>
                         </td>
-                        <td align='center'>
+                        <td>
                             <?php
                                 $strColor1 = $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1']
                                                 ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']
