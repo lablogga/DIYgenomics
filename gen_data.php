@@ -107,7 +107,7 @@
             <div style='font-size: 10pt;'>
                 <?php
                     require('gen_data_variants_info.php');
-                    printVariantsInfo($CurrentCondition);
+                    renderVariantsInfo($CurrentCondition);
                 ?>
             </div>
         </div>
