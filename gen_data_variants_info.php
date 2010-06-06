@@ -42,14 +42,14 @@
             return $COND;
         }
 
-        function renderConditionsList($Conditions) {
+        function renderConditionsList($arrConditions) {
             ?>
                 <form method='get'>
                     <select name='condition' onchange='this.form.submit()'>
 
                         <?php
                             $conditionCurrent = getCurrentConditionID();
-                            foreach ($Conditions as $cond) {
+                            foreach ($arrConditions as $cond) {
                                 $selected = (($cond[0] == $conditionCurrent) ? "selected" : "");
                         ?>
 
