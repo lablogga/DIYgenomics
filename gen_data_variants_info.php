@@ -198,7 +198,7 @@
          *      }
          *  }
          */
-        function queryDataCurrentCondition() {
+        function queryDataForCondition($idCondition) {
 
             $strQueryStudiesInfo = "SELECT 1_studies.PMID,"
                                 . " 1_studies.PMID_URL,"
@@ -218,7 +218,7 @@
                                 . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
                                 . " JOIN 3_variants ON 3_variants.Primary = 8_map_variant_condition_entity_study.Variant_index"
                                 . " JOIN 4_entities ON 4_entities.Primary = 8_map_variant_condition_entity_study.Entity_index"
-                                . " WHERE 8_map_variant_condition_entity_study.Condition_index = " . getCurrentConditionID()
+                                . " WHERE 8_map_variant_condition_entity_study.Condition_index = " . $idCondition
                                 . " ORDER BY 1_studies.Citation";
 
             $resultQueryStudiesInfo = mysql_query($strQueryStudiesInfo)
@@ -325,10 +325,11 @@
             return $mapDataCurrentCondition;
         }
 
+        $idCurrentCondition = getCurrentConditionID();
         $arrConditions = queryArrayConditions();                                // This is an array of all the conditions that the user can look at.
-        $CurrentCondition = $arrConditions[getCurrentConditionID() - 1][1];     // This is the name of the condition that the user is currently looking at.
+        $CurrentCondition = $arrConditions[$idCurrentCondition - 1][1];         // This is the name of the condition that the user is currently looking at.
 
-        $mapDataCurrentCondition = queryDataCurrentCondition();
+        $mapDataCurrentCondition = queryDataForCondition($idCurrentCondition);
     ?>
     <div style='float:right;margin-left:20px;'>
         <!-- DROPDOWN MENU -->
