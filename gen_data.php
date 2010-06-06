@@ -147,12 +147,11 @@
 
         <!-- SET FONT SIZE TO 10 pt -->
         <div style='font-size: 10pt;'>
-
-        <?php
-            require('gen_data_variants_info.php');
-            printVariantsInfo($CurrentCondition);
-	     ?>
-    </div>
+            <?php
+                require('gen_data_variants_info.php');
+                printVariantsInfo($CurrentCondition);
+            ?>
+        </div>
 
          <?php
 			//Call PHP functions
