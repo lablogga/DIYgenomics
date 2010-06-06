@@ -62,6 +62,10 @@
             .DIYgenomics_health_app .layout .variants_table tr th {
                 background-color:               #ffff77;
             }
+
+            .DIYgenomics_health_app .layout .variants_table tr.vtr_odd {
+                background-color:               #dddddd;
+            }
         </style>
     </head>
     <body class='DIYgenomics_health_app'>

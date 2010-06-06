@@ -358,9 +358,11 @@
             <th>Sample data</th>
         </tr>
         <?php
-            foreach ($mapDataCurrentCondition['variants'] as $strVariant) {
+            for ($i = 0; $i < count($mapDataCurrentCondition['variants']); $i++) {
+                $strVariant = $mapDataCurrentCondition['variants'][$i];
+                $strRowClass = $i % 2 == 0 ? 'vtr_even' : 'vtr_odd';
                 ?>
-                    <tr>
+                    <tr class='<?=$strRowClass?>'>
                         <td>
                             <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['locus_url']?>'>
                                 <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['locus']?>
