@@ -83,11 +83,15 @@
         <div class='layout'>
             <h3>DIYgenomics Genome Health Risk Web Application</h3>
             <div>
-                <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
-                (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
-                (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
-                underlying research reference cited by the company is posted in the table below.
-                NOTE: This information is provided by non-medical professionals.
+                <p>
+                    <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
+                    (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
+                    (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
+                    underlying research reference cited by the company is posted in the table below.
+                </p>
+                <p>
+                    NOTE: This information is provided by non-medical professionals.
+                </p>
             </div>
 
             <!-- SET FONT SIZE TO 10 pt -->
