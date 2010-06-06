@@ -31,17 +31,6 @@
 
     function renderVariantsInfo() {
 
-        /**
-         *  Returns the condition ID that the user is currently looking at.
-         */
-        function getCurrentConditionID() {
-            $COND = $_GET["condition"];
-            if ($COND == "") {
-              $COND = 1;
-            }
-            return $COND;
-        }
-
         function renderConditionsFormComboBox($arrConditions, $idCurrentCondition) {
             ?>
                 <form method='get'>

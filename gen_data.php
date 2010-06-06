@@ -40,6 +40,14 @@
         <meta name="description" content="DIYgenomics Genome Health Risk Web Application" />
         <meta name="keywords" content="genomics, genome, personal genomes, personal genome, citizen science, science, technology, direct-to-consumer, consumer genomics, genomic testing, genetic testing, research" />
 
+        <!--  The following includes the Dojo release 1.4.3 script from '/dojo-release-1.4.3/dojo/dojo.js'
+              and will access non-Dojo-specific modules from '/dojo/DIYgenomics/'. -->
+        <script
+            type='text/javascript'
+            src='/dojo-release-1.4.3/dojo/dojo.js'
+            djConfig="parseOnLoad: true, modulePaths:{'DIYgenomics':'/dojo/DIYgenomics/'}">
+        </script>
+
          <!-- Favicon Information -->
         <link rel="shortcut icon" type="image/x-icon" href="http://www.diygenomics.org/images/favicon.ico">
 
@@ -87,6 +95,17 @@
             // authentication info out of the source repo.
             require('database_opener.php');
             $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
+
+            /**
+             *  Returns the condition ID that the user is currently looking at.
+             */
+            function getCurrentConditionID() {
+                $COND = $_GET["condition"];
+                if ($COND == "") {
+                  $COND = 1;
+                }
+                return $COND;
+            }
         ?>
 
         <div class='layout'>
@@ -105,10 +124,16 @@
 
             <!-- SET FONT SIZE TO 10 pt -->
             <div style='font-size: 10pt;'>
+                <!-- The following generates the table info via PHP -->
                 <?php
                     require('gen_data_variants_info.php');
-                    renderVariantsInfo($CurrentCondition);
+                    renderVariantsInfo();
                 ?>
+                <!-- The following generates the table info via Dojo.  Ultimately it will be overlayed on top of the PHP generated info. -->
+                <script type='text/javascript'>
+                    dojo.require('DIYgenomics.gen_data.VariantsInfoWidget');
+                </script>
+                <div dojoType='DIYgenomics.gen_data.VariantsInfoWidget' id_condition='<?=getCurrentConditionID()?>'></div>
             </div>
         </div>
 
