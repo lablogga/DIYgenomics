@@ -198,7 +198,7 @@
          *      }
          *  }
          */
-        function getDataCurrentCondition() {
+        function queryDataCurrentCondition() {
 
             $strQueryStudiesInfo = "SELECT 1_studies.PMID,"
                                 . " 1_studies.PMID_URL,"
@@ -328,7 +328,7 @@
         $arrConditions = queryArrayConditions();                                // This is an array of all the conditions that the user can look at.
         $CurrentCondition = $arrConditions[getCurrentConditionID() - 1][1];     // This is the name of the condition that the user is currently looking at.
 
-        $mapDataCurrentCondition = getDataCurrentCondition();
+        $mapDataCurrentCondition = queryDataCurrentCondition();
     ?>
     <div style='float:right;margin-left:20px;'>
         <!-- DROPDOWN MENU -->
