@@ -42,7 +42,7 @@
             return $COND;
         }
 
-        function renderConditionsList($arrConditions, $idCurrentCondition) {
+        function renderConditionsFormComboBox($arrConditions, $idCurrentCondition) {
             ?>
                 <form method='get'>
                     <select name='condition' onchange='this.form.submit()'>
@@ -75,7 +75,7 @@
     <div style='float:right;margin-left:20px;'>
         <!-- DROPDOWN MENU -->
         <?php
-            renderConditionsList($arrConditions, $idCurrentCondition);
+            renderConditionsFormComboBox($arrConditions, $idCurrentCondition);
         ?>
     </div>
     <h3>Variants reviewed for <?=$CurrentCondition?></h3>
