@@ -49,7 +49,7 @@
             }
 
             .DIYgenomics_health_app .layout {
-                margin:                         auto;
+                margin:                         25px auto 25px;
                 width:                          85%;
             }
         </style>
