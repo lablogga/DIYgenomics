@@ -102,7 +102,7 @@
             }
         </style>
     </head>
-    <body id="top" class='DIYgenomics_health_app'>
+    <body class='DIYgenomics_health_app'>
 
 
         <!--
