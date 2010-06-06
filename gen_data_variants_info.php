@@ -341,7 +341,7 @@
     <?php
         //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
     ?>
-    <table style='border:solid 1px #cccccc;'>
+    <table style='border:1px solid #cccccc;'>
         <tr ALIGN='center'>
             <th>Locus</th>
             <th>Gene</th>
