@@ -341,7 +341,7 @@
     <?php
         //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
     ?>
-    <table class='variants_table'>
+    <table class='variants_table' cellpadding='0' cellspacing='0'>
         <tr>
             <th>Locus</th>
             <th>Gene</th>
