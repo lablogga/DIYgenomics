@@ -58,6 +58,10 @@
                 text-align:                     center;
                 width:                          100%;
             }
+
+            .DIYgenomics_health_app .layout .variants_table tr th {
+                background-color:               #ffff77;
+            }
         </style>
     </head>
     <body class='DIYgenomics_health_app'>
