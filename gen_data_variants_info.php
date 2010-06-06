@@ -42,15 +42,14 @@
             return $COND;
         }
 
-        function renderConditionsList($arrConditions) {
+        function renderConditionsList($arrConditions, $idCurrentCondition) {
             ?>
                 <form method='get'>
                     <select name='condition' onchange='this.form.submit()'>
 
                         <?php
-                            $conditionCurrent = getCurrentConditionID();
                             foreach ($arrConditions as $cond) {
-                                $selected = (($cond[0] == $conditionCurrent) ? "selected" : "");
+                                $selected = (($cond[0] == $idCurrentCondition) ? "selected" : "");
                         ?>
 
                         <option value='<?=$cond[0]?>' <?=$selected?>><?=$cond[1]?></option>
@@ -76,7 +75,7 @@
     <div style='float:right;margin-left:20px;'>
         <!-- DROPDOWN MENU -->
         <?php
-            renderConditionsList($arrConditions);
+            renderConditionsList($arrConditions, $idCurrentCondition);
         ?>
     </div>
     <h3>Variants reviewed for <?=$CurrentCondition?></h3>
