@@ -75,8 +75,8 @@
     }
 
     /**
-     *  This function queries the database for data associated with the currently selected health condition, and
-     *  returns this data in a hierarchial data structure.
+     *  This function queries the database for the data associated with the specified health condition id, and
+     *  returns that data in a hierarchial data structure.
      *
      *  The data structure looks like this:
      *
