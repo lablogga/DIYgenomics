@@ -341,7 +341,7 @@
     <?php
         //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
     ?>
-    <table id='myTable' width='80%' cellspacing='1' cellpadding='0' style='border:solid 1px #cccccc; margin-left: 1.4 in;'>
+    <table width='80%' cellspacing='1' cellpadding='0' style='border:solid 1px #cccccc; margin-left: 1.4 in;'>
         <tr ALIGN='center'>
             <th>Locus</th>
             <th>Gene</th>
