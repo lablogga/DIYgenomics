@@ -298,7 +298,7 @@
         // Query the disease / condition URLs from the database:
         $strQueryDiseaseURLs = "SELECT 4_entities.Entity, 6_map_entity_condition.URL"
                                     . " FROM 6_map_entity_condition JOIN 4_entities"
-                                    . " WHERE Condition_index = " . getCurrentConditionID() . " AND 6_map_entity_condition.Entity_index = 4_entities.Primary";
+                                    . " WHERE Condition_index = " . $idCondition . " AND 6_map_entity_condition.Entity_index = 4_entities.Primary";
         $resultQueryDiseaseURLs = mysql_query($strQueryDiseaseURLs)
             or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
 
@@ -313,5 +313,139 @@
         }
 
         return $mapDataCurrentCondition;
+    }
+
+    /**
+     *  Queries the database for the data containing all the information on all the conditions
+     *  and their associated variants and related studies, and returns that data in a hierarchial
+     *  data structure.
+     *
+     *  The data structure looks like this:
+     *
+     *  {
+     *      conditions:                         [
+     *                                              "Alzheimer's disease",
+     *                                              "Atrial fibrillation",
+     *                                              "Breast cancer",
+     *                                              "Celiac disease",
+     *                                              "Colorectal cancer",
+     *                                              "Crohn"s disease",
+     *                                              "Diabetes (type 1)",
+     *                                              "Diabetes (type 2)",
+     *                                              "Glaucoma",
+     *                                              "Heart attack",
+     *                                              "Lung cancer",
+     *                                              "Lupus",
+     *                                              "Macular degeneration",
+     *                                              "Multiple sclerosis",
+     *                                              "Obesity",
+     *                                              "Prostate cancer",
+     *                                              "Psoriasis",
+     *                                              "Restless legs syndrome",
+     *                                              "Rheumatoid arthritis",
+     *                                              "Ulcerative colitis"
+     *                                          ],
+     *      conditions_keyed: {
+     *          "Alzheimer's disease": {
+     *              id:                         1,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Atrial fibrillation": {
+     *              id:                         2,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Breast cancer": {
+     *              id:                         3,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Celiac disease": {
+     *              id:                         4,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Colorectal cancer": {
+     *              id:                         5,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Crohn"s disease": {
+     *              id:                         6,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Diabetes (type 1)": {
+     *              id:                         7,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Diabetes (type 2)": {
+     *              id:                         8,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Glaucoma": {
+     *              id:                         9,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Heart attack": {
+     *              id:                         10,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Lung cancer": {
+     *              id:                         11,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Lupus": {
+     *              id:                         12,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Macular degeneration": {
+     *              id:                         13,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Multiple sclerosis": {
+     *              id:                         14,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Obesity": {
+     *              id:                         15,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Prostate cancer": {
+     *              id:                         16,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Psoriasis": {
+     *              id:                         17,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Restless legs syndrome": {
+     *              id:                         18,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Rheumatoid arthritis": {
+     *              id:                         19,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          },
+     *          "Ulcerative colitis": {
+     *              id:                         20,
+     *              condition_data:             // data structure from queryDataForCondition(id)
+     *          }
+     *      }
+     *  }
+     */
+    function queryDataForConditionsAll() {
+        $arrConditions = queryArrayConditions();
+
+        $mapDataConditions = array(
+                                'conditions'        => array(),
+                                'conditions_keyed'  => array());
+
+        foreach ($arrConditions as $arrCondition) {
+            $idCondition = $arrCondition[0];
+            $strCondition = $arrCondition[1];
+
+            $mapDataConditions['conditions'][] = $strCondition;
+            $mapDataConditions['conditions_keyed'][$strCondition] = array(
+                                                                        'id'                => $idCondition,
+                                                                        'condition_data'    => queryDataForCondition($idCondition));
+        }
+
+        return $mapDataConditions;
     }
 ?>
