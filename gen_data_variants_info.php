@@ -57,7 +57,7 @@
 
         $idCurrentCondition = getCurrentConditionID();
         $arrConditions = queryArrayConditions();                                // This is an array of all the conditions that the user can look at.
-        $CurrentCondition = $arrConditions[$idCurrentCondition - 1][1];         // This is the name of the condition that the user is currently looking at.
+        $strCurrentCondition = $arrConditions[$idCurrentCondition - 1][1];      // This is the name of the condition that the user is currently looking at.
 
         $mapDataCurrentCondition = queryDataForCondition($idCurrentCondition);
     ?>
@@ -67,7 +67,7 @@
             renderConditionsFormComboBox($arrConditions, $idCurrentCondition);
         ?>
     </div>
-    <h3>Variants reviewed for <?=$CurrentCondition?></h3>
+    <h3>Variants reviewed for <?=$strCurrentCondition?></h3>
     <?php
         //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
     ?>
