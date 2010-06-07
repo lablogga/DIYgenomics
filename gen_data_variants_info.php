@@ -56,7 +56,7 @@
         require ('gen_data_queries.php');
 
         $arrConditions = queryArrayConditions();                                // This is an array of all the conditions that the user can look at.
-        $strCurrentCondition = $arrConditions[$idForCondition - 1][1];          // This is the name of the condition that the user is currently looking at.
+        $strCondition = $arrConditions[$idForCondition - 1][1];                 // This is the name of the condition that the user is currently looking at.
 
         $mapDataCurrentCondition = queryDataForCondition($idForCondition);
     ?>
@@ -68,7 +68,7 @@
                 renderConditionsFormComboBox($arrConditions, $idForCondition);
             ?>
         </div>
-        <h3>Variants reviewed for <?=$strCurrentCondition?></h3>
+        <h3>Variants reviewed for <?=$strCondition?></h3>
         <?php
             //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
         ?>
