@@ -60,116 +60,118 @@
 
         $mapDataCurrentCondition = queryDataForCondition($idForCondition);
     ?>
-    <div style='float:right;margin-left:20px;'>
-        <!-- DROPDOWN MENU -->
-        <?php
-            renderConditionsFormComboBox($arrConditions, $idForCondition);
-        ?>
-    </div>
-    <h3>Variants reviewed for <?=$strCurrentCondition?></h3>
-    <?php
-        //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
-    ?>
-    <table class='variants_table' cellpadding='0' cellspacing='0'>
-        <tr>
-            <th>Locus</th>
-            <th>Gene</th>
-            <th>Variant</th>
+    <div>
+        <div style='float:right;margin-left:20px;'>
+            <!-- DROPDOWN MENU -->
             <?php
-                $arrEntityColumns = array('deCODEme', 'Navigenics', '23andMe');
-                foreach ($arrEntityColumns as $strEntity) {
+                renderConditionsFormComboBox($arrConditions, $idForCondition);
+            ?>
+        </div>
+        <h3>Variants reviewed for <?=$strCurrentCondition?></h3>
+        <?php
+            //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
+        ?>
+        <table class='variants_table' cellpadding='0' cellspacing='0'>
+            <tr>
+                <th>Locus</th>
+                <th>Gene</th>
+                <th>Variant</th>
+                <?php
+                    $arrEntityColumns = array('deCODEme', 'Navigenics', '23andMe');
+                    foreach ($arrEntityColumns as $strEntity) {
+                        ?>
+                            <th><a href='<?=$mapDataCurrentCondition['entities_keyed'][$strEntity]['entity_cond_url']?>'><?=$strEntity?></a></th>
+                        <?php
+                    }
+                ?>
+                <th><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
+                <th>Sample data</th>
+            </tr>
+            <?php
+                for ($i = 0; $i < count($mapDataCurrentCondition['variants']); $i++) {
+                    $strVariant = $mapDataCurrentCondition['variants'][$i];
+                    $strRowClass = $i % 2 == 0 ? 'vtr_even' : 'vtr_odd';
                     ?>
-                        <th><a href='<?=$mapDataCurrentCondition['entities_keyed'][$strEntity]['entity_cond_url']?>'><?=$strEntity?></a></th>
+                        <tr class='<?=$strRowClass?>'>
+                            <td>
+                                <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['locus_url']?>'>
+                                    <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['locus']?>
+                                </a>
+                            </td>
+                            <td>
+                                <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['gene_url']?>'>
+                                    <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['gene']?>
+                                </a>
+                            </td>
+                            <td>
+                                <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant_url']?>'>
+                                    <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant']?>
+                                </a>
+                            </td>
+
+                            <?php
+                                foreach ($arrEntityColumns as $strEntity) {
+                                    ?>
+                                    <td>
+                                        <?php
+                                            $totalStudies = 0;
+                                            foreach ($mapDataCurrentCondition['variants_keyed'][$strVariant]['studies'] as $strStudy) {
+                                                if ($mapDataCurrentCondition['variants_keyed'][$strVariant]['studies_keyed'][$strStudy]['entities'][$strEntity]) {
+                                                    if ($totalStudies > 0) echo ",";
+                                                    ?><a href='<?=$mapDataCurrentCondition['studies_keyed'][$strStudy]['url']?>'><?=$mapDataCurrentCondition['studies_keyed'][$strStudy]['number']?></a><?php
+                                                    $totalStudies++;
+                                                }
+                                            }
+                                        ?>
+                                    </td>
+                                    <?php
+                                }
+                            ?>
+
+                            <td>
+                                <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant_url']?>'>
+                                    <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']?>/<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_risk']?>
+                                </a>
+                            </td>
+                            <td>
+                                <?php
+                                    $strColor1 = $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1']
+                                                    ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']
+                                                    ?   "green"
+                                                    :   "red";
+
+                                    $strColor2 = $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2']
+                                                    ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']
+                                                    ?   "green"
+                                                    :   "red";
+
+                                    echo "<span style='color:$strColor1;'>" . $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1'] . "</span>";
+                                    echo "<span style='color:$strColor2;'>" . $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2'] . "</span>";
+                                ?>
+                            </td>
+                        </tr>
                     <?php
                 }
             ?>
-            <th><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
-            <th>Sample data</th>
-        </tr>
-        <?php
-            for ($i = 0; $i < count($mapDataCurrentCondition['variants']); $i++) {
-                $strVariant = $mapDataCurrentCondition['variants'][$i];
-                $strRowClass = $i % 2 == 0 ? 'vtr_even' : 'vtr_odd';
-                ?>
-                    <tr class='<?=$strRowClass?>'>
-                        <td>
-                            <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['locus_url']?>'>
-                                <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['locus']?>
-                            </a>
-                        </td>
-                        <td>
-                            <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['gene_url']?>'>
-                                <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['gene']?>
-                            </a>
-                        </td>
-                        <td>
-                            <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant_url']?>'>
-                                <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant']?>
-                            </a>
-                        </td>
+        </table>
 
-                        <?php
-                            foreach ($arrEntityColumns as $strEntity) {
-                                ?>
-                                <td>
-                                    <?php
-                                        $totalStudies = 0;
-                                        foreach ($mapDataCurrentCondition['variants_keyed'][$strVariant]['studies'] as $strStudy) {
-                                            if ($mapDataCurrentCondition['variants_keyed'][$strVariant]['studies_keyed'][$strStudy]['entities'][$strEntity]) {
-                                                if ($totalStudies > 0) echo ",";
-                                                ?><a href='<?=$mapDataCurrentCondition['studies_keyed'][$strStudy]['url']?>'><?=$mapDataCurrentCondition['studies_keyed'][$strStudy]['number']?></a><?php
-                                                $totalStudies++;
-                                            }
-                                        }
-                                    ?>
-                                </td>
-                                <?php
-                            }
-                        ?>
+        <h4><i>Research references cited by consumer genomic companies:</i></h4>
 
-                        <td>
-                            <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant_url']?>'>
-                                <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']?>/<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_risk']?>
-                            </a>
-                        </td>
-                        <td>
-                            <?php
-                                $strColor1 = $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1']
-                                                ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']
-                                                ?   "green"
-                                                :   "red";
-
-                                $strColor2 = $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2']
-                                                ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']
-                                                ?   "green"
-                                                :   "red";
-
-                                echo "<span style='color:$strColor1;'>" . $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1'] . "</span>";
-                                echo "<span style='color:$strColor2;'>" . $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2'] . "</span>";
-                            ?>
-                        </td>
-                    </tr>
-                <?php
-            }
-        ?>
-    </table>
-
-    <h4><i>Research references cited by consumer genomic companies:</i></h4>
-
-    <ol>
-        <?php
-            foreach ($mapDataCurrentCondition['studies'] as $key => $field_pubmedid) {
-                $study = $mapDataCurrentCondition['studies_keyed'][$field_pubmedid];
-                $cit = $study["citation"];
-                $citurl = $study["url"];
-                ?>
-                    <li>
-                        <a href='<?=$citurl?>'><?=$cit?></a>
-                    </li>
-                <?php
-            }
-        ?>
-    </ol>
+        <ol>
+            <?php
+                foreach ($mapDataCurrentCondition['studies'] as $key => $field_pubmedid) {
+                    $study = $mapDataCurrentCondition['studies_keyed'][$field_pubmedid];
+                    $cit = $study["citation"];
+                    $citurl = $study["url"];
+                    ?>
+                        <li>
+                            <a href='<?=$citurl?>'><?=$cit?></a>
+                        </li>
+                    <?php
+                }
+            ?>
+        </ol>
+    </div>
     <?php
     }
 ?>
