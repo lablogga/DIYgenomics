@@ -127,16 +127,10 @@
 
             <!-- SET FONT SIZE TO 10 pt -->
             <div style='font-size: 10pt;'>
-                <!-- The following generates the variant info via PHP. -->
                 <?php
                     require('gen_data_variants_info.php');
                     renderVariantsInfo($idCurrentCondition);
                 ?>
-                <!-- The following generates the variant info via Dojo.  Ultimately it will be overlayed on top of the PHP generated info. -->
-                <script type='text/javascript'>
-                    dojo.require('DIYgenomics.gen_data.VariantsInfoWidget');
-                </script>
-                <div dojoType='DIYgenomics.gen_data.VariantsInfoWidget' id_condition='<?=$idCurrentCondition?>'></div>
             </div>
         </div>
 

@@ -60,6 +60,7 @@
 
         $mapDataCurrentCondition = queryDataForCondition($idForCondition);
     ?>
+    <!-- The following generates the variant info via PHP. -->
     <div>
         <div style='float:right;margin-left:20px;'>
             <!-- DROPDOWN MENU -->
@@ -172,6 +173,13 @@
             ?>
         </ol>
     </div>
+    <!-- The following generates the variant info via Dojo.  Ultimately it will be overlayed on top of the PHP generated info. -->
+    <div dojoType='DIYgenomics.gen_data.VariantsInfoWidget' id_condition='<?=$idForCondition?>'></div>
     <?php
     }
 ?>
+
+<!-- The following includes a JavaScript file for the Dojo-based variant info generation widget. -->
+<script type='text/javascript'>
+    dojo.require('DIYgenomics.gen_data.VariantsInfoWidget');
+</script>
