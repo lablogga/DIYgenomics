@@ -43,5 +43,17 @@ dojo.declare(
         templateString:     [   "<div>",
                                     "<h3>Variants reviewed for ${id_condition}</h3>",
                                 "</div>"
-                            ].join("")
+                            ].join(""),
+
+        postCreate:         function() {
+                                this.inherited(arguments);
+
+                                dojo.xhrGet(
+                                        {
+                                            handleAs:   'json',
+                                            url:        'gen_data_all.php',
+                                            load:       function(data) {
+                                                        }
+                                        });
+                            }
     });
