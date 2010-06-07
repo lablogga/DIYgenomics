@@ -29,16 +29,16 @@
      * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
      */
 
-    function renderVariantsInfo() {
+    function renderVariantsInfo($idForCondition) {
 
-        function renderConditionsFormComboBox($arrConditions, $idCurrentCondition) {
+        function renderConditionsFormComboBox($arrConditions, $idForCondition) {
             ?>
                 <form method='get'>
                     <select name='condition' onchange='this.form.submit()'>
 
                         <?php
                             foreach ($arrConditions as $cond) {
-                                $selected = (($cond[0] == $idCurrentCondition) ? "selected" : "");
+                                $selected = (($cond[0] == $idForCondition) ? "selected" : "");
                         ?>
 
                         <option value='<?=$cond[0]?>' <?=$selected?>><?=$cond[1]?></option>
@@ -55,16 +55,15 @@
         // Include the utility functions involving database queries:
         require ('gen_data_queries.php');
 
-        $idCurrentCondition = getCurrentConditionID();
         $arrConditions = queryArrayConditions();                                // This is an array of all the conditions that the user can look at.
-        $strCurrentCondition = $arrConditions[$idCurrentCondition - 1][1];      // This is the name of the condition that the user is currently looking at.
+        $strCurrentCondition = $arrConditions[$idForCondition - 1][1];          // This is the name of the condition that the user is currently looking at.
 
-        $mapDataCurrentCondition = queryDataForCondition($idCurrentCondition);
+        $mapDataCurrentCondition = queryDataForCondition($idForCondition);
     ?>
     <div style='float:right;margin-left:20px;'>
         <!-- DROPDOWN MENU -->
         <?php
-            renderConditionsFormComboBox($arrConditions, $idCurrentCondition);
+            renderConditionsFormComboBox($arrConditions, $idForCondition);
         ?>
     </div>
     <h3>Variants reviewed for <?=$strCurrentCondition?></h3>

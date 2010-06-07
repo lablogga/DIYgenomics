@@ -48,6 +48,7 @@
         return $COND;
     }
 
+    $idCurrentCondition = getCurrentConditionID();
 ?>
 
 <html>
@@ -129,13 +130,13 @@
                 <!-- The following generates the table info via PHP -->
                 <?php
                     require('gen_data_variants_info.php');
-                    renderVariantsInfo();
+                    renderVariantsInfo($idCurrentCondition);
                 ?>
                 <!-- The following generates the table info via Dojo.  Ultimately it will be overlayed on top of the PHP generated info. -->
                 <script type='text/javascript'>
                     dojo.require('DIYgenomics.gen_data.VariantsInfoWidget');
                 </script>
-                <div dojoType='DIYgenomics.gen_data.VariantsInfoWidget' id_condition='<?=getCurrentConditionID()?>'></div>
+                <div dojoType='DIYgenomics.gen_data.VariantsInfoWidget' id_condition='<?=$idCurrentCondition?>'></div>
             </div>
         </div>
 
