@@ -30,6 +30,24 @@
      * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
      * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
      */
+
+
+    // This starts up the database connection.  Actual authentication is done in a different file to keep the
+    // authentication info out of the source repo.
+    require('database_opener.php');
+    $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
+
+    /**
+     *  Returns the condition ID that the user is currently looking at.
+     */
+    function getCurrentConditionID() {
+        $COND = $_GET["condition"];
+        if ($COND == "") {
+          $COND = 1;
+        }
+        return $COND;
+    }
+
 ?>
 
 <html>
@@ -90,22 +108,6 @@
 
 			//Call PHP function to display page header and menus
         	require('../header.php');
-
-            // This starts up the database connection.  Actual authentication is done in a different file to keep the
-            // authentication info out of the source repo.
-            require('database_opener.php');
-            $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
-
-            /**
-             *  Returns the condition ID that the user is currently looking at.
-             */
-            function getCurrentConditionID() {
-                $COND = $_GET["condition"];
-                if ($COND == "") {
-                  $COND = 1;
-                }
-                return $COND;
-            }
         ?>
 
         <div class='layout'>
