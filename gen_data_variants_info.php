@@ -174,7 +174,7 @@
         </ol>
     </div>
     <!-- The following generates the variant info via Dojo.  Ultimately it will be overlayed on top of the PHP generated info. -->
-    <div dojoType='DIYgenomics.gen_data.VariantsInfoWidget' id_condition='<?=$idForCondition?>'></div>
+    <div dojoType='DIYgenomics.gen_data.VariantsInfoWidget' condition="<?=htmlspecialchars($strCondition)?>"></div>
     <?php
     }
 ?>

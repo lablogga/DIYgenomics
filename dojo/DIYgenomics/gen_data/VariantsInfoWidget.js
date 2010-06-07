@@ -38,10 +38,10 @@ dojo.declare(
     'DIYgenomics.gen_data.VariantsInfoWidget',
     [dijit._Widget, dijit._Templated],
     {
-        id_condition:       1,
+        condition:          "",
 
         templateString:     [   "<div>",
-                                    "<h3>Variants reviewed for ${id_condition}</h3>",
+                                    "<h3>Variants reviewed for ${condition}</h3>",
                                 "</div>"
                             ].join(""),
 
