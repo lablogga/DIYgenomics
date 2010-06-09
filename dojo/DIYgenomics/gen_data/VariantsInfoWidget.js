@@ -41,11 +41,11 @@ dojo.declare(
         condition:          "",
 
         templateString:     [   "<div>",
-                                    "<h3>Variants reviewed for ${condition}</h3>",
-                                    "<div>",
+                                    "<div class='condlist'>",
                                         "<select dojoAttachPoint='_selectConditions'>",
                                         "</select>",
                                     "</div",
+                                    "<h3>Variants reviewed for ${condition}</h3>",
                                 "</div>"
                             ].join(""),
 

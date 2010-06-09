@@ -79,7 +79,12 @@
                 margin:                         25px auto 25px;
                 width:                          85%;
             }
-            
+
+            .DIYgenomics_health_app .layout .condlist {
+                float:                          right;
+                margin-left:                    20px;
+            }
+
             .DIYgenomics_health_app .layout .variants_table {
                 border:                         1px solid #cccccc;
                 text-align:                     center;

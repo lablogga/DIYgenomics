@@ -62,7 +62,7 @@
     ?>
     <!-- The following generates the variant info via PHP. -->
     <div>
-        <div style='float:right;margin-left:20px;'>
+        <div class='condlist'>
             <!-- DROPDOWN MENU -->
             <?php
                 renderConditionsFormComboBox($arrConditions, $idForCondition);
