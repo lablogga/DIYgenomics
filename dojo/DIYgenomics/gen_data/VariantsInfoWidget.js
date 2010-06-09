@@ -42,6 +42,10 @@ dojo.declare(
 
         templateString:     [   "<div>",
                                     "<h3>Variants reviewed for ${condition}</h3>",
+                                    "<div>",
+                                        "<select dojoAttachPoint='_selectConditions'>",
+                                        "</select>",
+                                    "</div",
                                 "</div>"
                             ].join(""),
 
@@ -61,5 +65,25 @@ dojo.declare(
                             },
 
         onLoadedData:       function(data) {
+                                if (!data || !data.conditions || !data.conditions.length) return;
+
+                                var that = this;
+
+                                function _addCondition(strCondition) {
+                                    var elOption = dojo.create(
+                                                    'option',
+                                                    {
+                                                        innerHTML:  strCondition,
+                                                        value:      strCondition
+                                                    });
+
+                                    if (that.condition == strCondition) elOption.selected = 'selected';
+
+                                    dojo.place(elOption, that._selectConditions);
+                                }                                
+
+                                for (var i = 0; i < data.conditions.length; i++) {
+                                    _addCondition(data.conditions[i]);
+                                }
                             }
     });
