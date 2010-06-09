@@ -65,6 +65,13 @@ dojo.declare(
                             },
 
         onLoadedData:       function(data) {
+                                this._initConditionsCB(data);
+                            },
+
+                            /**
+                             *  Private function to initialize the conditions combo box.
+                             */
+        _initConditionsCB:  function(data) {
                                 if (!data || !data.conditions || !data.conditions.length) return;
 
                                 var that = this;
