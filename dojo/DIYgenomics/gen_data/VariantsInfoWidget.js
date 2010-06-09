@@ -48,12 +48,18 @@ dojo.declare(
         postCreate:         function() {
                                 this.inherited(arguments);
 
+                                var that = this;
+
                                 dojo.xhrGet(
                                         {
                                             handleAs:   'json',
                                             url:        'gen_data_all.php',
                                             load:       function(data) {
+                                                            that.onLoadedData(data);
                                                         }
                                         });
+                            },
+
+        onLoadedData:       function(data) {
                             }
     });
