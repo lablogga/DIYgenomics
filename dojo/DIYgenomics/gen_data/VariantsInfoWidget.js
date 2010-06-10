@@ -46,6 +46,10 @@ dojo.declare(
                                         "</select>",
                                     "</div",
                                     "<h3>Variants reviewed for ${condition}</h3>",
+                                    "<table class='variants_table' cellpadding='0' cellspacing='0'>",
+                                        "<tr dojoAttachPoint='_trVariantsTableHeader'>",
+                                        "</tr>",
+                                    "</table>",
                                 "</div>"
                             ].join(""),
 
@@ -66,6 +70,7 @@ dojo.declare(
 
         onLoadedData:       function(data) {
                                 this._initConditionsCB(data);
+                                this._initVariantsTable(data);
                             },
 
                             /**
@@ -92,5 +97,23 @@ dojo.declare(
                                 for (var i = 0; i < data.conditions.length; i++) {
                                     _addCondition(data.conditions[i]);
                                 }
+                            },
+
+        _initVariantsTable: function(data) {
+                                var that = this;
+
+                                function _addHeaderColumn(strName) {
+                                    dojo.place(
+                                            dojo.create(
+                                                    'th',
+                                                    {
+                                                        innerHTML:  strName
+                                                    }),
+                                            that._trVariantsTableHeader);
+                                }
+
+                                _addHeaderColumn('Locus');
+                                _addHeaderColumn('Gene');
+                                _addHeaderColumn('Variant');
                             }
     });
