@@ -3,6 +3,7 @@
      * Copyright (C) 2010 DIYgenomics           diygenomics.org
      * Copyright (C) 2010 Melanie Swan          mxswan@gmail
      * Copyright (C) 2010 Marat Nepomnyashy     maratbn@gmail
+     * All rights reserved.
      *
      * Module:          gen_data_all.php
      *
