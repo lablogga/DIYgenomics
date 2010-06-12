@@ -101,14 +101,22 @@ dojo.declare(
                             },
 
         _initVariantsTable: function(data) {
+                                var condition = data.conditions_keyed[this.condition];
+                                if (!condition) return;
+
                                 var that = this;
 
-                                function _addHeaderColumn(strName) {
+                                function _addHeaderColumn(strName, strLink) {
+                                    var strHTML = [ (strLink ? "<a href='" + strLink + "' target='_blank'>" : ""),
+                                                    strName,
+                                                    (strLink ? "</a>" : "")
+                                                ].join("");
+
                                     dojo.place(
                                             dojo.create(
                                                     'th',
                                                     {
-                                                        innerHTML:  strName
+                                                        innerHTML:  strHTML
                                                     }),
                                             that._trVariantsTableHeader);
                                 }
@@ -120,7 +128,11 @@ dojo.declare(
                                 _addHeaderColumn('Variant');
 
                                 for (var i = 0; i < arrEntities.length; i++) {
-                                    _addHeaderColumn(arrEntities[i]);
+                                    var strEntity = arrEntities[i];
+                                    var strLink =   condition.condition_data.entities_keyed &&
+                                                    condition.condition_data.entities_keyed[strEntity] &&
+                                                    condition.condition_data.entities_keyed[strEntity].entity_cond_url;
+                                    _addHeaderColumn(strEntity, strLink);
                                 }
                             }
     });
