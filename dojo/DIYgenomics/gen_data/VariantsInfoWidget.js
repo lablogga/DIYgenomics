@@ -153,5 +153,7 @@ dojo.declare(
                                 }
 
                                 _addHeaderColumn('dbSNP (Nrml/Rsk)', 'http://www.ncbi.nlm.nih.gov/projects/SNP');
+
+                                _addHeaderColumn('Sample data');
                             }
     });
