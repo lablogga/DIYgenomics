@@ -113,8 +113,14 @@ dojo.declare(
                                             that._trVariantsTableHeader);
                                 }
 
+                                var arrEntities = ['deCODEme', 'Navigenics', '23andMe'];
+
                                 _addHeaderColumn('Locus');
                                 _addHeaderColumn('Gene');
                                 _addHeaderColumn('Variant');
+
+                                for (var i = 0; i < arrEntities.length; i++) {
+                                    _addHeaderColumn(arrEntities[i]);
+                                }
                             }
     });
