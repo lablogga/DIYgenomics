@@ -39,121 +39,121 @@ dojo.declare(
     'DIYgenomics.gen_data.VariantsInfoWidget',
     [dijit._Widget, dijit._Templated],
     {
-        condition:          "",
+        condition:                  "",
 
-        templateString:     [   "<div>",
-                                    "<div class='condlist'>",
-                                        "<select dojoAttachPoint='_selectConditions' dojoAttachEvent='onchange:onSelectedCondition'>",
-                                        "</select>",
-                                    "</div",
-                                    "<h3>Variants reviewed for ",
-                                        "<span dojoAttachPoint='_spanCondition'>${condition}</span>",
-                                    "</h3>",
-                                    "<table class='variants_table' cellpadding='0' cellspacing='0'>",
-                                        "<tr dojoAttachPoint='_trVariantsTableHeader'>",
-                                        "</tr>",
-                                    "</table>",
-                                "</div>"
-                            ].join(""),
+        templateString:             [   "<div>",
+                                            "<div class='condlist'>",
+                                                "<select dojoAttachPoint='_selectConditions' dojoAttachEvent='onchange:onSelectedCondition'>",
+                                                "</select>",
+                                            "</div",
+                                            "<h3>Variants reviewed for ",
+                                                "<span dojoAttachPoint='_spanCondition'>${condition}</span>",
+                                            "</h3>",
+                                            "<table class='variants_table' cellpadding='0' cellspacing='0'>",
+                                                "<tr dojoAttachPoint='_trVariantsTableHeader'>",
+                                                "</tr>",
+                                            "</table>",
+                                        "</div>"
+                                    ].join(""),
 
-        postCreate:         function() {
-                                this.inherited(arguments);
+        postCreate:                 function() {
+                                        this.inherited(arguments);
 
-                                var that = this;
+                                        var that = this;
 
-                                dojo.xhrGet(
-                                        {
-                                            handleAs:   'json',
-                                            url:        'gen_data_all.php',
-                                            load:       function(data) {
-                                                            that.onLoadedData(data);
-                                                        }
-                                        });
-                            },
+                                        dojo.xhrGet(
+                                                {
+                                                    handleAs:   'json',
+                                                    url:        'gen_data_all.php',
+                                                    load:       function(data) {
+                                                                    that.onLoadedData(data);
+                                                                }
+                                                });
+                                    },
 
-        onLoadedData:       function(data) {
-                                this.data = data;
-                                this._initConditionsCB();
-                                this._displayCurrentCondition();
-                            },
+        onLoadedData:               function(data) {
+                                        this.data = data;
+                                        this._initConditionsCB();
+                                        this._displayCurrentCondition();
+                                    },
 
-        onSelectedCondition:function() {
-                                this.condition = dojo.attr(this._selectConditions, 'value');
-                                this._displayCurrentCondition();
-                            },
+        onSelectedCondition:        function() {
+                                        this.condition = dojo.attr(this._selectConditions, 'value');
+                                        this._displayCurrentCondition();
+                                    },
 
-        _displayCurrentCondition: function() {
-                                this._spanCondition.innerHTML = this.condition;
-                                this._initVariantsTable();
-                            },
+        _displayCurrentCondition:   function() {
+                                        this._spanCondition.innerHTML = this.condition;
+                                        this._initVariantsTable();
+                                    },
 
-                            /**
-                             *  Private function to initialize the conditions combo box.
-                             */
-        _initConditionsCB:  function() {
-                                if (!this.data || !this.data.conditions || !this.data.conditions.length) return;
+                                    /**
+                                     *  Private function to initialize the conditions combo box.
+                                     */
+        _initConditionsCB:          function() {
+                                        if (!this.data || !this.data.conditions || !this.data.conditions.length) return;
 
-                                var that = this;
+                                        var that = this;
 
-                                function _addCondition(strCondition) {
-                                    var elOption = dojo.create(
-                                                    'option',
-                                                    {
-                                                        innerHTML:  strCondition,
-                                                        value:      strCondition
-                                                    });
+                                        function _addCondition(strCondition) {
+                                            var elOption = dojo.create(
+                                                            'option',
+                                                            {
+                                                                innerHTML:  strCondition,
+                                                                value:      strCondition
+                                                            });
 
-                                    if (that.condition == strCondition) elOption.selected = 'selected';
+                                            if (that.condition == strCondition) elOption.selected = 'selected';
 
-                                    dojo.place(elOption, that._selectConditions);
-                                }                                
+                                            dojo.place(elOption, that._selectConditions);
+                                        }                                
 
-                                for (var i = 0; i < this.data.conditions.length; i++) {
-                                    _addCondition(this.data.conditions[i]);
-                                }
-                            },
+                                        for (var i = 0; i < this.data.conditions.length; i++) {
+                                            _addCondition(this.data.conditions[i]);
+                                        }
+                                    },
 
-        _initVariantsTable: function() {
-                                while (this._trVariantsTableHeader.hasChildNodes()) {
-                                    this._trVariantsTableHeader.removeChild(this._trVariantsTableHeader.lastChild);
-                                }
+        _initVariantsTable:         function() {
+                                        while (this._trVariantsTableHeader.hasChildNodes()) {
+                                            this._trVariantsTableHeader.removeChild(this._trVariantsTableHeader.lastChild);
+                                        }
 
-                                var condition = this.data && this.data.conditions_keyed && this.data.conditions_keyed[this.condition];
-                                if (!condition) return;
+                                        var condition = this.data && this.data.conditions_keyed && this.data.conditions_keyed[this.condition];
+                                        if (!condition) return;
 
-                                var that = this;
+                                        var that = this;
 
-                                function _addHeaderColumn(strName, strLink) {
-                                    var strHTML = [ (strLink ? "<a href='" + strLink + "' target='_blank'>" : ""),
-                                                    strName,
-                                                    (strLink ? "</a>" : "")
-                                                ].join("");
+                                        function _addHeaderColumn(strName, strLink) {
+                                            var strHTML = [ (strLink ? "<a href='" + strLink + "' target='_blank'>" : ""),
+                                                            strName,
+                                                            (strLink ? "</a>" : "")
+                                                        ].join("");
 
-                                    dojo.place(
-                                            dojo.create(
-                                                    'th',
-                                                    {
-                                                        innerHTML:  strHTML
-                                                    }),
-                                            that._trVariantsTableHeader);
-                                }
+                                            dojo.place(
+                                                    dojo.create(
+                                                            'th',
+                                                            {
+                                                                innerHTML:  strHTML
+                                                            }),
+                                                    that._trVariantsTableHeader);
+                                        }
 
-                                var arrEntities = ['deCODEme', 'Navigenics', '23andMe'];
+                                        var arrEntities = ['deCODEme', 'Navigenics', '23andMe'];
 
-                                _addHeaderColumn('Locus');
-                                _addHeaderColumn('Gene');
-                                _addHeaderColumn('Variant');
+                                        _addHeaderColumn('Locus');
+                                        _addHeaderColumn('Gene');
+                                        _addHeaderColumn('Variant');
 
-                                for (var i = 0; i < arrEntities.length; i++) {
-                                    var strEntity = arrEntities[i];
-                                    var strLink =   condition.condition_data.entities_keyed &&
-                                                    condition.condition_data.entities_keyed[strEntity] &&
-                                                    condition.condition_data.entities_keyed[strEntity].entity_cond_url;
-                                    _addHeaderColumn(strEntity, strLink);
-                                }
+                                        for (var i = 0; i < arrEntities.length; i++) {
+                                            var strEntity = arrEntities[i];
+                                            var strLink =   condition.condition_data.entities_keyed &&
+                                                            condition.condition_data.entities_keyed[strEntity] &&
+                                                            condition.condition_data.entities_keyed[strEntity].entity_cond_url;
+                                            _addHeaderColumn(strEntity, strLink);
+                                        }
 
-                                _addHeaderColumn('dbSNP (Nrml/Rsk)', 'http://www.ncbi.nlm.nih.gov/projects/SNP');
+                                        _addHeaderColumn('dbSNP (Nrml/Rsk)', 'http://www.ncbi.nlm.nih.gov/projects/SNP');
 
-                                _addHeaderColumn('Sample data');
-                            }
+                                        _addHeaderColumn('Sample data');
+                                    }
     });
