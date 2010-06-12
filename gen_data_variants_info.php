@@ -42,7 +42,7 @@
                                 $selected = (($cond[0] == $idForCondition) ? "selected" : "");
                         ?>
 
-                        <option value='<?=$cond[0]?>' <?=$selected?>><?=$cond[1]?></option>
+                        <option value='<?=htmlentities($cond[0])?>' <?=$selected?>><?=htmlentities($cond[1])?></option>
 
                         <?php
                             }
@@ -69,7 +69,7 @@
                 renderConditionsFormComboBox($arrConditions, $idForCondition);
             ?>
         </div>
-        <h3>Variants reviewed for <?=$strCondition?></h3>
+        <h3>Variants reviewed for <?=htmlentities($strCondition)?></h3>
         <?php
             //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
         ?>
@@ -82,7 +82,7 @@
                     $arrEntityColumns = array('deCODEme', 'Navigenics', '23andMe');
                     foreach ($arrEntityColumns as $strEntity) {
                         ?>
-                            <th><a href='<?=$mapDataCurrentCondition['entities_keyed'][$strEntity]['entity_cond_url']?>'><?=$strEntity?></a></th>
+                            <th><a href='<?=htmlentities($mapDataCurrentCondition['entities_keyed'][$strEntity]['entity_cond_url'])?>'><?=htmlentities($strEntity)?></a></th>
                         <?php
                     }
                 ?>
@@ -96,18 +96,18 @@
                     ?>
                         <tr class='<?=$strRowClass?>'>
                             <td>
-                                <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['locus_url']?>'>
-                                    <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['locus']?>
+                                <a href='<?=htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['locus_url'])?>'>
+                                    <?=htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['locus'])?>
                                 </a>
                             </td>
                             <td>
-                                <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['gene_url']?>'>
-                                    <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['gene']?>
+                                <a href='<?=htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['gene_url'])?>'>
+                                    <?=htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['gene'])?>
                                 </a>
                             </td>
                             <td>
-                                <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant_url']?>'>
-                                    <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant']?>
+                                <a href='<?=htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['variant_url'])?>'>
+                                    <?=htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['variant'])?>
                                 </a>
                             </td>
 
@@ -120,7 +120,7 @@
                                             foreach ($mapDataCurrentCondition['variants_keyed'][$strVariant]['studies'] as $strStudy) {
                                                 if ($mapDataCurrentCondition['variants_keyed'][$strVariant]['studies_keyed'][$strStudy]['entities'][$strEntity]) {
                                                     if ($totalStudies > 0) echo ",";
-                                                    ?><a href='<?=$mapDataCurrentCondition['studies_keyed'][$strStudy]['url']?>'><?=$mapDataCurrentCondition['studies_keyed'][$strStudy]['number']?></a><?php
+                                                    ?><a href='<?=htmlentities($mapDataCurrentCondition['studies_keyed'][$strStudy]['url'])?>'><?=htmlentities($mapDataCurrentCondition['studies_keyed'][$strStudy]['number'])?></a><?php
                                                     $totalStudies++;
                                                 }
                                             }
@@ -131,8 +131,8 @@
                             ?>
 
                             <td>
-                                <a href='<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['variant_url']?>'>
-                                    <?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']?>/<?=$mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_risk']?>
+                                <a href='<?=htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['variant_url'])?>'>
+                                    <?=htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal'])?>/<?=htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_risk'])?>
                                 </a>
                             </td>
                             <td>
@@ -147,8 +147,8 @@
                                                     ?   "green"
                                                     :   "red";
 
-                                    echo "<span style='color:$strColor1;'>" . $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1'] . "</span>";
-                                    echo "<span style='color:$strColor2;'>" . $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2'] . "</span>";
+                                    echo "<span style='color:$strColor1;'>" . htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1']) . "</span>";
+                                    echo "<span style='color:$strColor2;'>" . htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2']) . "</span>";
                                 ?>
                             </td>
                         </tr>
@@ -167,7 +167,7 @@
                     $citurl = $study["url"];
                     ?>
                         <li>
-                            <a href='<?=$citurl?>'><?=$cit?></a>
+                            <a href='<?=htmlentities($citurl)?>'><?=htmlentities($cit)?></a>
                         </li>
                     <?php
                 }
@@ -175,7 +175,7 @@
         </ol>
     </div>
     <!-- The following generates the variant info via Dojo.  Ultimately it will be overlayed on top of the PHP generated info. -->
-    <div dojoType='DIYgenomics.gen_data.VariantsInfoWidget' condition="<?=htmlspecialchars($strCondition)?>"></div>
+    <div dojoType='DIYgenomics.gen_data.VariantsInfoWidget' condition='<?=htmlentities($strCondition, ENT_QUOTES)?>'></div>
     <?php
     }
 ?>

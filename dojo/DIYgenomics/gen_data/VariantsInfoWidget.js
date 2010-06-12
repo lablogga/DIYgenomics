@@ -35,6 +35,8 @@ dojo.provide('DIYgenomics.gen_data.VariantsInfoWidget');
 dojo.require('dijit._Templated');
 dojo.require('dijit._Widget');
 
+dojo.require('dojox.html.entities');
+
 dojo.declare(
     'DIYgenomics.gen_data.VariantsInfoWidget',
     [dijit._Widget, dijit._Templated],
@@ -96,11 +98,13 @@ dojo.declare(
                                         var that = this;
 
                                         function _addCondition(strCondition) {
+                                            var strConditionEncoded = dojox.html.entities.encode(strCondition);
+
                                             var elOption = dojo.create(
                                                             'option',
                                                             {
-                                                                innerHTML:  strCondition,
-                                                                value:      strCondition
+                                                                innerHTML:  strConditionEncoded,
+                                                                value:      strConditionEncoded
                                                             });
 
                                             if (that.condition == strCondition) elOption.selected = 'selected';
@@ -124,8 +128,8 @@ dojo.declare(
                                         var that = this;
 
                                         function _addHeaderColumn(strName, strLink) {
-                                            var strHTML = [ (strLink ? "<a href='" + strLink + "' target='_blank'>" : ""),
-                                                            strName,
+                                            var strHTML = [ (strLink ? "<a href='" + dojox.html.entities.encode(strLink) + "' target='_blank'>" : ""),
+                                                            dojox.html.entities.encode(strName),
                                                             (strLink ? "</a>" : "")
                                                         ].join("");
 
