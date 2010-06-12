@@ -47,7 +47,7 @@ dojo.declare(
                                             "<div class='condlist'>",
                                                 "<select dojoAttachPoint='_selectConditions' dojoAttachEvent='onchange:onSelectedCondition'>",
                                                 "</select>",
-                                            "</div",
+                                            "</div>",
                                             "<h3>Variants reviewed for ",
                                                 "<span dojoAttachPoint='_spanCondition'>${condition}</span>",
                                             "</h3>",
