@@ -43,10 +43,12 @@ dojo.declare(
 
         templateString:     [   "<div>",
                                     "<div class='condlist'>",
-                                        "<select dojoAttachPoint='_selectConditions'>",
+                                        "<select dojoAttachPoint='_selectConditions' dojoAttachEvent='onchange:onSelectedCondition'>",
                                         "</select>",
                                     "</div",
-                                    "<h3>Variants reviewed for ${condition}</h3>",
+                                    "<h3>Variants reviewed for ",
+                                        "<span dojoAttachPoint='_spanCondition'>${condition}</span>",
+                                    "</h3>",
                                     "<table class='variants_table' cellpadding='0' cellspacing='0'>",
                                         "<tr dojoAttachPoint='_trVariantsTableHeader'>",
                                         "</tr>",
@@ -70,15 +72,26 @@ dojo.declare(
                             },
 
         onLoadedData:       function(data) {
-                                this._initConditionsCB(data);
-                                this._initVariantsTable(data);
+                                this.data = data;
+                                this._initConditionsCB();
+                                this._displayCurrentCondition();
+                            },
+
+        onSelectedCondition:function() {
+                                this.condition = dojo.attr(this._selectConditions, 'value');
+                                this._displayCurrentCondition();
+                            },
+
+        _displayCurrentCondition: function() {
+                                this._spanCondition.innerHTML = this.condition;
+                                this._initVariantsTable();
                             },
 
                             /**
                              *  Private function to initialize the conditions combo box.
                              */
-        _initConditionsCB:  function(data) {
-                                if (!data || !data.conditions || !data.conditions.length) return;
+        _initConditionsCB:  function() {
+                                if (!this.data || !this.data.conditions || !this.data.conditions.length) return;
 
                                 var that = this;
 
@@ -95,13 +108,17 @@ dojo.declare(
                                     dojo.place(elOption, that._selectConditions);
                                 }                                
 
-                                for (var i = 0; i < data.conditions.length; i++) {
-                                    _addCondition(data.conditions[i]);
+                                for (var i = 0; i < this.data.conditions.length; i++) {
+                                    _addCondition(this.data.conditions[i]);
                                 }
                             },
 
-        _initVariantsTable: function(data) {
-                                var condition = data.conditions_keyed[this.condition];
+        _initVariantsTable: function() {
+                                while (this._trVariantsTableHeader.hasChildNodes()) {
+                                    this._trVariantsTableHeader.removeChild(this._trVariantsTableHeader.lastChild);
+                                }
+
+                                var condition = this.data && this.data.conditions_keyed && this.data.conditions_keyed[this.condition];
                                 if (!condition) return;
 
                                 var that = this;
