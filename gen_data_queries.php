@@ -62,7 +62,7 @@
         */
 
         $QueryConditions = mysql_query("SELECT 2_conditions.Primary, 2_conditions.Condition FROM 2_conditions;")
-                            or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_connect_errno() . "</p>");
+                            or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_errno() . "</p>");
 
 
         //READ QUERY 3 RESULTS INTO ARRAY
@@ -213,7 +213,7 @@
                             . " ORDER BY 1_studies.Citation";
 
         $resultQueryStudiesInfo = mysql_query($strQueryStudiesInfo)
-            or die("<p>Unable to query the database for studies information.  Error code: " . mysql_connect_errno() . "</p>");
+            or die("<p>Unable to query the database for studies information.  Error code: " . mysql_errno() . "</p>");
 
         $mapDataCurrentCondition = array(
                                         'entities'          => array(),
@@ -301,7 +301,7 @@
                                     . " FROM 6_map_entity_condition JOIN 4_entities"
                                     . " WHERE Condition_index = " . $idCondition . " AND 6_map_entity_condition.Entity_index = 4_entities.Primary";
         $resultQueryDiseaseURLs = mysql_query($strQueryDiseaseURLs)
-            or die("<p>Unable to query the database for conditions.  Error code: " . mysql_connect_errno() . "</p>");
+            or die("<p>Unable to query the database for conditions.  Error code: " . mysql_errno() . "</p>");
 
         // Process the query results into the current condition data:
         while ($arrDiseaseURL = mysql_fetch_array($resultQueryDiseaseURLs)) {

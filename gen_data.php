@@ -36,7 +36,7 @@
     // This starts up the database connection.  Actual authentication is done in a different file to keep the
     // authentication info out of the source repo.
     require('database_opener.php');
-    $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_connect_errno() . "</p>");
+    $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_errno() . "</p>");
 
     /**
      *  Returns the condition ID that the user is currently looking at.
