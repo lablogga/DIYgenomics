@@ -151,5 +151,7 @@ dojo.declare(
                                                     condition.condition_data.entities_keyed[strEntity].entity_cond_url;
                                     _addHeaderColumn(strEntity, strLink);
                                 }
+
+                                _addHeaderColumn('dbSNP (Nrml/Rsk)', 'http://www.ncbi.nlm.nih.gov/projects/SNP');
                             }
     });
