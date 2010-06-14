@@ -90,7 +90,7 @@ dojo.declare(
 
         _displayCurrentCondition:   function() {
                                         this._spanCondition.innerHTML = this.condition;
-                                        this._initVariantsTable();
+                                        this._fillVariantsTable();
                                     },
 
                                     /**
@@ -121,7 +121,7 @@ dojo.declare(
                                         }
                                     },
 
-        _initVariantsTable:         function() {
+        _fillVariantsTable:         function() {
                                         function _clearChildNodes(elNode) {
                                             if (!elNode) return;
 
