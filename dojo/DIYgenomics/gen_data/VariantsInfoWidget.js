@@ -231,6 +231,23 @@ dojo.declare(
                                                                 "</a>",
                                                             "</td>");
 
+                                            var strColor1 = dataVariant.dbSNP_sample_1 == dataVariant.dbSNP_normal
+                                                            ?   "green"
+                                                            :   "red";
+
+                                            var strColor2 = dataVariant.dbSNP_sample_2 == dataVariant.dbSNP_normal
+                                                            ?   "green"
+                                                            :   "red";
+
+                                            arrHTML.push(   "<td>",
+                                                                "<span style='color:", strColor1, "'>",
+                                                                    (dataVariant.dbSNP_sample_1 || ""),
+                                                                "</span>",
+                                                                "<span style='color:", strColor2, "'>",
+                                                                    (dataVariant.dbSNP_sample_2 || ""),
+                                                                "</span>",
+                                                            "</td>");
+
                                             var trRow = dojo.place(
                                                     dojo.create(
                                                             'tr',
