@@ -254,9 +254,9 @@ dojo.declare(
                                             }
 
                                             _addVariantColumn([ _getAnchorOpeningTag(dataVariant.variant_url),
-                                                                dataVariant.dbSNP_normal || "",
+                                                                dojox.html.entities.encode(dataVariant.dbSNP_normal) || "",
                                                                 "/",
-                                                                dataVariant.dbSNP_risk || "",
+                                                                dojox.html.entities.encode(dataVariant.dbSNP_risk) || "",
                                                                 "</a>"]);
 
                                             var strColor1 = dataVariant.dbSNP_sample_1 == dataVariant.dbSNP_normal
@@ -268,10 +268,10 @@ dojo.declare(
                                                             :   "red";
 
                                             _addVariantColumn([ "<span style='color:", strColor1, "'>",
-                                                                    (dataVariant.dbSNP_sample_1 || ""),
+                                                                    (dojox.html.entities.encode(dataVariant.dbSNP_sample_1) || ""),
                                                                 "</span>",
                                                                 "<span style='color:", strColor2, "'>",
-                                                                    (dataVariant.dbSNP_sample_2 || ""),
+                                                                    (dojox.html.entities.encode(dataVariant.dbSNP_sample_2) || ""),
                                                                 "</span>"]);
                                         }
 
