@@ -201,26 +201,37 @@ dojo.declare(
                                         function _addVariantRow(dataVariant, strCSSClass) {
                                             if (!dataVariant) return;
 
-                                            var arrHTML = [ "<td>",
-                                                                _getAnchorOpeningTag(dataVariant.locus_url),
+                                            var trRow = dojo.create(
+                                                            'tr',
+                                                            {
+                                                                'class':    strCSSClass
+                                                            },
+                                                            that._trVariantsTableBody);
+
+                                            function _addVariantColumn(arrHTML) {
+                                                var tdColumn = dojo.create(
+                                                                'td',
+                                                                {
+                                                                },
+                                                                trRow);
+                                                if (arrHTML) tdColumn.innerHTML = arrHTML.join("");
+                                            }
+
+                                            _addVariantColumn([ _getAnchorOpeningTag(dataVariant.locus_url),
                                                                     dojox.html.entities.encode(dataVariant.locus),
-                                                                "</a>",
-                                                            "</td>",
-                                                            "<td>",
-                                                                _getAnchorOpeningTag(dataVariant.gene_url),
+                                                                "</a>"]);
+
+                                            _addVariantColumn([ _getAnchorOpeningTag(dataVariant.gene_url),
                                                                     dojox.html.entities.encode(dataVariant.gene),
-                                                                "</a>",
-                                                            "</td>",
-                                                            "<td>",
-                                                                _getAnchorOpeningTag(dataVariant.variant_url),
+                                                                "</a>"]);
+
+                                            _addVariantColumn([ _getAnchorOpeningTag(dataVariant.variant_url),
                                                                     dojox.html.entities.encode(dataVariant.variant),
-                                                                "</a>",
-                                                            "</td>"
-                                                        ];
+                                                                "</a>"]);
 
                                             for (var i = 0; i < arrEntities.length; i++) {
                                                 var strEntity = arrEntities[i];
-                                                arrHTML.push("<td>");
+                                                var arrHTMLEntityColumn = [];
 
                                                 if (dataVariant.studies) {
                                                     var totalStudies = 0;
@@ -230,25 +241,23 @@ dojo.declare(
                                                             dataVariant.studies_keyed[strStudy] &&
                                                             dataVariant.studies_keyed[strStudy].entities &&
                                                             dataVariant.studies_keyed[strStudy].entities[strEntity]) {
-                                                            if (totalStudies > 0) arrHTML.push(",");
-                                                            arrHTML.push(_getAnchorOpeningTag(condition.condition_data.studies_keyed[strStudy].url));
-                                                            arrHTML.push(dojox.html.entities.encode("" + condition.condition_data.studies_keyed[strStudy].number));
-                                                            arrHTML.push("</a>");
+                                                            if (totalStudies > 0) arrHTMLEntityColumn.push(",");
+                                                            arrHTMLEntityColumn.push(_getAnchorOpeningTag(condition.condition_data.studies_keyed[strStudy].url));
+                                                            arrHTMLEntityColumn.push(dojox.html.entities.encode("" + condition.condition_data.studies_keyed[strStudy].number));
+                                                            arrHTMLEntityColumn.push("</a>");
                                                             totalStudies++;
                                                         }
                                                     }
                                                 }
 
-                                                arrHTML.push("</td>");
+                                                _addVariantColumn(arrHTMLEntityColumn);
                                             }
 
-                                            arrHTML.push(   "<td>",
-                                                                _getAnchorOpeningTag(dataVariant.variant_url),
+                                            _addVariantColumn([ _getAnchorOpeningTag(dataVariant.variant_url),
                                                                 dataVariant.dbSNP_normal || "",
                                                                 "/",
                                                                 dataVariant.dbSNP_risk || "",
-                                                                "</a>",
-                                                            "</td>");
+                                                                "</a>"]);
 
                                             var strColor1 = dataVariant.dbSNP_sample_1 == dataVariant.dbSNP_normal
                                                             ?   "green"
@@ -258,23 +267,12 @@ dojo.declare(
                                                             ?   "green"
                                                             :   "red";
 
-                                            arrHTML.push(   "<td>",
-                                                                "<span style='color:", strColor1, "'>",
+                                            _addVariantColumn([ "<span style='color:", strColor1, "'>",
                                                                     (dataVariant.dbSNP_sample_1 || ""),
                                                                 "</span>",
                                                                 "<span style='color:", strColor2, "'>",
                                                                     (dataVariant.dbSNP_sample_2 || ""),
-                                                                "</span>",
-                                                            "</td>");
-
-                                            var trRow = dojo.place(
-                                                    dojo.create(
-                                                            'tr',
-                                                            {
-                                                                'class':    strCSSClass
-                                                            }),
-                                                    that._trVariantsTableBody);
-                                            trRow.innerHTML = arrHTML.join("");
+                                                                "</span>"]);
                                         }
 
                                         for (var i = 0; i < arrVariants.length; i++) {
