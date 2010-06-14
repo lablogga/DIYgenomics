@@ -135,7 +135,7 @@
             <div style='font-size: 10pt;'>
                 <?php
                     require('gen_data_variants_info.php');
-                    renderVariantsInfo($idCurrentCondition);
+                    renderVariantsInfo($idCurrentCondition, 'diyghavi');
                 ?>
             </div>
         </div>

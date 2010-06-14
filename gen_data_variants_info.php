@@ -30,7 +30,7 @@
      * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
      */
 
-    function renderVariantsInfo($idForCondition) {
+    function renderVariantsInfo($idForCondition, $idTable) {
 
         function renderConditionsFormComboBox($arrConditions, $idForCondition) {
             ?>
@@ -62,7 +62,7 @@
         $mapDataCurrentCondition = queryDataForCondition($idForCondition);
     ?>
     <!-- The following generates the variant info via PHP. -->
-    <div>
+    <div id='<?=$idTable?>'>
         <div class='condlist'>
             <!-- DROPDOWN MENU -->
             <?php
