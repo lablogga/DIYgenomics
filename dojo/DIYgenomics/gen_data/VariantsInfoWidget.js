@@ -79,7 +79,7 @@ dojo.declare(
 
         onLoadedData:               function(data) {
                                         this.data = data;
-                                        this._initConditionsCB();
+                                        this._fillConditionsCB();
                                         this._displayCurrentCondition();
                                     },
 
@@ -96,7 +96,7 @@ dojo.declare(
                                     /**
                                      *  Private function to initialize the conditions combo box.
                                      */
-        _initConditionsCB:          function() {
+        _fillConditionsCB:          function() {
                                         if (!this.data || !this.data.conditions || !this.data.conditions.length) return;
 
                                         var that = this;
