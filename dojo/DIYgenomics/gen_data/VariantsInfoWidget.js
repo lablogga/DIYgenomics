@@ -52,8 +52,12 @@ dojo.declare(
                                                 "<span dojoAttachPoint='_spanCondition'>${condition}</span>",
                                             "</h3>",
                                             "<table class='variants_table' cellpadding='0' cellspacing='0'>",
-                                                "<tr dojoAttachPoint='_trVariantsTableHeader'>",
-                                                "</tr>",
+                                                "<thead>",
+                                                    "<tr dojoAttachPoint='_trVariantsTableHeader'>",
+                                                    "</tr>",
+                                                "</thead>",
+                                                "<tbody dojoAttachPoint='_trVariantsTableBody>",
+                                                "</tbody>",
                                             "</table>",
                                         "</div>"
                                     ].join(""),
@@ -127,8 +131,12 @@ dojo.declare(
 
                                         var that = this;
 
+                                        function _getAnchorOpeningTag(strLink) {
+                                            return "<a href='" + dojox.html.entities.encode(strLink) + "' target='_blank'>";
+                                        }
+
                                         function _addHeaderColumn(strName, strLink) {
-                                            var strHTML = [ (strLink ? "<a href='" + dojox.html.entities.encode(strLink) + "' target='_blank'>" : ""),
+                                            var strHTML = [ (strLink ? _getAnchorOpeningTag(strLink) : ""),
                                                             dojox.html.entities.encode(strName),
                                                             (strLink ? "</a>" : "")
                                                         ].join("");
@@ -157,7 +165,72 @@ dojo.declare(
                                         }
 
                                         _addHeaderColumn('dbSNP (Nrml/Rsk)', 'http://www.ncbi.nlm.nih.gov/projects/SNP');
-
                                         _addHeaderColumn('Sample data');
+
+                                        var arrVariants =   condition.condition_data &&
+                                                            condition.condition_data.variants;
+
+                                        if (!arrVariants || !condition.condition_data.variants_keyed) return;
+
+                                        function _addVariantRow(dataVariant, strCSSClass) {
+                                            if (!dataVariant) return;
+
+                                            var arrHTML = [ "<td>",
+                                                                _getAnchorOpeningTag(dataVariant.locus_url),
+                                                                    dojox.html.entities.encode(dataVariant.locus),
+                                                                "</a>",
+                                                            "</td>",
+                                                            "<td>",
+                                                                _getAnchorOpeningTag(dataVariant.gene_url),
+                                                                    dojox.html.entities.encode(dataVariant.gene),
+                                                                "</a>",
+                                                            "</td>",
+                                                            "<td>",
+                                                                _getAnchorOpeningTag(dataVariant.variant_url),
+                                                                    dojox.html.entities.encode(dataVariant.variant),
+                                                                "</a>",
+                                                            "</td>"
+                                                        ];
+
+                                            for (var i = 0; i < arrEntities.length; i++) {
+                                                var strEntity = arrEntities[i];
+                                                arrHTML.push("<td>");
+
+                                                if (dataVariant.studies) {
+                                                    var totalStudies = 0;
+                                                    for (var j = 0; j < dataVariant.studies.length; j++) {
+                                                        var strStudy = dataVariant.studies[j];
+                                                        if (dataVariant.studies_keyed &&
+                                                            dataVariant.studies_keyed[strStudy] &&
+                                                            dataVariant.studies_keyed[strStudy].entities &&
+                                                            dataVariant.studies_keyed[strStudy].entities[strEntity]) {
+                                                            if (totalStudies > 0) arrHTML.push(",");
+                                                            arrHTML.push(_getAnchorOpeningTag(condition.condition_data.studies_keyed[strStudy].url));
+                                                            arrHTML.push(dojox.html.entities.encode("" + condition.condition_data.studies_keyed[strStudy].number));
+                                                            arrHTML.push("</a>");
+                                                            totalStudies++;
+                                                        }
+                                                    }
+                                                }
+
+                                                arrHTML.push("</td>");
+                                            }
+
+                                            var trRow = dojo.place(
+                                                    dojo.create(
+                                                            'tr',
+                                                            {
+                                                                'class':    strCSSClass
+                                                            }),
+                                                    that._trVariantsTableBody);
+                                            trRow.innerHTML = arrHTML.join("");
+                                        }
+
+                                        for (var i = 0; i < arrVariants.length; i++) {
+                                            var strVariant = arrVariants[i];
+                                            var dataVariant = condition.condition_data.variants_keyed[strVariant];
+                                            if (!dataVariant) continue;
+                                            _addVariantRow(dataVariant, i % 2 == 0 ? 'vtr_even' : 'vtr_odd');
+                                        }
                                     }
     });
