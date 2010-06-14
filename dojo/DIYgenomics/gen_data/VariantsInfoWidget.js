@@ -122,9 +122,16 @@ dojo.declare(
                                     },
 
         _initVariantsTable:         function() {
-                                        while (this._trVariantsTableHeader.hasChildNodes()) {
-                                            this._trVariantsTableHeader.removeChild(this._trVariantsTableHeader.lastChild);
+                                        function _clearChildNodes(elNode) {
+                                            if (!elNode) return;
+
+                                            while (elNode.hasChildNodes()) {
+                                                elNode.removeChild(elNode.lastChild);
+                                            }
                                         }
+
+                                        _clearChildNodes(this._trVariantsTableHeader);
+                                        _clearChildNodes(this._trVariantsTableBody);
 
                                         var condition = this.data && this.data.conditions_keyed && this.data.conditions_keyed[this.condition];
                                         if (!condition) return;
