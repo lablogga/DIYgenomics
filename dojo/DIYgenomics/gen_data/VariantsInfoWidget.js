@@ -223,6 +223,14 @@ dojo.declare(
                                                 arrHTML.push("</td>");
                                             }
 
+                                            arrHTML.push(   "<td>",
+                                                                _getAnchorOpeningTag(dataVariant.variant_url),
+                                                                dataVariant.dbSNP_normal || "",
+                                                                "/",
+                                                                dataVariant.dbSNP_risk || "",
+                                                                "</a>",
+                                                            "</td>");
+
                                             var trRow = dojo.place(
                                                     dojo.create(
                                                             'tr',
