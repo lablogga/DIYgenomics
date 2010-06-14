@@ -59,7 +59,7 @@ dojo.declare(
                                                         "<tr dojoAttachPoint='_trVariantsTableHeader'>",
                                                         "</tr>",
                                                     "</thead>",
-                                                    "<tbody dojoAttachPoint='_trVariantsTableBody>",
+                                                    "<tbody dojoAttachPoint='_trVariantsTableBody'>",
                                                     "</tbody>",
                                                 "</table>",
                                             "</div>",
