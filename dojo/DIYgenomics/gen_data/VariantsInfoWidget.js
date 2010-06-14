@@ -62,6 +62,9 @@ dojo.declare(
                                                     "<tbody dojoAttachPoint='_trVariantsTableBody'>",
                                                     "</tbody>",
                                                 "</table>",
+                                                "<h4><i>Research references cited by consumer genomic companies:</i></h4>",
+                                                "<ol dojoAttachPoint='_olReferences'>",
+                                                "</ol>",
                                             "</div>",
                                         "</div>"
                                     ].join(""),
@@ -107,9 +110,18 @@ dojo.declare(
                                         this._displayCurrentCondition();
                                     },
 
+        _clearChildNodes:           function(elNode) {
+                                        if (!elNode) return;
+
+                                        while (elNode.hasChildNodes()) {
+                                            elNode.removeChild(elNode.lastChild);
+                                        }
+                                    },
+
         _displayCurrentCondition:   function() {
                                         this._spanCondition.innerHTML = this.condition;
                                         this._fillVariantsTable();
+                                        this._fillReferencesList();
                                     },
 
                                     /**
@@ -140,29 +152,48 @@ dojo.declare(
                                         }
                                     },
 
-        _fillVariantsTable:         function() {
-                                        function _clearChildNodes(elNode) {
-                                            if (!elNode) return;
+        _fillReferencesList:        function() {
+                                        this._clearChildNodes(this._olReferences);
 
-                                            while (elNode.hasChildNodes()) {
-                                                elNode.removeChild(elNode.lastChild);
-                                            }
+                                        var condition_data =    this.data &&
+                                                                this.data.conditions_keyed &&
+                                                                this.data.conditions_keyed[this.condition] &&
+                                                                this.data.conditions_keyed[this.condition].condition_data;
+                                        if (!condition_data || !condition_data.studies || !condition_data.studies_keyed) return;
+
+                                        var that = this;
+
+                                        function _appendStudy(dataStudy) {
+                                            var liStudy = dojo.create(
+                                                            'li',
+                                                            {},
+                                                            that._olReferences);
+
+                                            liStudy.innerHTML = [   that._getAnchorOpeningTag(dataStudy.url),
+                                                                        dojox.html.entities.encode(dataStudy.citation),
+                                                                    "</a>"
+                                                                ].join("");
                                         }
 
-                                        _clearChildNodes(this._trVariantsTableHeader);
-                                        _clearChildNodes(this._trVariantsTableBody);
+                                        for (var i = 0; i < condition_data.studies.length; i++) {
+                                            var strStudy = condition_data.studies[i];
+                                            if (!strStudy) continue;
+
+                                            _appendStudy(condition_data.studies_keyed[strStudy]);
+                                        }
+                                    },
+
+        _fillVariantsTable:         function() {
+                                        this._clearChildNodes(this._trVariantsTableHeader);
+                                        this._clearChildNodes(this._trVariantsTableBody);
 
                                         var condition = this.data && this.data.conditions_keyed && this.data.conditions_keyed[this.condition];
                                         if (!condition) return;
 
                                         var that = this;
 
-                                        function _getAnchorOpeningTag(strLink) {
-                                            return "<a href='" + dojox.html.entities.encode(strLink) + "' target='_blank'>";
-                                        }
-
                                         function _addHeaderColumn(strName, strLink) {
-                                            var strHTML = [ (strLink ? _getAnchorOpeningTag(strLink) : ""),
+                                            var strHTML = [ (strLink ? that._getAnchorOpeningTag(strLink) : ""),
                                                             dojox.html.entities.encode(strName),
                                                             (strLink ? "</a>" : "")
                                                         ].join("");
@@ -217,15 +248,15 @@ dojo.declare(
                                                 if (arrHTML) tdColumn.innerHTML = arrHTML.join("");
                                             }
 
-                                            _addVariantColumn([ _getAnchorOpeningTag(dataVariant.locus_url),
+                                            _addVariantColumn([ that._getAnchorOpeningTag(dataVariant.locus_url),
                                                                     dojox.html.entities.encode(dataVariant.locus),
                                                                 "</a>"]);
 
-                                            _addVariantColumn([ _getAnchorOpeningTag(dataVariant.gene_url),
+                                            _addVariantColumn([ that._getAnchorOpeningTag(dataVariant.gene_url),
                                                                     dojox.html.entities.encode(dataVariant.gene),
                                                                 "</a>"]);
 
-                                            _addVariantColumn([ _getAnchorOpeningTag(dataVariant.variant_url),
+                                            _addVariantColumn([ that._getAnchorOpeningTag(dataVariant.variant_url),
                                                                     dojox.html.entities.encode(dataVariant.variant),
                                                                 "</a>"]);
 
@@ -242,7 +273,7 @@ dojo.declare(
                                                             dataVariant.studies_keyed[strStudy].entities &&
                                                             dataVariant.studies_keyed[strStudy].entities[strEntity]) {
                                                             if (totalStudies > 0) arrHTMLEntityColumn.push(",");
-                                                            arrHTMLEntityColumn.push(_getAnchorOpeningTag(condition.condition_data.studies_keyed[strStudy].url));
+                                                            arrHTMLEntityColumn.push(that._getAnchorOpeningTag(condition.condition_data.studies_keyed[strStudy].url));
                                                             arrHTMLEntityColumn.push(dojox.html.entities.encode("" + condition.condition_data.studies_keyed[strStudy].number));
                                                             arrHTMLEntityColumn.push("</a>");
                                                             totalStudies++;
@@ -253,7 +284,7 @@ dojo.declare(
                                                 _addVariantColumn(arrHTMLEntityColumn);
                                             }
 
-                                            _addVariantColumn([ _getAnchorOpeningTag(dataVariant.variant_url),
+                                            _addVariantColumn([ that._getAnchorOpeningTag(dataVariant.variant_url),
                                                                 dojox.html.entities.encode(dataVariant.dbSNP_normal) || "",
                                                                 "/",
                                                                 dojox.html.entities.encode(dataVariant.dbSNP_risk) || "",
@@ -281,6 +312,10 @@ dojo.declare(
                                             if (!dataVariant) continue;
                                             _addVariantRow(dataVariant, i % 2 == 0 ? 'vtr_even' : 'vtr_odd');
                                         }
+                                    },
+
+        _getAnchorOpeningTag:       function(strLink) {
+                                        return "<a href='" + dojox.html.entities.encode(strLink) + "' target='_blank'>";
                                     },
 
         _updateStatus:              function(strStatus) {
