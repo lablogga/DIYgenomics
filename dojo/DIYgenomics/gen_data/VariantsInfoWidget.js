@@ -42,6 +42,7 @@ dojo.declare(
     [dijit._Widget, dijit._Templated],
     {
         condition:                  "",
+        idReplace:                  "",
 
         templateString:             [   "<div>",
                                             "<div dojoAttachPoint='_divStatus'>",
@@ -103,6 +104,11 @@ dojo.declare(
                                         this._updateStatus("Completed loading and processing reviewed variants data.");
                                         dojo.style(this._divContent, 'display', "");
                                         dojo.style(this._divStatus, 'display', 'none');
+
+                                        if (this.idReplace) {
+                                            var elReplace = dojo.byId(this.idReplace);
+                                            if (elReplace) dojo.style(elReplace, 'display', 'none');
+                                        }
                                     },
 
         onSelectedCondition:        function() {

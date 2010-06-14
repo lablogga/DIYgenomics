@@ -61,7 +61,13 @@
 
         $mapDataCurrentCondition = queryDataForCondition($idForCondition);
     ?>
-    <!-- The following generates the variant info via PHP. -->
+    <!-- The following generates the variant info via Dojo.  The dojo rendering will hide the PHP rendering below after it completely initializes. -->
+    <div
+        dojoType='DIYgenomics.gen_data.VariantsInfoWidget'
+        condition='<?=htmlentities($strCondition, ENT_QUOTES)?>'
+        idReplace='<?=$idTable?>'></div>
+
+    <!-- The following generates the variant info via PHP.  The content is still rendered server-side to be indexable by search engines. -->
     <div id='<?=$idTable?>'>
         <div class='condlist'>
             <!-- DROPDOWN MENU -->
@@ -174,8 +180,6 @@
             ?>
         </ol>
     </div>
-    <!-- The following generates the variant info via Dojo.  Ultimately it will be overlayed on top of the PHP generated info. -->
-    <div dojoType='DIYgenomics.gen_data.VariantsInfoWidget' condition='<?=htmlentities($strCondition, ENT_QUOTES)?>'></div>
     <?php
     }
 ?>
