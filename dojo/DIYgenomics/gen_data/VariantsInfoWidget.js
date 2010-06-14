@@ -44,26 +44,32 @@ dojo.declare(
         condition:                  "",
 
         templateString:             [   "<div>",
-                                            "<div class='condlist'>",
-                                                "<select dojoAttachPoint='_selectConditions' dojoAttachEvent='onchange:onSelectedCondition'>",
-                                                "</select>",
+                                            "<div dojoAttachPoint='_divStatus'>",
                                             "</div>",
-                                            "<h3>Variants reviewed for ",
-                                                "<span dojoAttachPoint='_spanCondition'>${condition}</span>",
-                                            "</h3>",
-                                            "<table class='variants_table' cellpadding='0' cellspacing='0'>",
-                                                "<thead>",
-                                                    "<tr dojoAttachPoint='_trVariantsTableHeader'>",
-                                                    "</tr>",
-                                                "</thead>",
-                                                "<tbody dojoAttachPoint='_trVariantsTableBody>",
-                                                "</tbody>",
-                                            "</table>",
+                                            "<div dojoAttachPoint='_divContent' style='display:none;'>",
+                                                "<div class='condlist'>",
+                                                    "<select dojoAttachPoint='_selectConditions' dojoAttachEvent='onchange:onSelectedCondition'>",
+                                                    "</select>",
+                                                "</div>",
+                                                "<h3>Variants reviewed for ",
+                                                    "<span dojoAttachPoint='_spanCondition'>${condition}</span>",
+                                                "</h3>",
+                                                "<table class='variants_table' cellpadding='0' cellspacing='0'>",
+                                                    "<thead>",
+                                                        "<tr dojoAttachPoint='_trVariantsTableHeader'>",
+                                                        "</tr>",
+                                                    "</thead>",
+                                                    "<tbody dojoAttachPoint='_trVariantsTableBody>",
+                                                    "</tbody>",
+                                                "</table>",
+                                            "</div>",
                                         "</div>"
                                     ].join(""),
 
         postCreate:                 function() {
                                         this.inherited(arguments);
+
+                                        this._updateStatus("Loading reviewed variants data...");
 
                                         var that = this;
 
@@ -71,6 +77,13 @@ dojo.declare(
                                                 {
                                                     handleAs:   'json',
                                                     url:        'gen_data_all.php',
+                                                    error:      function(error) {
+                                                                    that._updateStatus(
+                                                                            "Encountered error loading reviewed variants data..."
+                                                                            + "  Error number: " + (error && error.number || "unknown"),
+                                                                            + "  Error description: " + (error && error.description || "unknown"));
+                                                                },
+
                                                     load:       function(data) {
                                                                     that.onLoadedData(data);
                                                                 }
@@ -78,9 +91,15 @@ dojo.declare(
                                     },
 
         onLoadedData:               function(data) {
+                                        this._updateStatus("Processing reviewed variants data...");
+
                                         this.data = data;
                                         this._fillConditionsCB();
                                         this._displayCurrentCondition();
+
+                                        this._updateStatus("Completed loading and processing reviewed variants data.");
+                                        dojo.style(this._divContent, 'display', "");
+                                        dojo.style(this._divStatus, 'display', 'none');
                                     },
 
         onSelectedCondition:        function() {
@@ -264,5 +283,9 @@ dojo.declare(
                                             if (!dataVariant) continue;
                                             _addVariantRow(dataVariant, i % 2 == 0 ? 'vtr_even' : 'vtr_odd');
                                         }
+                                    },
+
+        _updateStatus:              function(strStatus) {
+                                        this._divStatus.innerHTML = dojox.html.entities.encode(strStatus);
                                     }
     });
