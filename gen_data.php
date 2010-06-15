@@ -65,7 +65,7 @@
         <script
             type='text/javascript'
             src='/dojo-release-1.4.3/dojo/dojo.js'
-            djConfig="debugAtAllCosts: true, parseOnLoad: true, modulePaths:{'DIYgenomics':'/dojo/DIYgenomics/'}">
+            djConfig="debugAtAllCosts: true, parseOnLoad: true, modulePaths:{'DIYgenomics':'/dojo_master/DIYgenomics/'}">
         </script>
 
          <!-- Favicon Information -->
