@@ -44,6 +44,8 @@ dojo.declare(
         condition:                  "",
         idReplace:                  "",
 
+        _urlFILEfox:                'https://addons.mozilla.org/en-US/firefox/addon/156946/',
+
         templateString:             [   "<div>",
                                             "<div dojoAttachPoint='_divStatus'>",
                                             "</div>",
@@ -64,7 +66,7 @@ dojo.declare(
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanIFF' style='display:none;'>",
                                                         "Install the ",
-                                                        "<a href='https://addons.mozilla.org/en-US/firefox/addon/156946/' target='_blank'>",
+                                                        "<a href='${_urlFILEfox}' target='_blank'>",
                                                             "FILEfox",
                                                         "</a>",
                                                         " extension to privately view your own data.",
@@ -75,7 +77,7 @@ dojo.declare(
                                                             "Firefox",
                                                         "</a>",
                                                         " with the ",
-                                                        "<a href='https://addons.mozilla.org/en-US/firefox/addon/156946/' target='_blank'>",
+                                                        "<a href='${_urlFILEfox}' target='_blank'>",
                                                             "FILEfox",
                                                         "</a>",
                                                         " extension to privately view your own data.",
