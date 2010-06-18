@@ -55,6 +55,32 @@ dojo.declare(
                                                 "<h3>Variants reviewed for ",
                                                     "<span dojoAttachPoint='_spanCondition'>${condition}</span>",
                                                 "</h3>",
+                                                "<h4 dojoAttachPoint='_h4Controls' style='display:none;text-align:center;'>",
+                                                    "<span dojoAttachPoint='_spanVYD' style='display:none;'>",
+                                                        "<a href='#'>Privately view your own data</a>",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanPYD' style='display:none;'>",
+                                                        "<a href='#'>Purge your data</a>",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanIFF' style='display:none;'>",
+                                                        "Install the ",
+                                                        "<a href='https://addons.mozilla.org/en-US/firefox/addon/156946/' target='_blank'>",
+                                                            "FILEfox",
+                                                        "</a>",
+                                                        " extension to privately view your own data.",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanUFF' style='display:none;'>",
+                                                        "Use ",
+                                                        "<a href='http://www.getfirefox.com/' target='_blank'>",
+                                                            "Firefox",
+                                                        "</a>",
+                                                        " with the ",
+                                                        "<a href='https://addons.mozilla.org/en-US/firefox/addon/156946/' target='_blank'>",
+                                                            "FILEfox",
+                                                        "</a>",
+                                                        " extension to privately view your own data.",
+                                                    "</span>",
+                                                "</h4>",
                                                 "<table class='variants_table' cellpadding='0' cellspacing='0'>",
                                                     "<thead>",
                                                         "<tr dojoAttachPoint='_trVariantsTableHeader'>",
@@ -109,6 +135,17 @@ dojo.declare(
                                             var elReplace = dojo.byId(this.idReplace);
                                             if (elReplace) dojo.style(elReplace, 'display', 'none');
                                         }
+
+                                        if (dojo.isFF) {
+                                            if (window.nsFILEfox) {
+                                                dojo.style(this._spanVYD, 'display', "");
+                                            } else {
+                                                dojo.style(this._spanIFF, 'display', "");
+                                            }
+                                        } else {
+                                            dojo.style(this._spanUFF, 'display', "");
+                                        }
+                                        dojo.style(this._h4Controls, 'display', "");
                                     },
 
         onSelectedCondition:        function() {
