@@ -45,6 +45,7 @@ dojo.declare(
         idReplace:                  "",
 
         _urlFILEfox:                'https://addons.mozilla.org/en-US/firefox/addon/156946/',
+        _versionFILEfoxMin:         '0.2.3',
 
         templateString:             [   "<div>",
                                             "<div dojoAttachPoint='_divStatus'>",
@@ -70,6 +71,17 @@ dojo.declare(
                                                             "FILEfox",
                                                         "</a>",
                                                         " extension to privately view your own data.",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanUPFF' style='display:none;'>",
+                                                        "Upgrade your ",
+                                                        "<a href='${_urlFILEfox}' target='_blank'>",
+                                                            "FILEfox",
+                                                        "</a>",
+                                                        " extension to at least version ${_versionFILEfoxMin} to privately view your own data.",
+                                                        "<br>",
+                                                        "(You have old version ",
+                                                        "<span dojoAttachPoint='_spanUPFFOV'></span>",
+                                                        " installed.)",
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanUFF' style='display:none;'>",
                                                         "Use ",
@@ -140,7 +152,12 @@ dojo.declare(
 
                                         if (dojo.isFF) {
                                             if (window.nsFILEfox) {
-                                                dojo.style(this._spanVYD, 'display', "");
+                                                if (nsFILEfox.isVersionAtLeast && nsFILEfox.isVersionAtLeast(this._versionFILEfoxMin)) {
+                                                    dojo.style(this._spanVYD, 'display', "");
+                                                } else {
+                                                    dojo.style(this._spanUPFF, 'display', "");
+                                                    this._spanUPFFOV.innerHTML = nsFILEfox.getVersion();
+                                                }
                                             } else {
                                                 dojo.style(this._spanIFF, 'display', "");
                                             }
