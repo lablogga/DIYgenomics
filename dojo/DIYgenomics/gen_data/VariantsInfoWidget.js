@@ -60,7 +60,7 @@ dojo.declare(
                                                 "</h3>",
                                                 "<h4 dojoAttachPoint='_h4Controls' style='display:none;text-align:center;'>",
                                                     "<span dojoAttachPoint='_spanVYD' style='display:none;'>",
-                                                        "<a href='#'>Privately view your own data</a>",
+                                                        "<a href='#' dojoAttachEvent='onclick:_onClickVYD'>Privately view your own data</a>",
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanPYD' style='display:none;'>",
                                                         "<a href='#'>Purge your data</a>",
@@ -378,6 +378,24 @@ dojo.declare(
 
         _getAnchorOpeningTag:       function(strLink) {
                                         return "<a href='" + dojox.html.entities.encode(strLink) + "' target='_blank'>";
+                                    },
+
+        _onClickVYD:                function() {
+                                        // Request a file through FILEfox:
+                                        // (Keeping the returned data object in a private local variable so that other scripts on the page cannot read it.)
+                                        var fileUserGenome = nsFILEfox.requestLoadASCIIFile(
+                                                                'upload_policy_file_never',             // Specifying a valid file upload policy
+                                                                                                        // to avoid an error message!
+                                                                'upload_policy_derived_data_never',     // Specifying a valid the derived data upload policy
+                                                                                                        // to avoid an error message!
+                                                                "DIYgenomics Health App",               // Company / JavaScript app name
+                                                                                                        // Additional message to the user
+                                                                "Please specify your genome file from 23andMe.");
+                                        if (!fileUserGenome) {
+                                            alert("Could not load your genome file.  You either canceled, or there was an error.");
+                                            return;
+                                        }
+
                                     },
 
         _updateStatus:              function(strStatus) {
