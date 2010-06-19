@@ -396,6 +396,21 @@ dojo.declare(
                                             return;
                                         }
 
+                                        for (var i = 0; i < fileUserGenome.totalLines; i++) {
+                                            var totalTokensOnLine = fileUserGenome.getTotalTokensOnLine(i);
+                                            // Each line with the data that we are after looks like this:
+                                            // rsid    chromosome  position    genotype
+                                            if (totalTokensOnLine != 4) continue;                       // Number of tokens on the line is not 4.
+
+                                            // The first token should be the variant identifier, which looks like this:
+                                            // rs#######
+                                            var strTokenFirst = fileUserGenome.getTokenOnLine(0, i);
+                                            if (!strTokenFirst) continue;
+                                            if (strTokenFirst.search(/^rs\d+$/) != 0) continue;         // First token does not appear to be a variant.
+
+                                            // OK, after this point we have a valid variant.
+                                            
+                                        }
                                     },
 
         _updateStatus:              function(strStatus) {
