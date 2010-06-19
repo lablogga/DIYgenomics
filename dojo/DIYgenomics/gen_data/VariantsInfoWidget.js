@@ -138,6 +138,9 @@ dojo.declare(
                                         this._updateStatus("Processing reviewed variants data...");
 
                                         this.data = data;
+
+                                        this._processVariants();
+
                                         this._fillConditionsCB();
                                         this._displayCurrentCondition();
 
@@ -170,6 +173,30 @@ dojo.declare(
         onSelectedCondition:        function() {
                                         this.condition = dojo.attr(this._selectConditions, 'value');
                                         this._displayCurrentCondition();
+                                    },
+
+        _processVariants:           function() {
+                                        this._dataVariants = {};
+
+                                        if (!this.data || !this.data.conditions || !this.data.conditions_keyed) return;
+
+                                        for (var i = 0; i < this.data.conditions.length; i++) {
+                                            var strCondition = this.data.conditions[i];
+                                            if (!strCondition) continue;
+
+                                            var dataCondition = this.data.conditions_keyed[strCondition];
+                                            if (!dataCondition ||
+                                                !dataCondition.condition_data ||
+                                                !dataCondition.condition_data.variants ||
+                                                !dataCondition.condition_data.variants_keyed) continue;
+
+                                            for (var j = 0; j < dataCondition.condition_data.variants.length; j++) {
+                                                var strVariant = dataCondition.condition_data.variants[j];
+                                                if (!strVariant) continue;
+
+                                                this._dataVariants[strVariant] = dataCondition.condition_data.variants_keyed[strVariant];
+                                            }
+                                        }
                                     },
 
         _clearChildNodes:           function(elNode) {
@@ -396,6 +423,7 @@ dojo.declare(
                                             return;
                                         }
 
+                                        var totalRelevantVariants = 0;
                                         for (var i = 0; i < fileUserGenome.totalLines; i++) {
                                             var totalTokensOnLine = fileUserGenome.getTotalTokensOnLine(i);
                                             // Each line with the data that we are after looks like this:
@@ -409,8 +437,13 @@ dojo.declare(
                                             if (strTokenFirst.search(/^rs\d+$/) != 0) continue;         // First token does not appear to be a variant.
 
                                             // OK, after this point we have a valid variant.
-                                            
+                                            if (!this._dataVariants[strTokenFirst]) continue;           // Not a relevant variant.
+
+                                            // After this point we found a relevant variant, time to save the user data to it.
+                                            this._dataVariants[strTokenFirst].dbSNP_user = fileUserGenome.getTokenOnLine(3, i);
+                                            totalRelevantVariants++;
                                         }
+
                                     },
 
         _updateStatus:              function(strStatus) {
