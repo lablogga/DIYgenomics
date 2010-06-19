@@ -71,7 +71,7 @@ dojo.declare(
                                                         " relevant variants so far.",
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanPYD' style='display:none;'>",
-                                                        "<a href='#'>Purge your private data</a>",
+                                                        "<a href='#' dojoAttachEvent='onclick:_onClickPYD'>Purge your private data</a>",
                                                         "<br>",
                                                         "(Found ",
                                                         "<span dojoAttachPoint='_spanPYD_Relevant'>0</span>",
@@ -419,6 +419,16 @@ dojo.declare(
                                         return "<a href='" + dojox.html.entities.encode(strLink) + "' target='_blank'>";
                                     },
 
+                                    /**
+                                     *  Event handler for user clicks on 'Purge your private data'.
+                                     */
+        _onClickPYD:                function() {
+                                        this._purgeUserPrivateData();
+
+                                        dojo.style(this._spanVYD, 'display', "");
+                                        dojo.style(this._spanPYD, 'display', 'none');
+                                    },
+
         _onClickVYD:                function() {
                                         // Request a file through FILEfox:
                                         // (Keeping the returned data object in a private local variable so that other scripts on the page cannot read it.)
@@ -436,6 +446,7 @@ dojo.declare(
                                         }
 
                                         this._updateStatusLoadingProgress(0, 0);
+                                        this._purgeUserPrivateData();
 
                                         dojo.style(this._spanVYD, 'display', 'none');
                                         dojo.style(this._spanVYDP, 'display', "");
@@ -483,6 +494,17 @@ dojo.declare(
         _onDoneProcessingUserData:  function() {
                                         dojo.style(this._spanVYDP, 'display', 'none');
                                         dojo.style(this._spanPYD, 'display', "");
+                                    },
+
+        _purgeUserPrivateData:      function() {
+                                        if (!this._dataVariants) return;
+
+                                        for (var strVariant in this._dataVariants) {
+                                            var dataVariant = this._dataVariants[strVariant];
+                                            if (!dataVariant) continue;
+
+                                            dataVariant.dbSNP_user = null;
+                                        }
                                     },
 
         _updateStatus:              function(strStatus) {
