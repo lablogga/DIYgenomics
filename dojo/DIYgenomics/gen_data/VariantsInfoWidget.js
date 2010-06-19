@@ -72,6 +72,10 @@ dojo.declare(
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanPYD' style='display:none;'>",
                                                         "<a href='#'>Purge your private data</a>",
+                                                        "<br>",
+                                                        "(Found ",
+                                                        "<span dojoAttachPoint='_spanPYD_Relevant'>0</span>",
+                                                        " relevant variants.)",
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanIFF' style='display:none;'>",
                                                         "Install the ",
@@ -492,5 +496,6 @@ dojo.declare(
                                     function(totalPercentComplete, totalRelevantVariants) {
                                         this._spanVYDP_Percent.innerHTML    = totalPercentComplete.toFixed(2);
                                         this._spanVYDP_Relevant.innerHTML   = "" + totalRelevantVariants;
+                                        this._spanPYD_Relevant.innerHTML    = "" + totalRelevantVariants;
                                     }
     });
