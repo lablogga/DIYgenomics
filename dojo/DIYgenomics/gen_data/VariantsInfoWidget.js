@@ -71,7 +71,7 @@ dojo.declare(
                                                         " relevant variants so far.",
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanPYD' style='display:none;'>",
-                                                        "<a href='#'>Purge your data</a>",
+                                                        "<a href='#'>Purge your private data</a>",
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanIFF' style='display:none;'>",
                                                         "Install the ",
