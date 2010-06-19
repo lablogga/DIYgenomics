@@ -431,8 +431,7 @@ dojo.declare(
                                             return;
                                         }
 
-                                        this._spanVYDP_Percent.innerHTML    = "0";
-                                        this._spanVYDP_Relevant.innerHTML   = "0";
+                                        this._updateStatusLoadingProgress(0, 0);
 
                                         dojo.style(this._spanVYD, 'display', 'none');
                                         dojo.style(this._spanVYDP, 'display', "");
@@ -468,8 +467,9 @@ dojo.declare(
                                                                 that._dataVariants[strTokenFirst].dbSNP_user = fileUserGenome.getTokenOnLine(3, lineCurrent);
                                                                 totalRelevantVariants++;
                                                             }
-                                                            that._spanVYDP_Percent.innerHTML    = (100 * (lineCurrent / fileUserGenome.totalLines)).toFixed(2);
-                                                            that._spanVYDP_Relevant.innerHTML   = "" + totalRelevantVariants;
+                                                            that._updateStatusLoadingProgress(
+                                                                        100 * (lineCurrent / fileUserGenome.totalLines),
+                                                                        totalRelevantVariants);
                                                         }
 
                                         timer.start();
@@ -477,5 +477,14 @@ dojo.declare(
 
         _updateStatus:              function(strStatus) {
                                         this._divStatus.innerHTML = dojox.html.entities.encode(strStatus);
+                                    },
+
+                                    /**
+                                     *  Updates the relevant <span>s with the latest progress counters.
+                                     */
+        _updateStatusLoadingProgress:
+                                    function(totalPercentComplete, totalRelevantVariants) {
+                                        this._spanVYDP_Percent.innerHTML    = totalPercentComplete.toFixed(2);
+                                        this._spanVYDP_Relevant.innerHTML   = "" + totalRelevantVariants;
                                     }
     });
