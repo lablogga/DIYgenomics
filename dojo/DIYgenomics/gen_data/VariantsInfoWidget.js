@@ -445,6 +445,7 @@ dojo.declare(
                                                             for (i = 0; i < 5000; i++, lineCurrent++) {
                                                                 if (lineCurrent == fileUserGenome.totalLines) {
                                                                     timer.stop();
+                                                                    that._onDoneProcessingUserData();
                                                                     break;
                                                                 }
 
@@ -473,6 +474,11 @@ dojo.declare(
                                                         }
 
                                         timer.start();
+                                    },
+
+        _onDoneProcessingUserData:  function() {
+                                        dojo.style(this._spanVYDP, 'display', 'none');
+                                        dojo.style(this._spanPYD, 'display', "");
                                     },
 
         _updateStatus:              function(strStatus) {
