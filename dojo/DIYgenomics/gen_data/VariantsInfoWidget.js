@@ -36,6 +36,7 @@ dojo.require('dijit._Templated');
 dojo.require('dijit._Widget');
 
 dojo.require('dojox.html.entities');
+dojo.require('dojox.timing');
 
 dojo.declare(
     'DIYgenomics.gen_data.VariantsInfoWidget',
@@ -61,6 +62,13 @@ dojo.declare(
                                                 "<h4 dojoAttachPoint='_h4Controls' style='display:none;text-align:center;'>",
                                                     "<span dojoAttachPoint='_spanVYD' style='display:none;'>",
                                                         "<a href='#' dojoAttachEvent='onclick:_onClickVYD'>Privately view your own data</a>",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanVYDP' style='display:none;'>",
+                                                        "Loading your genome data...  ",
+                                                        "<span dojoAttachPoint='_spanVYDP_Percent'>0</span>",
+                                                        "% complete.  Found ",
+                                                        "<span dojoAttachPoint='_spanVYDP_Relevant'>0</span>",
+                                                        " relevant variants so far.",
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanPYD' style='display:none;'>",
                                                         "<a href='#'>Purge your data</a>",
@@ -423,27 +431,48 @@ dojo.declare(
                                             return;
                                         }
 
+                                        this._spanVYDP_Percent.innerHTML    = "0";
+                                        this._spanVYDP_Relevant.innerHTML   = "0";
+
+                                        dojo.style(this._spanVYD, 'display', 'none');
+                                        dojo.style(this._spanVYDP, 'display', "");
+
                                         var totalRelevantVariants = 0;
-                                        for (var i = 0; i < fileUserGenome.totalLines; i++) {
-                                            var totalTokensOnLine = fileUserGenome.getTotalTokensOnLine(i);
-                                            // Each line with the data that we are after looks like this:
-                                            // rsid    chromosome  position    genotype
-                                            if (totalTokensOnLine != 4) continue;                       // Number of tokens on the line is not 4.
+                                        var lineCurrent = 0;
 
-                                            // The first token should be the variant identifier, which looks like this:
-                                            // rs#######
-                                            var strTokenFirst = fileUserGenome.getTokenOnLine(0, i);
-                                            if (!strTokenFirst) continue;
-                                            if (strTokenFirst.search(/^rs\d+$/) != 0) continue;         // First token does not appear to be a variant.
+                                        var timer = new dojox.timing.Timer(100);
+                                        var that = this;
+                                        timer.onTick =  function() {
+                                                            for (i = 0; i < 5000; i++, lineCurrent++) {
+                                                                if (lineCurrent == fileUserGenome.totalLines) {
+                                                                    timer.stop();
+                                                                    break;
+                                                                }
 
-                                            // OK, after this point we have a valid variant.
-                                            if (!this._dataVariants[strTokenFirst]) continue;           // Not a relevant variant.
+                                                                var totalTokensOnLine = fileUserGenome.getTotalTokensOnLine(lineCurrent);
 
-                                            // After this point we found a relevant variant, time to save the user data to it.
-                                            this._dataVariants[strTokenFirst].dbSNP_user = fileUserGenome.getTokenOnLine(3, i);
-                                            totalRelevantVariants++;
-                                        }
+                                                                // Each line with the data that we are after looks like this:
+                                                                // rsid    chromosome  position    genotype
+                                                                if (totalTokensOnLine != 4) continue;                       // Number of tokens on the line is not 4.
 
+                                                                // The first token should be the variant identifier, which looks like this:
+                                                                // rs#######
+                                                                var strTokenFirst = fileUserGenome.getTokenOnLine(0, lineCurrent);
+                                                                if (!strTokenFirst) continue;
+                                                                if (strTokenFirst.search(/^rs\d+$/) != 0) continue;         // First token does not appear to be a variant.
+
+                                                                // OK, after this point we have a valid variant.
+                                                                if (!that._dataVariants[strTokenFirst]) continue;           // Not a relevant variant.
+
+                                                                // After this point we found a relevant variant, time to save the user data to it.
+                                                                that._dataVariants[strTokenFirst].dbSNP_user = fileUserGenome.getTokenOnLine(3, lineCurrent);
+                                                                totalRelevantVariants++;
+                                                            }
+                                                            that._spanVYDP_Percent.innerHTML    = (100 * (lineCurrent / fileUserGenome.totalLines)).toFixed(2);
+                                                            that._spanVYDP_Relevant.innerHTML   = "" + totalRelevantVariants;
+                                                        }
+
+                                        timer.start();
                                     },
 
         _updateStatus:              function(strStatus) {
