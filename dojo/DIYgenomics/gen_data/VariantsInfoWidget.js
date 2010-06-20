@@ -323,8 +323,8 @@ dojo.declare(
                                         }
 
                                         _addHeaderColumn('dbSNP (Nrml/Rsk)', 'http://www.ncbi.nlm.nih.gov/projects/SNP');
-                                        _addHeaderColumn('Sample data');
-                                        _addHeaderColumn('Your private data');
+                                        if (!this._isPrivateDataLoaded) _addHeaderColumn('Sample data');
+                                        if (this._isPrivateDataLoaded) _addHeaderColumn('Your private data');
 
                                         var arrVariants =   condition.condition_data &&
                                                             condition.condition_data.variants;
@@ -398,28 +398,32 @@ dojo.declare(
                                                                 dojox.html.entities.encode(dataVariant.dbSNP_risk) || "",
                                                                 "</a>"]);
 
-                                            var strColor1 = _getColorSNP(dataVariant.dbSNP_sample_1);
-                                            var strColor2 = _getColorSNP(dataVariant.dbSNP_sample_2);
+                                            if (!this._isPrivateDataLoaded) {
+                                                var strColor1 = _getColorSNP(dataVariant.dbSNP_sample_1);
+                                                var strColor2 = _getColorSNP(dataVariant.dbSNP_sample_2);
 
-                                            _addVariantColumn([ "<span style='color:", strColor1, "'>",
-                                                                    (dojox.html.entities.encode(dataVariant.dbSNP_sample_1) || ""),
-                                                                "</span>",
-                                                                "<span style='color:", strColor2, "'>",
-                                                                    (dojox.html.entities.encode(dataVariant.dbSNP_sample_2) || ""),
-                                                                "</span>"]);
-
-                                            var htmlPrivateData = [];
-                                            if (dataVariant.dbSNP_user) {
-                                                for (var i = 0; i < dataVariant.dbSNP_user.length; i++) {
-                                                    var l = dataVariant.dbSNP_user[i];
-                                                    var strColorPD = _getColorSNP(l);
-                                                    htmlPrivateData.push(
-                                                                "<span style='color:", strColorPD, "'>",
-                                                                    (dojox.html.entities.encode(l) || ""),
-                                                                "</span>");
-                                                }
+                                                _addVariantColumn([ "<span style='color:", strColor1, "'>",
+                                                                        (dojox.html.entities.encode(dataVariant.dbSNP_sample_1) || ""),
+                                                                    "</span>",
+                                                                    "<span style='color:", strColor2, "'>",
+                                                                        (dojox.html.entities.encode(dataVariant.dbSNP_sample_2) || ""),
+                                                                    "</span>"]);
                                             }
-                                            _addVariantColumn(htmlPrivateData);
+
+                                            if (this._isPrivateDataLoaded) {
+                                                var htmlPrivateData = [];
+                                                if (dataVariant.dbSNP_user) {
+                                                    for (var i = 0; i < dataVariant.dbSNP_user.length; i++) {
+                                                        var l = dataVariant.dbSNP_user[i];
+                                                        var strColorPD = _getColorSNP(l);
+                                                        htmlPrivateData.push(
+                                                                    "<span style='color:", strColorPD, "'>",
+                                                                        (dojox.html.entities.encode(l) || ""),
+                                                                    "</span>");
+                                                    }
+                                                }
+                                                _addVariantColumn(htmlPrivateData);
+                                            }
                                         }
 
                                         for (var i = 0; i < arrVariants.length; i++) {
@@ -476,6 +480,7 @@ dojo.declare(
                                                             for (i = 0; i < 5000; i++, lineCurrent++) {
                                                                 if (lineCurrent == fileUserGenome.totalLines) {
                                                                     timer.stop();
+                                                                    that._isPrivateDataLoaded = true;
                                                                     that._onDoneProcessingUserData();
                                                                     break;
                                                                 }
@@ -514,7 +519,7 @@ dojo.declare(
                                     },
 
         _purgeUserPrivateData:      function() {
-                                        if (!this._dataVariants) return;
+                                        if (!this._dataVariants) throw new Error("Logic error.");
 
                                         for (var strVariant in this._dataVariants) {
                                             var dataVariant = this._dataVariants[strVariant];
@@ -522,6 +527,7 @@ dojo.declare(
 
                                             dataVariant.dbSNP_user = null;
                                         }
+                                        this._isPrivateDataLoaded = false;
                                     },
 
         _updateStatus:              function(strStatus) {
