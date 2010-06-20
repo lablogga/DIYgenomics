@@ -403,7 +403,7 @@ dojo.declare(
                                                                 dojox.html.entities.encode(dataVariant.dbSNP_risk) || "",
                                                                 "</a>"]);
 
-                                            if (!this._isPrivateDataLoaded) {
+                                            if (!that._isPrivateDataLoaded) {
                                                 var strColor1 = _getColorSNP(dataVariant.dbSNP_sample_1);
                                                 var strColor2 = _getColorSNP(dataVariant.dbSNP_sample_2);
 
@@ -415,7 +415,7 @@ dojo.declare(
                                                                     "</span>"]);
                                             }
 
-                                            if (this._isPrivateDataLoaded) {
+                                            if (that._isPrivateDataLoaded) {
                                                 var htmlPrivateData = [];
                                                 if (dataVariant.dbSNP_user) {
                                                     for (var i = 0; i < dataVariant.dbSNP_user.length; i++) {
@@ -501,7 +501,7 @@ dojo.declare(
                                                                 return;
                                                             }
 
-                                                            for (i = 0; i < 5000; i++, lineCurrent++) {
+                                                            for (var i = 0; i < 5000; i++, lineCurrent++) {
                                                                 if (lineCurrent == fileUserGenome.totalLines) {
                                                                     timer.stop();
                                                                     that._isPrivateDataLoaded = true;
