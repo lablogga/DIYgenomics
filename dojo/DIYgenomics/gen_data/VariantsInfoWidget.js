@@ -324,6 +324,7 @@ dojo.declare(
 
                                         _addHeaderColumn('dbSNP (Nrml/Rsk)', 'http://www.ncbi.nlm.nih.gov/projects/SNP');
                                         _addHeaderColumn('Sample data');
+                                        _addHeaderColumn('Your private data');
 
                                         var arrVariants =   condition.condition_data &&
                                                             condition.condition_data.variants;
@@ -347,6 +348,12 @@ dojo.declare(
                                                                 },
                                                                 trRow);
                                                 if (arrHTML) tdColumn.innerHTML = arrHTML.join("");
+                                            }
+
+                                            function _getColorSNP(strSNP) {
+                                                return (strSNP == dataVariant.dbSNP_normal)
+                                                            ?   "green"
+                                                            :   "red";
                                             }
 
                                             _addVariantColumn([ that._getAnchorOpeningTag(dataVariant.locus_url),
@@ -391,13 +398,8 @@ dojo.declare(
                                                                 dojox.html.entities.encode(dataVariant.dbSNP_risk) || "",
                                                                 "</a>"]);
 
-                                            var strColor1 = dataVariant.dbSNP_sample_1 == dataVariant.dbSNP_normal
-                                                            ?   "green"
-                                                            :   "red";
-
-                                            var strColor2 = dataVariant.dbSNP_sample_2 == dataVariant.dbSNP_normal
-                                                            ?   "green"
-                                                            :   "red";
+                                            var strColor1 = _getColorSNP(dataVariant.dbSNP_sample_1);
+                                            var strColor2 = _getColorSNP(dataVariant.dbSNP_sample_2);
 
                                             _addVariantColumn([ "<span style='color:", strColor1, "'>",
                                                                     (dojox.html.entities.encode(dataVariant.dbSNP_sample_1) || ""),
@@ -405,6 +407,19 @@ dojo.declare(
                                                                 "<span style='color:", strColor2, "'>",
                                                                     (dojox.html.entities.encode(dataVariant.dbSNP_sample_2) || ""),
                                                                 "</span>"]);
+
+                                            var htmlPrivateData = [];
+                                            if (dataVariant.dbSNP_user) {
+                                                for (var i = 0; i < dataVariant.dbSNP_user.length; i++) {
+                                                    var l = dataVariant.dbSNP_user[i];
+                                                    var strColorPD = _getColorSNP(l);
+                                                    htmlPrivateData.push(
+                                                                "<span style='color:", strColorPD, "'>",
+                                                                    (dojox.html.entities.encode(l) || ""),
+                                                                "</span>");
+                                                }
+                                            }
+                                            _addVariantColumn(htmlPrivateData);
                                         }
 
                                         for (var i = 0; i < arrVariants.length; i++) {
@@ -425,6 +440,7 @@ dojo.declare(
         _onClickPYD:                function() {
                                         this._purgeUserPrivateData();
 
+                                        this._fillVariantsTable();
                                         dojo.style(this._spanVYD, 'display', "");
                                         dojo.style(this._spanPYD, 'display', 'none');
                                     },
@@ -492,6 +508,7 @@ dojo.declare(
                                     },
 
         _onDoneProcessingUserData:  function() {
+                                        this._fillVariantsTable();
                                         dojo.style(this._spanVYDP, 'display', 'none');
                                         dojo.style(this._spanPYD, 'display', "");
                                     },
