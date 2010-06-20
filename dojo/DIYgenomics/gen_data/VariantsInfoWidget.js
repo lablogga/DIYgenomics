@@ -72,6 +72,8 @@ dojo.declare(
                                                         "% complete, found ",
                                                         "<span dojoAttachPoint='_spanVYDP_Relevant'>0</span>",
                                                         " relevant variants so far...",
+                                                        "<br>",
+                                                        "<a href='#' dojoAttachEvent='onclick:_onClickAbortProcessing'>Abort processing of and purge your private data</a>",
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanPYD' style='display:none;'>",
                                                         "<a href='#' dojoAttachEvent='onclick:_onClickPYD'>Purge your private data</a>",
@@ -441,6 +443,10 @@ dojo.declare(
                                         return "<a href='" + dojox.html.entities.encode(strLink) + "' target='_blank'>";
                                     },
 
+        _onClickAbortProcessing:    function() {
+                                        this.flagAbortProcessing = true;
+                                    },
+
                                     /**
                                      *  Event handler for user clicks on 'Purge your private data'.
                                      */
@@ -487,6 +493,14 @@ dojo.declare(
                                         var timer = new dojox.timing.Timer(100);
                                         var that = this;
                                         timer.onTick =  function() {
+                                                            if (that.flagAbortProcessing) {                                 // This checks if the user decided to cancel the data processing.
+                                                                that.flagAbortProcessing = false;
+                                                                timer.stop();
+                                                                dojo.style(that._spanVYDP, 'display', 'none');
+                                                                that._onClickPYD();
+                                                                return;
+                                                            }
+
                                                             for (i = 0; i < 5000; i++, lineCurrent++) {
                                                                 if (lineCurrent == fileUserGenome.totalLines) {
                                                                     timer.stop();
