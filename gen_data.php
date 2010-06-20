@@ -144,8 +144,8 @@
          <?php
 			//Call PHP functions
 			require('../glossary.php');
-    		require('../footer_site.php');
     		require('footer_webapp.php');
+            require('../footer_site.php');
 	     ?>
 
 
