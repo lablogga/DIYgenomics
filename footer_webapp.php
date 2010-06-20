@@ -5,7 +5,7 @@
 * Copyright (C) 2010 Marat Nepomnyashy maratbn@gmail
 * All rights reserved.
 *
-* Module: gen_data_variants_info.php
+* Module: footer_webapp.php
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are met:
@@ -37,7 +37,7 @@
 function displayLicensingInformation() {
 
 //Content and software licensing portion
-	echo "<p style=\"text-align: center; font-size: 0.75em;\"><b/>";
+	echo "<p style=\"text-align: center; font-size: 0.75em;padding-top:25px;\"><b/>";
 	echo "Software licensing: BSD (<a href=\"http://github.com/lablogga/DIYgenomics\">DIYgenomics GitHub</a>) ";
 	echo "</b></p>";
 

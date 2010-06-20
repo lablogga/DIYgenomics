@@ -36,6 +36,7 @@ dojo.require('dijit._Templated');
 dojo.require('dijit._Widget');
 
 dojo.require('dojox.html.entities');
+dojo.require('dojox.timing');
 
 dojo.declare(
     'DIYgenomics.gen_data.VariantsInfoWidget',
@@ -43,6 +44,9 @@ dojo.declare(
     {
         condition:                  "",
         idReplace:                  "",
+
+        _urlFILEfox:                'https://addons.mozilla.org/en-US/firefox/addon/156946/',
+        _versionFILEfoxMin:         '0.2.3',
 
         templateString:             [   "<div>",
                                             "<div dojoAttachPoint='_divStatus'>",
@@ -55,6 +59,59 @@ dojo.declare(
                                                 "<h3>Variants reviewed for ",
                                                     "<span dojoAttachPoint='_spanCondition'>${condition}</span>",
                                                 "</h3>",
+                                                "<h4 dojoAttachPoint='_h4Controls' style='display:none;text-align:center;'>",
+                                                    "<span dojoAttachPoint='_spanVYD' style='display:none;'>",
+                                                        "<a href='#' dojoAttachEvent='onclick:_onClickVYD'>Privately view your own data</a>",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanVYDW' style='display:none;'>",
+                                                        "Loading your genome data file...  Please wait...",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanVYDP' style='display:none;'>",
+                                                        "Processing your genome data, ",
+                                                        "<span dojoAttachPoint='_spanVYDP_Percent'>0</span>",
+                                                        "% complete, found ",
+                                                        "<span dojoAttachPoint='_spanVYDP_Relevant'>0</span>",
+                                                        " relevant variants so far...",
+                                                        "<br>",
+                                                        "<a href='#' dojoAttachEvent='onclick:_onClickAbortProcessing'>Abort processing of and purge your private data</a>",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanPYD' style='display:none;'>",
+                                                        "<a href='#' dojoAttachEvent='onclick:_onClickPYD'>Purge your private data</a>",
+                                                        "<br>",
+                                                        "(Found ",
+                                                        "<span dojoAttachPoint='_spanPYD_Relevant'>0</span>",
+                                                        " relevant variants.)",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanIFF' style='display:none;'>",
+                                                        "Install the ",
+                                                        "<a href='${_urlFILEfox}' target='_blank'>",
+                                                            "FILEfox",
+                                                        "</a>",
+                                                        " extension to privately view your own data.",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanUPFF' style='display:none;'>",
+                                                        "Upgrade your ",
+                                                        "<a href='${_urlFILEfox}' target='_blank'>",
+                                                            "FILEfox",
+                                                        "</a>",
+                                                        " extension to at least version ${_versionFILEfoxMin} to privately view your own data.",
+                                                        "<br>",
+                                                        "(You have old version ",
+                                                        "<span dojoAttachPoint='_spanUPFFOV'></span>",
+                                                        " installed.)",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanUFF' style='display:none;'>",
+                                                        "Use ",
+                                                        "<a href='http://www.getfirefox.com/' target='_blank'>",
+                                                            "Firefox",
+                                                        "</a>",
+                                                        " with the ",
+                                                        "<a href='${_urlFILEfox}' target='_blank'>",
+                                                            "FILEfox",
+                                                        "</a>",
+                                                        " extension to privately view your own data.",
+                                                    "</span>",
+                                                "</h4>",
                                                 "<table class='variants_table' cellpadding='0' cellspacing='0'>",
                                                     "<thead>",
                                                         "<tr dojoAttachPoint='_trVariantsTableHeader'>",
@@ -98,6 +155,9 @@ dojo.declare(
                                         this._updateStatus("Processing reviewed variants data...");
 
                                         this.data = data;
+
+                                        this._processVariants();
+
                                         this._fillConditionsCB();
                                         this._displayCurrentCondition();
 
@@ -109,11 +169,51 @@ dojo.declare(
                                             var elReplace = dojo.byId(this.idReplace);
                                             if (elReplace) dojo.style(elReplace, 'display', 'none');
                                         }
+
+                                        if (dojo.isFF) {
+                                            if (window.nsFILEfox) {
+                                                if (nsFILEfox.isVersionAtLeast && nsFILEfox.isVersionAtLeast(this._versionFILEfoxMin)) {
+                                                    dojo.style(this._spanVYD, 'display', "");
+                                                } else {
+                                                    dojo.style(this._spanUPFF, 'display', "");
+                                                    this._spanUPFFOV.innerHTML = nsFILEfox.getVersion();
+                                                }
+                                            } else {
+                                                dojo.style(this._spanIFF, 'display', "");
+                                            }
+                                        } else {
+                                            dojo.style(this._spanUFF, 'display', "");
+                                        }
+                                        dojo.style(this._h4Controls, 'display', "");
                                     },
 
         onSelectedCondition:        function() {
                                         this.condition = dojo.attr(this._selectConditions, 'value');
                                         this._displayCurrentCondition();
+                                    },
+
+        _processVariants:           function() {
+                                        this._dataVariants = {};
+
+                                        if (!this.data || !this.data.conditions || !this.data.conditions_keyed) return;
+
+                                        for (var i = 0; i < this.data.conditions.length; i++) {
+                                            var strCondition = this.data.conditions[i];
+                                            if (!strCondition) continue;
+
+                                            var dataCondition = this.data.conditions_keyed[strCondition];
+                                            if (!dataCondition ||
+                                                !dataCondition.condition_data ||
+                                                !dataCondition.condition_data.variants ||
+                                                !dataCondition.condition_data.variants_keyed) continue;
+
+                                            for (var j = 0; j < dataCondition.condition_data.variants.length; j++) {
+                                                var strVariant = dataCondition.condition_data.variants[j];
+                                                if (!strVariant) continue;
+
+                                                this._dataVariants[strVariant] = dataCondition.condition_data.variants_keyed[strVariant];
+                                            }
+                                        }
                                     },
 
         _clearChildNodes:           function(elNode) {
@@ -228,7 +328,8 @@ dojo.declare(
                                         }
 
                                         _addHeaderColumn('dbSNP (Nrml/Rsk)', 'http://www.ncbi.nlm.nih.gov/projects/SNP');
-                                        _addHeaderColumn('Sample data');
+                                        if (!this._isPrivateDataLoaded) _addHeaderColumn('Sample data');
+                                        if (this._isPrivateDataLoaded) _addHeaderColumn('Your private data');
 
                                         var arrVariants =   condition.condition_data &&
                                                             condition.condition_data.variants;
@@ -252,6 +353,12 @@ dojo.declare(
                                                                 },
                                                                 trRow);
                                                 if (arrHTML) tdColumn.innerHTML = arrHTML.join("");
+                                            }
+
+                                            function _getColorSNP(strSNP) {
+                                                return (strSNP == dataVariant.dbSNP_normal)
+                                                            ?   "green"
+                                                            :   "red";
                                             }
 
                                             _addVariantColumn([ that._getAnchorOpeningTag(dataVariant.locus_url),
@@ -296,20 +403,32 @@ dojo.declare(
                                                                 dojox.html.entities.encode(dataVariant.dbSNP_risk) || "",
                                                                 "</a>"]);
 
-                                            var strColor1 = dataVariant.dbSNP_sample_1 == dataVariant.dbSNP_normal
-                                                            ?   "green"
-                                                            :   "red";
+                                            if (!this._isPrivateDataLoaded) {
+                                                var strColor1 = _getColorSNP(dataVariant.dbSNP_sample_1);
+                                                var strColor2 = _getColorSNP(dataVariant.dbSNP_sample_2);
 
-                                            var strColor2 = dataVariant.dbSNP_sample_2 == dataVariant.dbSNP_normal
-                                                            ?   "green"
-                                                            :   "red";
+                                                _addVariantColumn([ "<span style='color:", strColor1, "'>",
+                                                                        (dojox.html.entities.encode(dataVariant.dbSNP_sample_1) || ""),
+                                                                    "</span>",
+                                                                    "<span style='color:", strColor2, "'>",
+                                                                        (dojox.html.entities.encode(dataVariant.dbSNP_sample_2) || ""),
+                                                                    "</span>"]);
+                                            }
 
-                                            _addVariantColumn([ "<span style='color:", strColor1, "'>",
-                                                                    (dojox.html.entities.encode(dataVariant.dbSNP_sample_1) || ""),
-                                                                "</span>",
-                                                                "<span style='color:", strColor2, "'>",
-                                                                    (dojox.html.entities.encode(dataVariant.dbSNP_sample_2) || ""),
-                                                                "</span>"]);
+                                            if (this._isPrivateDataLoaded) {
+                                                var htmlPrivateData = [];
+                                                if (dataVariant.dbSNP_user) {
+                                                    for (var i = 0; i < dataVariant.dbSNP_user.length; i++) {
+                                                        var l = dataVariant.dbSNP_user[i];
+                                                        var strColorPD = _getColorSNP(l);
+                                                        htmlPrivateData.push(
+                                                                    "<span style='color:", strColorPD, "'>",
+                                                                        (dojox.html.entities.encode(l) || ""),
+                                                                    "</span>");
+                                                    }
+                                                }
+                                                _addVariantColumn(htmlPrivateData);
+                                            }
                                         }
 
                                         for (var i = 0; i < arrVariants.length; i++) {
@@ -324,7 +443,128 @@ dojo.declare(
                                         return "<a href='" + dojox.html.entities.encode(strLink) + "' target='_blank'>";
                                     },
 
+        _onClickAbortProcessing:    function() {
+                                        this.flagAbortProcessing = true;
+                                    },
+
+                                    /**
+                                     *  Event handler for user clicks on 'Purge your private data'.
+                                     */
+        _onClickPYD:                function() {
+                                        this._purgeUserPrivateData();
+
+                                        this._fillVariantsTable();
+                                        dojo.style(this._spanVYD, 'display', "");
+                                        dojo.style(this._spanPYD, 'display', 'none');
+                                    },
+
+        _onClickVYD:                function() {
+                                        dojo.style(this._spanVYD, 'display', 'none');
+                                        dojo.style(this._spanVYDW, 'display', "");
+
+                                        // Request a file through FILEfox:
+                                        // (Keeping the returned data object in a private local variable so that other scripts on the page cannot read it.)
+                                        var fileUserGenome = nsFILEfox.requestLoadASCIIFile(
+                                                                'upload_policy_file_never',                 // Specifying a valid file upload policy
+                                                                                                            // to avoid an error message!
+                                                                'upload_policy_derived_data_never',         // Specifying a valid the derived data upload policy
+                                                                                                            // to avoid an error message!
+                                                                "DIYgenomics Health Risk Web Application",  // Company / JavaScript app name
+                                                                                                            // Additional message to the user
+                                                                "Please specify your genome file from 23andMe.  " +
+                                                                "It should be a basic text file with each line formatted like this:\r\n"+
+                                                                "rsid <TAB> chromosome <TAB> position <TAB> genotype\r\n");
+                                        if (!fileUserGenome) {
+                                            alert("Could not load your genome file.  You either canceled, or there was an error.");
+                                            dojo.style(this._spanVYDW, 'display', 'none');
+                                            dojo.style(this._spanVYD, 'display', "");
+                                            return;
+                                        }
+
+                                        this._updateStatusLoadingProgress(0, 0);
+                                        this._purgeUserPrivateData();
+
+                                        dojo.style(this._spanVYDW, 'display', 'none');
+                                        dojo.style(this._spanVYDP, 'display', "");
+
+                                        var totalRelevantVariants = 0;
+                                        var lineCurrent = 0;
+
+                                        var timer = new dojox.timing.Timer(100);
+                                        var that = this;
+                                        timer.onTick =  function() {
+                                                            if (that.flagAbortProcessing) {                                 // This checks if the user decided to cancel the data processing.
+                                                                that.flagAbortProcessing = false;
+                                                                timer.stop();
+                                                                dojo.style(that._spanVYDP, 'display', 'none');
+                                                                that._onClickPYD();
+                                                                return;
+                                                            }
+
+                                                            for (i = 0; i < 5000; i++, lineCurrent++) {
+                                                                if (lineCurrent == fileUserGenome.totalLines) {
+                                                                    timer.stop();
+                                                                    that._isPrivateDataLoaded = true;
+                                                                    that._onDoneProcessingUserData();
+                                                                    break;
+                                                                }
+
+                                                                var totalTokensOnLine = fileUserGenome.getTotalTokensOnLine(lineCurrent);
+
+                                                                // Each line with the data that we are after looks like this:
+                                                                // rsid    chromosome  position    genotype
+                                                                if (totalTokensOnLine != 4) continue;                       // Number of tokens on the line is not 4.
+
+                                                                // The first token should be the variant identifier, which looks like this:
+                                                                // rs#######
+                                                                var strTokenFirst = fileUserGenome.getTokenOnLine(0, lineCurrent);
+                                                                if (!strTokenFirst) continue;
+                                                                if (strTokenFirst.search(/^rs\d+$/) != 0) continue;         // First token does not appear to be a variant.
+
+                                                                // OK, after this point we have a valid variant.
+                                                                if (!that._dataVariants[strTokenFirst]) continue;           // Not a relevant variant.
+
+                                                                // After this point we found a relevant variant, time to save the user data to it.
+                                                                that._dataVariants[strTokenFirst].dbSNP_user = fileUserGenome.getTokenOnLine(3, lineCurrent);
+                                                                totalRelevantVariants++;
+                                                            }
+                                                            that._updateStatusLoadingProgress(
+                                                                        100 * (lineCurrent / fileUserGenome.totalLines),
+                                                                        totalRelevantVariants);
+                                                        }
+
+                                        timer.start();
+                                    },
+
+        _onDoneProcessingUserData:  function() {
+                                        this._fillVariantsTable();
+                                        dojo.style(this._spanVYDP, 'display', 'none');
+                                        dojo.style(this._spanPYD, 'display', "");
+                                    },
+
+        _purgeUserPrivateData:      function() {
+                                        if (!this._dataVariants) throw new Error("Logic error.");
+
+                                        for (var strVariant in this._dataVariants) {
+                                            var dataVariant = this._dataVariants[strVariant];
+                                            if (!dataVariant) continue;
+
+                                            dataVariant.dbSNP_user = null;
+                                        }
+                                        this._isPrivateDataLoaded = false;
+                                    },
+
         _updateStatus:              function(strStatus) {
                                         this._divStatus.innerHTML = dojox.html.entities.encode(strStatus);
+                                    },
+
+                                    /**
+                                     *  Updates the relevant <span>s with the latest progress counters.
+                                     */
+        _updateStatusLoadingProgress:
+                                    function(totalPercentComplete, totalRelevantVariants) {
+                                        this._spanVYDP_Percent.innerHTML    = totalPercentComplete.toFixed(2);
+                                        this._spanVYDP_Relevant.innerHTML   = "" + totalRelevantVariants;
+                                        this._spanPYD_Relevant.innerHTML    = "" + totalRelevantVariants;
                                     }
     });

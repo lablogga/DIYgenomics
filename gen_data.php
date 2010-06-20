@@ -128,6 +128,7 @@
                 </p>
                 <p>
                     NOTE: This information is provided by non-medical professionals.
+                    This software is not intended to diagnose, treat, cure, or prevent any disease.
                 </p>
             </div>
 
@@ -143,8 +144,8 @@
          <?php
 			//Call PHP functions
 			require('../glossary.php');
-    		require('../footer_site.php');
     		require('footer_webapp.php');
+            require('../footer_site.php');
 	     ?>
 
 
