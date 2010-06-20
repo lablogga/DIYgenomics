@@ -63,6 +63,9 @@ dojo.declare(
                                                     "<span dojoAttachPoint='_spanVYD' style='display:none;'>",
                                                         "<a href='#' dojoAttachEvent='onclick:_onClickVYD'>Privately view your own data</a>",
                                                     "</span>",
+                                                    "<span dojoAttachPoint='_spanVYDW' style='display:none;'>",
+                                                        "Loading your genome data file...  Please wait...",
+                                                    "</span>",
                                                     "<span dojoAttachPoint='_spanVYDP' style='display:none;'>",
                                                         "Loading your genome data...  ",
                                                         "<span dojoAttachPoint='_spanVYDP_Percent'>0</span>",
@@ -450,6 +453,9 @@ dojo.declare(
                                     },
 
         _onClickVYD:                function() {
+                                        dojo.style(this._spanVYD, 'display', 'none');
+                                        dojo.style(this._spanVYDW, 'display', "");
+
                                         // Request a file through FILEfox:
                                         // (Keeping the returned data object in a private local variable so that other scripts on the page cannot read it.)
                                         var fileUserGenome = nsFILEfox.requestLoadASCIIFile(
@@ -462,13 +468,15 @@ dojo.declare(
                                                                 "Please specify your genome file from 23andMe.");
                                         if (!fileUserGenome) {
                                             alert("Could not load your genome file.  You either canceled, or there was an error.");
+                                            dojo.style(this._spanVYDW, 'display', 'none');
+                                            dojo.style(this._spanVYD, 'display', "");
                                             return;
                                         }
 
                                         this._updateStatusLoadingProgress(0, 0);
                                         this._purgeUserPrivateData();
 
-                                        dojo.style(this._spanVYD, 'display', 'none');
+                                        dojo.style(this._spanVYDW, 'display', 'none');
                                         dojo.style(this._spanVYDP, 'display', "");
 
                                         var totalRelevantVariants = 0;
