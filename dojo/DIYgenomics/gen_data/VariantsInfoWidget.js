@@ -67,7 +67,7 @@ dojo.declare(
                                                         "Loading your genome data file...  Please wait...",
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanVYDP' style='display:none;'>",
-                                                        "Loading your genome data...  ",
+                                                        "Processing your genome data...  ",
                                                         "<span dojoAttachPoint='_spanVYDP_Percent'>0</span>",
                                                         "% complete.  Found ",
                                                         "<span dojoAttachPoint='_spanVYDP_Relevant'>0</span>",
