@@ -501,7 +501,7 @@ dojo.declare(
                                                                 return;
                                                             }
 
-                                                            for (i = 0; i < 5000; i++, lineCurrent++) {
+                                                            for (var i = 0; i < 5000; i++, lineCurrent++) {
                                                                 if (lineCurrent == fileUserGenome.totalLines) {
                                                                     timer.stop();
                                                                     that._isPrivateDataLoaded = true;
