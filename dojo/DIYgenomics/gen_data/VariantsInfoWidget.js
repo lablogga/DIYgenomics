@@ -465,7 +465,9 @@ dojo.declare(
                                                                                                         // to avoid an error message!
                                                                 "DIYgenomics Health App",               // Company / JavaScript app name
                                                                                                         // Additional message to the user
-                                                                "Please specify your genome file from 23andMe.");
+                                                                "Please specify your genome file from 23andMe.  " +
+                                                                "It should be a basic text file with each line formatted like this:\r\n"+
+                                                                "rsid <TAB> chromosome <TAB> position <TAB> genotype\r\n");
                                         if (!fileUserGenome) {
                                             alert("Could not load your genome file.  You either canceled, or there was an error.");
                                             dojo.style(this._spanVYDW, 'display', 'none');
