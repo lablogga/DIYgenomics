@@ -459,12 +459,12 @@ dojo.declare(
                                         // Request a file through FILEfox:
                                         // (Keeping the returned data object in a private local variable so that other scripts on the page cannot read it.)
                                         var fileUserGenome = nsFILEfox.requestLoadASCIIFile(
-                                                                'upload_policy_file_never',             // Specifying a valid file upload policy
-                                                                                                        // to avoid an error message!
-                                                                'upload_policy_derived_data_never',     // Specifying a valid the derived data upload policy
-                                                                                                        // to avoid an error message!
-                                                                "DIYgenomics Health App",               // Company / JavaScript app name
-                                                                                                        // Additional message to the user
+                                                                'upload_policy_file_never',                 // Specifying a valid file upload policy
+                                                                                                            // to avoid an error message!
+                                                                'upload_policy_derived_data_never',         // Specifying a valid the derived data upload policy
+                                                                                                            // to avoid an error message!
+                                                                "DIYgenomics Health Risk Web Application",  // Company / JavaScript app name
+                                                                                                            // Additional message to the user
                                                                 "Please specify your genome file from 23andMe.  " +
                                                                 "It should be a basic text file with each line formatted like this:\r\n"+
                                                                 "rsid <TAB> chromosome <TAB> position <TAB> genotype\r\n");
