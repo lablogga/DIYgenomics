@@ -34,20 +34,9 @@
 //FUNCTION to display the licensing information and code repo link
 //==========================================================================================
 
-function displayLicensingInformation() {
-
-//Content and software licensing portion
-	echo "<p style=\"text-align: center; font-size: 0.75em;padding-top:25px;\"><b/>";
-	echo "Software licensing: BSD (<a href=\"http://github.com/lablogga/DIYgenomics\">DIYgenomics GitHub</a>) ";
-	echo "</b></p>";
-
-
-}   //end function
-
-//==========================================================================================
-//Call the function
-//==========================================================================================
-
-displayLicensingInformation();
-
 ?>
+
+<!-- Content and software licensing portion -->
+<p style='text-align: center; font-size: 0.75em;padding-top:25px;'><b/>
+Software licensing: BSD (<a href='http://github.com/lablogga/DIYgenomics'>DIYgenomics GitHub</a>)
+</b></p>
