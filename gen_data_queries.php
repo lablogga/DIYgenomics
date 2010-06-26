@@ -731,4 +731,84 @@
     }
 
 
+    /**
+     *  Queries the database for the data containing all the information on all the drugs
+     *  and their associated variants and related studies, and returns that data in a hierarchial
+     *  data structure.
+     *
+     *  The data structure looks like this:
+     *
+     *  {
+     *      drugs:                         [
+     *                                              "abacavir",
+     *                                              "acenocoumarol",
+     *                                              "acitretin",
+     *                                              "adalimumab",
+     *                                              ".",
+     *                                              ".",
+     *                                              ".",
+     *                                              "zoledronate",
+     *                                              "zolmitriptan"
+     *                                          ],
+     *      drugs_keyed: {
+     *          "abacavir": {
+     *              id:                         1,
+     *              drug_data:                  // data structure from queryDataForDrug(id)
+     *          },
+     *          "acenocoumarol": {
+     *              id:                         2,
+     *              drug_data:                  // data structure from queryDataForDrug(id)
+     *          },
+     *          "acitretin": {
+     *              id:                         3,
+     *              drug_data:                  // data structure from queryDataForDrug(id)
+     *          },
+     *          "adalimumab": {
+     *              id:                         4,
+     *              drug_data:                  // data structure from queryDataForDrug(id)
+     *          },
+     *          ".": {
+     *              id:                         5,
+     *              drug_data:                  // data structure from queryDataForDrug(id)
+     *          },
+     *          ".": {
+     *              id:                         6,
+     *              drug_data:                  // data structure from queryDataForDrug(id)
+     *          },
+     *          ".": {
+     *              id:                         7,
+     *              drug_data:                  // data structure from queryDataForDrug(id)
+     *          },
+     *          "zoledronate": {
+     *              id:                         8,
+     *              drug_data:                  // data structure from queryDataForDrug(id)
+     *          },
+     *          "zolmitriptan": {
+     *              id:                         9,
+     *              drug_data:                  // data structure from queryDataForDrug(id)
+     *          }
+     *      }
+     *  }
+     */
+    function queryDataForDrugsAll() {
+        $arrDrugs = queryArrayDrugs();
+
+        $mapDataDrugs = array(
+                                'drugs'        => array(),
+                                'drugs_keyed'  => array());
+
+        foreach ($arrDrugs as $arrDrug) {
+            $idDrug = $arrDrug[0];
+            $strDrug = $arrDrug[1];
+
+            $mapDataDrugs['drugs'][] = $strDrug;
+            $mapDataDrugs['drugs_keyed'][$strDrug] = array(
+                                                                        'id'                => $idDrug,
+                                                                        'drug_data'         => queryDataForDrug($idDrug));
+        }
+
+        return $mapDataDrugs;
+    }
+
+
     ?>
