@@ -30,7 +30,12 @@
      * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
      */
 
-    function renderVariantsInfo($idForCondition, $idTable) {
+
+   /**
+     * A function to render conditions
+     */
+
+       function renderVariantsInfo($idForCondition, $idTable) {
 
         function renderConditionsFormComboBox($arrConditions, $idForCondition) {
             ?>
@@ -61,6 +66,48 @@
 
         $mapDataCurrentCondition = queryDataForCondition($idForCondition);
     ?>
+
+
+    /**
+     * A function to render drugs
+     */
+
+      function renderVariantsInfoForDrugs($idForDrug, $idTable) {
+
+          function renderDrugsFormComboBox($arrDrugs, $idForDrug) {
+              ?>
+                  <form method='get'>
+                      <select name='drug' onchange='this.form.submit()'>
+
+                          <?php
+                              foreach ($arrDrugs as $drug) {
+                                  $selected = (($drug[0] == $idForDrug) ? "selected" : "");
+                          ?>
+
+                          <option value='<?=htmlentities($drug[0])?>' <?=$selected?>><?=htmlentities($drug[1])?></option>
+
+                          <?php
+                              }
+                          ?>
+
+                      </select>
+                  </form>
+              <?php
+          }
+
+          // Include the utility functions involving database queries:
+          require ('gen_data_queries.php');
+
+          $arrDrugs = queryArrayDrugs();                                // This is an array of all the drugs that the user can look at.
+          $strDrug = $arrDrugs[$idForDrug - 1][1];                      // This is the name of the drug that the user is currently looking at.
+
+          $mapDataCurrentDrug = queryDataForDrug($idForDrug);
+      ?>
+
+
+
+
+
     <!-- The following generates the variant info via Dojo.  The dojo rendering will hide the PHP rendering below after it completely initializes. -->
     <!--     <div                                                                             -->
     <!--         dojoType='DIYgenomics.gen_data.VariantsInfoWidget'                           -->
