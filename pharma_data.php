@@ -39,17 +39,17 @@
     $DBConnect = openTheDatabase() or die ("<p>Unable to open the appropriate database.  Error code: " . mysql_errno() . "</p>");
 
     /**
-     *  Returns the condition ID that the user is currently looking at.
+     *  Returns the drug ID that the user is currently looking at.
      */
-    function getCurrentConditionID() {
-        $COND = $_GET["condition"];
-        if ($COND == "") {
-          $COND = 1;
+    function getCurrentDrugID() {
+        $DRUG = $_GET["drug"];
+        if ($DRUG == "") {
+          $DRUG = 1;
         }
-        return $COND;
+        return $DRUG;
     }
 
-    $idCurrentCondition = getCurrentConditionID();
+    $idCurrentDrug = getCurrentDrugID();
 ?>
 
 <html>
@@ -141,7 +141,7 @@
             <div style='font-size: 10pt;'>
                 <?php
                     require('gen_data_variants_info.php');
-                    renderVariantsInfoForDrugs($idCurrentCondition, 'diyghavi');
+                    renderVariantsInfoForDrugs($idCurrentDrug, 'diyghavi');
                 ?>
             </div>
         </div>
