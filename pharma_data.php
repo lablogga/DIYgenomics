@@ -7,7 +7,7 @@
      * Copyright (C) 2010 Marat Nepomnyashy     maratbn@gmail
      * All rights reserved.
      *
-     * Module: gen_data.php
+     * Module: pharma_data.php
      *
      * Redistribution and use in source and binary forms, with or without
      * modification, are permitted provided that the following conditions are met:
@@ -55,9 +55,9 @@
 <html>
     <head>
 
-        <title>PersonalGenomics Application </title>
+        <title>PersonalPharmacogenomics Application </title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <meta name="description" content="DIYgenomics Genome Durg Reponse Web Application" />
+        <meta name="description" content="DIYgenomics Genome Drug Reponse Web Application" />
         <meta name="keywords" content="genomics, genome, personal genomes, personal genome, citizen science, science, technology, direct-to-consumer, consumer genomics, genomic testing, genetic testing, research" />
 
         <!--  The following includes the Dojo release 1.4.3 script from '/dojo-release-1.4.3/dojo/dojo.js'
@@ -118,17 +118,22 @@
         ?>
 
         <div class='layout'>
-            <h3>DIYgenomics Genome Durg Reponse Web Application</h3>
+            <h3>DIYgenomics Drug Reponse Web Application</h3>
             <div>
                 <p>
-                    <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
-                    (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
-                    (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
-                    underlying research reference cited by the company is posted in the table below.
-                </p>
+                    <b>PersonalPharmacogenomics:</b> Side-by-side comparison of locus, gene and variant
+                    information for about 250 drugs (clopidogrel (Plavix), morphine, sildenafil
+                    (Viagra), warfarin, etc.). If a variant is reviewed, the underlying research
+                    references cited are posted in the table below. 'Sample data' is information from
+                    one person's 23andme file; not all the variants reviewed for drugs are genotyped currently
+                    by 23andme. One or two variant mutations could be interpreted as the usual dose
+                    of the drug possibly being 'less efficacious.' Green is the normal genotype, red is the mutation.
+                    * means that the <a href="http://www.fda.gov/Drugs/ScienceResearch/ResearchAreas/Pharmacogenetics/ucm083378.htm">
+                    FDA has validated genomic biomarkers</a> for this drug.
+				</p>
                 <p>
-                    NOTE: This information is provided by non-medical professionals.
-                    This software is not intended to diagnose, treat, cure, or prevent any disease.
+                    NOTE: This information is provided by non-medical professionals and
+                    is not intended to diagnose, treat, cure, or prevent any disease.
                 </p>
             </div>
 
@@ -136,7 +141,7 @@
             <div style='font-size: 10pt;'>
                 <?php
                     require('gen_data_variants_info.php');
-                    renderVariantsInfo($idCurrentCondition, 'diyghavi');
+                    renderVariantsInfoForDrugs($idCurrentCondition, 'diyghavi');
                 ?>
             </div>
         </div>
