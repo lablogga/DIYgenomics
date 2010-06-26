@@ -254,7 +254,7 @@
                                                                                 'citation'      => $field_citation);
             }
 
-            if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]) {                
+            if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]) {
                 $mapDataCurrentCondition['variants_keyed'][$field_variant] = array(
                                                                                 'gene'          => $field_gene,
                                                                                 'gene_url'      => $field_gene_url,
@@ -267,7 +267,7 @@
                                                                                 'dbSNP_risk'    => $field_dbSNP_risk,
                                                                                 'dbSNP_sample_1'=> $field_23andMe_1,
                                                                                 'dbSNP_sample_2'=> $field_23andMe_2);
-                                                                                
+
                 $mapDataCurrentCondition['variants'][] = $field_variant;
             }
 
@@ -449,4 +449,42 @@
 
         return $mapDataConditions;
     }
+
+
+
+ /**
+   *  The same three queries for the drug response app
+   */
+
+   /**
+     *  Returns an array of drugs that the user can browse through.
+     */
+    function queryArrayDrugs() {
+        /*  QUERY THE DATABASE - QUERY 3(DRUG LIST)
+                Returns a list like this:
+                1   abacavir
+                2   acenocoumarol
+                3   acitretin
+                4   adalimumab
+                .
+                .
+                .
+                233 zoledronate
+                234 zolmitriptan
+        */
+
+        $QueryDrugs = mysql_query("SELECT 5_drugs.Primary, 5_drugs.Drug FROM 5_drugs;")
+                            or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_errno() . "</p>");
+
+
+        //READ QUERY 3 RESULTS INTO ARRAY
+        // drugs holds rows {drug_ix, drug_name}
+        $Drugs = array();
+        while ($DrugRow = mysql_fetch_array($QueryDrugs)) {
+            $Drugs[] = $DrugRow;
+        }
+
+        return $Drugs;
+    }
+
 ?>
