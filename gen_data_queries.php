@@ -36,7 +36,7 @@
     /**
      *  Returns an array of conditions that the user can browse through.
      */
-    function queryArrayConditions() {
+   function queryArrayConditions() {
         /*  QUERY THE DATABASE - QUERY 3(CONDITIONS LIST)
                 Returns a list like this:
                 1   Alzheimer's disease
@@ -452,8 +452,6 @@
 
 
 
-
-
  /**
    *  The same three queries for the drug response app
    */
@@ -475,9 +473,8 @@
                 234 zolmitriptan
         */
 
-        $QueryDrugs = mysql_query("SELECT 5_drugs.Primary, 5_drugs.Drug FROM 5_drugs;")
+     $QueryDrugs = mysql_query("SELECT 5_drugs.Primary, 5_drugs.Drug FROM 5_drugs;")
                             or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_errno() . "</p>");
-
 
         //READ QUERY 3 RESULTS INTO ARRAY
         // drugs holds rows {drug_ix, drug_name}
@@ -625,6 +622,7 @@
                             . " JOIN 4_entities ON 4_entities.Primary = 8_map_variant_condition_entity_study.Entity_index"
                             . " WHERE 8_map_variant_condition_entity_study.Drug_index = " . $idDrug
                             . " ORDER BY 1_studies.Citation";
+
 
         $resultQueryStudiesInfo = mysql_query($strQueryStudiesInfo)
             or die("<p>Unable to query the database for studies information.  Error code: " . mysql_errno() . "</p>");
