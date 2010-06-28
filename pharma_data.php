@@ -141,8 +141,9 @@
             <div style='font-size: 10pt;'>
                 <?php
                     require('gen_data_variants_info.php');
+//                    Test();
                     renderVariantsInfoForDrugs($idCurrentDrug, 'diyghavi');
-                ?>
+                 ?>
             </div>
         </div>
 
