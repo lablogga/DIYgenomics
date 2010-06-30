@@ -233,7 +233,7 @@
 
     <!-- The following generates the variant info via PHP.  The content is still rendered server-side to be indexable by search engines. -->
     <div id='<?=$idTable?>'>
-        <div class='druglist'>
+        <div class='selection_combobox'>
             <!-- DROPDOWN MENU -->
             <?php
                 renderDrugsFormComboBox($arrDrugs, $idForDrug);
