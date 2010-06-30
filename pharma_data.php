@@ -81,7 +81,7 @@
                 width:                          85%;
             }
 
-            .DIYgenomics_health_app .layout .condlist {
+            .DIYgenomics_health_app .layout .selection_combobox {
                 float:                          right;
                 margin-left:                    20px;
             }
