@@ -52,7 +52,7 @@ dojo.declare(
                                             "<div dojoAttachPoint='_divStatus'>",
                                             "</div>",
                                             "<div dojoAttachPoint='_divContent' style='display:none;'>",
-                                                "<div class='condlist'>",
+                                                "<div class='selection_combobox'>",
                                                     "<select dojoAttachPoint='_selectConditions' dojoAttachEvent='onchange:onSelectedCondition'>",
                                                     "</select>",
                                                 "</div>",
