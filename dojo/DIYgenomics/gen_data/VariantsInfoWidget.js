@@ -356,7 +356,7 @@ dojo.declare(
                                             }
 
                                             function _getColorSNP(strSNP) {
-                                                return (strSNP == dataVariant.dbSNP_normal)
+                                                return (strSNP == dataVariant['23andMe_normal'])
                                                             ?   "green"
                                                             :   "red";
                                             }

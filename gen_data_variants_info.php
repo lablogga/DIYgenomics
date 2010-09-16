@@ -144,12 +144,12 @@
                             <td>
                                 <?php
                                     $strColor1 = $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_1']
-                                                    ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']
+                                                    ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['23andMe_normal']
                                                     ?   "green"
                                                     :   "red";
 
                                     $strColor2 = $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2']
-                                                    ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_normal']
+                                                    ==  $mapDataCurrentCondition['variants_keyed'][$strVariant]['23andMe_normal']
                                                     ?   "green"
                                                     :   "red";
 
