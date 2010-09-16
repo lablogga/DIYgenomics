@@ -204,6 +204,8 @@
                             . " 3_variants.dbSNP_risk,"
                             . " 3_variants.23andMe_1,"
                             . " 3_variants.23andMe_2,"
+                            . " 3_variants.23andMe_normal,"
+                            . " 3_variants.23andMe_risk,"
                             . " 4_entities.Entity"
                             . " FROM 1_studies"
                             . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
@@ -237,7 +239,9 @@
             $field_dbSNP_risk       = $arrStudyInfo[10];
             $field_23andMe_1        = $arrStudyInfo[11];
             $field_23andMe_2        = $arrStudyInfo[12];
-            $field_entity           = $arrStudyInfo[13];
+            $field_23andMe_normal   = $arrStudyInfo[13];
+            $field_23andMe_risk     = $arrStudyInfo[14];
+            $field_entity           = $arrStudyInfo[15];
 
             if (!$mapDataCurrentCondition['entities_keyed'][$field_entity]) {
                 $mapDataCurrentCondition['entities_keyed'][$field_entity] = array(
@@ -256,17 +260,19 @@
 
             if (!$mapDataCurrentCondition['variants_keyed'][$field_variant]) {
                 $mapDataCurrentCondition['variants_keyed'][$field_variant] = array(
-                                                                                'gene'          => $field_gene,
-                                                                                'gene_url'      => $field_gene_url,
-                                                                                'locus'         => $field_locus,
-                                                                                'locus_url'     => $field_locus_url,
-                                                                                'studies'       => array(),
-                                                                                'variant'       => $field_variant,
-                                                                                'variant_url'   => $field_variant_url,
-                                                                                'dbSNP_normal'  => $field_dbSNP_normal,
-                                                                                'dbSNP_risk'    => $field_dbSNP_risk,
-                                                                                'dbSNP_sample_1'=> $field_23andMe_1,
-                                                                                'dbSNP_sample_2'=> $field_23andMe_2);
+                                                                                'gene'            => $field_gene,
+                                                                                'gene_url'        => $field_gene_url,
+                                                                                'locus'           => $field_locus,
+                                                                                'locus_url'       => $field_locus_url,
+                                                                                'studies'         => array(),
+                                                                                'variant'         => $field_variant,
+                                                                                'variant_url'     => $field_variant_url,
+                                                                                'dbSNP_normal'    => $field_dbSNP_normal,
+                                                                                'dbSNP_risk'      => $field_dbSNP_risk,
+                                                                                'dbSNP_sample_1'  => $field_23andMe_1,
+                                                                                'dbSNP_sample_2'  => $field_23andMe_2,
+                                                                                '23andMe_normal'  => $field_23andMe_normal,
+                                                                                '23andMe_risk'    => $field_23andMe_risk);
 
                 $mapDataCurrentCondition['variants'][] = $field_variant;
             }
@@ -615,6 +621,8 @@
                             . " 3_variants.dbSNP_risk,"
                             . " 3_variants.23andMe_1,"
                             . " 3_variants.23andMe_2,"
+                            . " 3_variants.23andMe_normal,"
+                            . " 3_variants.23andMe_risk,"
                             . " 4_entities.Entity"
                             . " FROM 1_studies"
                             . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
@@ -649,7 +657,9 @@
             $field_dbSNP_risk       = $arrStudyInfo[10];
             $field_23andMe_1        = $arrStudyInfo[11];
             $field_23andMe_2        = $arrStudyInfo[12];
-            $field_entity           = $arrStudyInfo[13];
+            $field_23andMe_normal   = $arrStudyInfo[13];
+            $field_23andMe_risk     = $arrStudyInfo[14];
+            $field_entity           = $arrStudyInfo[15];
 
             if (!$mapDataCurrentDrug['entities_keyed'][$field_entity]) {
                 $mapDataCurrentDrug['entities_keyed'][$field_entity] = array(
@@ -668,18 +678,19 @@
 
             if (!$mapDataCurrentDrug['variants_keyed'][$field_variant]) {
                 $mapDataCurrentDrug['variants_keyed'][$field_variant] = array(
-                                                                                'gene'          => $field_gene,
-                                                                                'gene_url'      => $field_gene_url,
-                                                                                'locus'         => $field_locus,
-                                                                                'locus_url'     => $field_locus_url,
-                                                                                'studies'       => array(),
-                                                                                'variant'       => $field_variant,
-                                                                                'variant_url'   => $field_variant_url,
-                                                                                'dbSNP_normal'  => $field_dbSNP_normal,
-                                                                                'dbSNP_risk'    => $field_dbSNP_risk,
-                                                                                'dbSNP_sample_1'=> $field_23andMe_1,
-                                                                                'dbSNP_sample_2'=> $field_23andMe_2);
-
+                                                                                'gene'            => $field_gene,
+                                                                                'gene_url'        => $field_gene_url,
+                                                                                'locus'           => $field_locus,
+                                                                                'locus_url'       => $field_locus_url,
+                                                                                'studies'         => array(),
+                                                                                'variant'         => $field_variant,
+                                                                                'variant_url'     => $field_variant_url,
+                                                                                'dbSNP_normal'    => $field_dbSNP_normal,
+                                                                                'dbSNP_risk'      => $field_dbSNP_risk,
+                                                                                'dbSNP_sample_1'  => $field_23andMe_1,
+                                                                                'dbSNP_sample_2'  => $field_23andMe_2,
+                                                                                '23andMe_normal'  => $field_23andMe_normal,
+                                                                                '23andMe_risk'    => $field_23andMe_risk);
                 $mapDataCurrentDrug['variants'][] = $field_variant;
             }
 
