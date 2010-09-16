@@ -226,10 +226,10 @@
 
 
     <!-- The following generates the variant info via Dojo.  The dojo rendering will hide the PHP rendering below after it completely initializes. -->
-    <!--     <div                                                                             -->
-    <!--         dojoType='DIYgenomics.gen_data.VariantsInfoWidget'                           -->
-    <!--         condition='<?=htmlentities($strCondition, ENT_QUOTES)?>'                     -->
-    <!--         idReplace='<?=$idTable?>'></div>                                             -->
+    <div                                                                             
+        dojoType='DIYgenomics.gen_data.VariantsInfoForDrugsWidget'                           
+        condition='<?=htmlentities($strCondition, ENT_QUOTES)?>'                     
+        idReplace='<?=$idTable?>'></div>                                             
 
     <!-- The following generates the variant info via PHP.  The content is still rendered server-side to be indexable by search engines. -->
     <div id='<?=$idTable?>'>
@@ -353,5 +353,6 @@
 
 <!-- The following includes a JavaScript file for the Dojo-based variant info generation widget. -->
 <script type='text/javascript'>
-    dojo.require('DIYgenomics.gen_data.VariantsInfoWidget');
+//    dojo.require('DIYgenomics.gen_data.VariantsInfoWidget');
+    dojo.require('DIYgenomics.gen_data.VariantsInfoForDrugsWidget');
 </script>
