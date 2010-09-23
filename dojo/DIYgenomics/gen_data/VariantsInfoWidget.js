@@ -96,7 +96,7 @@ dojo.declare(
                                                         "</a>",
                                                         " extension to at least version ${_versionFILEfoxMin} to privately view your own data.",
                                                         "<br>",
-                                                        "(You have old version ",
+                                                        "(You have an old version ",
                                                         "<span dojoAttachPoint='_spanUPFFOV'></span>",
                                                         " installed.)",
                                                     "</span>",
