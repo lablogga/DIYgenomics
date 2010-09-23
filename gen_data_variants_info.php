@@ -353,6 +353,6 @@
 
 <!-- The following includes a JavaScript file for the Dojo-based variant info generation widget. -->
 <script type='text/javascript'>
-//    dojo.require('DIYgenomics.gen_data.VariantsInfoWidget');
+    dojo.require('DIYgenomics.gen_data.VariantsInfoWidget');
     dojo.require('DIYgenomics.gen_data.VariantsInfoForDrugsWidget');
 </script>
