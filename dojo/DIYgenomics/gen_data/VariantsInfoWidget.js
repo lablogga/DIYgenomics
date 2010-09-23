@@ -120,7 +120,7 @@ dojo.declare(
                                                     "<tbody dojoAttachPoint='_trVariantsTableBody'>",
                                                     "</tbody>",
                                                 "</table>",
-                                                "<h4><i>Research references cited by consumer genomic companies:</i></h4>",
+                                                "<h4><i>Research references cited by consumer genomic entities:</i></h4>",
                                                 "<ol dojoAttachPoint='_olReferences'>",
                                                 "</ol>",
                                             "</div>",
