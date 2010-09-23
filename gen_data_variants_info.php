@@ -228,7 +228,7 @@
     <!-- The following generates the variant info via Dojo.  The dojo rendering will hide the PHP rendering below after it completely initializes. -->
     <div                                                                             
         dojoType='DIYgenomics.gen_data.VariantsInfoForDrugsWidget'                           
-        condition='<?=htmlentities($strCondition, ENT_QUOTES)?>'                     
+        drug='<?=htmlentities($strDrug, ENT_QUOTES)?>'                     
         idReplace='<?=$idTable?>'></div>                                             
 
     <!-- The following generates the variant info via PHP.  The content is still rendered server-side to be indexable by search engines. -->
