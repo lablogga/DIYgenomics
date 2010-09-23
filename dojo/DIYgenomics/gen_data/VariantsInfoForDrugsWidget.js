@@ -193,7 +193,7 @@ dojo.declare(
                                     },
 
         _processVariants:           function() {
-                                        this._dataVariants = {};
+                                        mapRelevantVariants = {};
 
                                         if (!this.data || !this.data.drugs || !this.data.drugs_keyed) return;
 
@@ -211,7 +211,7 @@ dojo.declare(
                                                 var strVariant = dataDrug.drug_data.variants[j];
                                                 if (!strVariant) continue;
 
-                                                this._dataVariants[strVariant] = dataDrug.drug_data.variants_keyed[strVariant];
+                                                mapRelevantVariants[strVariant] = true;
                                             }
                                         }
                                     },
@@ -501,6 +501,10 @@ dojo.declare(
                                                                 return;
                                                             }
 
+                                                            // This just makes sure that the widget data is healthy.
+                                                            if (!that.data || !that.data.drugs || !that.data.drugs_keyed) throw new Error("Logic error.");
+
+                                                            // Cycling through 5000 lines of user private genome data at a time:
                                                             for (var i = 0; i < 5000; i++, lineCurrent++) {
                                                                 if (lineCurrent == fileUserGenome.totalLines) {
                                                                     timer.stop();
@@ -522,10 +526,27 @@ dojo.declare(
                                                                 if (strTokenFirst.search(/^rs\d+$/) != 0) continue;         // First token does not appear to be a variant.
 
                                                                 // OK, after this point we have a valid variant.
-                                                                if (!that._dataVariants[strTokenFirst]) continue;           // Not a relevant variant.
+                                                                if (!mapRelevantVariants[strTokenFirst]) continue;          // Not a relevant variant.
 
                                                                 // After this point we found a relevant variant, time to save the user data to it.
-                                                                that._dataVariants[strTokenFirst].dbSNP_user = fileUserGenome.getTokenOnLine(3, lineCurrent);
+                                                                // But need to cycle through all the drugs to find out which drug(s) the
+                                                                // variant is applicable to, as one variant may be applicable to multiple drugs.
+                                                                for (var i = 0; i < that.data.drugs.length; i++) {
+                                                                    var strDrug = that.data.drugs[i];
+                                                                    if (!strDrug) continue;
+
+                                                                    var dataDrug = that.data.conditions_keyed[strDrug];
+                                                                    if (!dataDrug ||
+                                                                        !dataDrug.drug_data ||
+                                                                        !dataDrug.drug_data.variants ||
+                                                                        !dataDrug.drug_data.variants_keyed) continue;
+
+                                                                    if (dataDrug.drug_data.variants_keyed[strTokenFirst]) {
+                                                                        // Looks like the relevant variant is applicable to this drug.
+                                                                        dataDrug.drug_data.variants_keyed[strTokenFirst].dbSNP_user = fileUserGenome.getTokenOnLine(3, lineCurrent);
+                                                                    }
+                                                                }
+
                                                                 totalRelevantVariants++;
                                                             }
                                                             that._updateStatusLoadingProgress(
@@ -543,14 +564,26 @@ dojo.declare(
                                     },
 
         _purgeUserPrivateData:      function() {
-                                        if (!this._dataVariants) throw new Error("Logic error.");
+                                        if (!this.data || !this.data.drugs || !this.data.drugs_keyed) throw new Error("Logic error.");
 
-                                        for (var strVariant in this._dataVariants) {
-                                            var dataVariant = this._dataVariants[strVariant];
-                                            if (!dataVariant) continue;
+                                        for (var i = 0; i < this.data.drugs.length; i++) {
+                                            var strDrug = this.data.drugs[i];
+                                            if (!strDrug) continue;
 
-                                            dataVariant.dbSNP_user = null;
+                                            var dataDrug = this.data.conditions_keyed[strDrug];
+                                            if (!dataDrug ||
+                                                !dataDrug.drug_data ||
+                                                !dataDrug.drug_data.variants ||
+                                                !dataDrug.drug_data.variants_keyed) continue;
+
+                                            for (var j = 0; j < dataDrug.drug_data.variants.length; j++) {
+                                                var strVariant = dataDrug.drug_data.variants[j];
+                                                if (!strVariant) continue;
+
+                                                dataDrug.drug_data.variants_keyed[strVariant].dbSNP_user = null;
+                                            }
                                         }
+
                                         this._isPrivateDataLoaded = false;
                                     },
 
