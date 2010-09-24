@@ -226,10 +226,10 @@
 
 
     <!-- The following generates the variant info via Dojo.  The dojo rendering will hide the PHP rendering below after it completely initializes. -->
-    <div                                                                             
-        dojoType='DIYgenomics.gen_data.VariantsInfoForDrugsWidget'                           
-        drug='<?=htmlentities($strDrug, ENT_QUOTES)?>'                     
-        idReplace='<?=$idTable?>'></div>                                             
+    <div
+        dojoType='DIYgenomics.gen_data.VariantsInfoForDrugsWidget'
+        drug='<?=htmlentities($strDrug, ENT_QUOTES)?>'
+        idReplace='<?=$idTable?>'></div>
 
     <!-- The following generates the variant info via PHP.  The content is still rendered server-side to be indexable by search engines. -->
     <div id='<?=$idTable?>'>
@@ -351,8 +351,179 @@
      }
  ?>
 
+
+
+
+    <?php
+
+   /**
+     * A function to render Athletic Performance categories
+     */
+
+       function renderVariantsInfoForAPcats($idForAPcat, $idTable) {
+
+          function renderAPcatsFormComboBox($arrAPcats, $idForAPcat) {
+              ?>
+                 <form method='get'>
+                      <select name='APcat' onchange='this.form.submit()'>
+
+                          <?php
+                              foreach ($arrAPcats as $APcat) {
+                                  $selected = (($APcat[0] == $idForAPcat) ? "selected" : "");
+                          ?>
+
+                          <option value='<?=htmlentities($APcat[0])?>' <?=$selected?>><?=htmlentities($APcat[1])?></option>
+
+                          <?php
+                              }
+                          ?>
+
+                      </select>
+                  </form>
+              <?php
+          }
+
+          // Include the utility functions involving database queries:
+          require ('gen_data_queries.php');
+
+          $arrAPcats = queryArrayAPcats();                                // This is an array of all the APcats that the user can look at.
+          $strAPcat = $arrAPcats[$idForAPcat - 1][1];                      // This is the name of the APcat that the user is currently looking at.
+
+          $mapDataCurrentAPcat = queryDataForAPcat($idForAPcat);
+      ?>
+
+
+    <!-- The following generates the variant info via Dojo.  The dojo rendering will hide the PHP rendering below after it completely initializes. -->
+    <div
+        dojoType='DIYgenomics.gen_data.VariantsInfoForAthperfWidget'
+        condition='<?=htmlentities($strAPcat, ENT_QUOTES)?>'
+        idReplace='<?=$idTable?>'></div>
+
+    <!-- The following generates the variant info via PHP.  The content is still rendered server-side to be indexable by search engines. -->
+    <div id='<?=$idTable?>'>
+        <div class='selection_combobox'>
+            <!-- DROPDOWN MENU -->
+            <?php
+                renderAPcatsFormComboBox($arrAPcats, $idForAPcat);
+            ?>
+        </div>
+        <h3>Variants reviewed for <?=htmlentities($strAPcat)?></h3>
+        <?php
+            //CREATE RESULTS TABLE FROM MAIN QUERY (QUERY 1)
+        ?>
+        <table class='variants_table' cellpadding='0' cellspacing='0'>
+            <tr>
+                <th>Locus</th>
+                <th>Gene</th>
+                <th>Variant</th>
+                <?php
+  //                  $arrEntityColumns = array('deCODEme', 'Navigenics', '23andMe');
+                    $arrEntityColumns = array('PharmGKB', 'Navigenics', '23andMe', 'DIYgenomics');  //4 different entities, in different order, for athperf
+                    foreach ($arrEntityColumns as $strEntity) {
+                        ?>
+                            <th><a href='<?=htmlentities($mapDataCurrentAPcat['entities_keyed'][$strEntity]['entity_APcat_url'])?>'><?=htmlentities($strEntity)?></a></th>
+                        <?php
+                    }
+                ?>
+                <th><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
+                <th>Sample data</th>
+            </tr>
+            <?php
+                for ($i = 0; $i < count($mapDataCurrentAPcat['variants']); $i++) {
+                    $strVariant = $mapDataCurrentAPcat['variants'][$i];
+                    $strRowClass = $i % 2 == 0 ? 'vtr_even' : 'vtr_odd';
+                    ?>
+                        <tr class='<?=$strRowClass?>'>
+                            <td>
+                                <a href='<?=htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['locus_url'])?>'>
+                                    <?=htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['locus'])?>
+                                </a>
+                            </td>
+                            <td>
+                                <a href='<?=htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['gene_url'])?>'>
+                                    <?=htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['gene'])?>
+                                </a>
+                            </td>
+                            <td>
+                                <a href='<?=htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['variant_url'])?>'>
+                                    <?=htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['variant'])?>
+                                </a>
+                            </td>
+
+                            <?php
+                                foreach ($arrEntityColumns as $strEntity) {
+                                    ?>
+                                    <td>
+                                        <?php
+                                            $totalStudies = 0;
+                                            foreach ($mapDataCurrentAPcat['variants_keyed'][$strVariant]['studies'] as $strStudy) {
+                                                if ($mapDataCurrentAPcat['variants_keyed'][$strVariant]['studies_keyed'][$strStudy]['entities'][$strEntity]) {
+                                                    if ($totalStudies > 0) echo ",";
+                                                    ?><a href='<?=htmlentities($mapDataCurrentAPcat['studies_keyed'][$strStudy]['url'])?>'><?=htmlentities($mapDataCurrentAPcat['studies_keyed'][$strStudy]['number'])?></a><?php
+                                                    $totalStudies++;
+                                                }
+                                            }
+                                        ?>
+                                    </td>
+                                    <?php
+                                }
+                            ?>
+
+                            <td>
+                                <a href='<?=htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['variant_url'])?>'>
+                                    <?=htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['dbSNP_normal'])?>/<?=htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['dbSNP_risk'])?>
+                                </a>
+                            </td>
+                            <td>
+                                <?php
+                                    $strColor1 = $mapDataCurrentAPcat['variants_keyed'][$strVariant]['dbSNP_sample_1']
+                                                    ==  $mapDataCurrentAPcat['variants_keyed'][$strVariant]['23andMe_normal']
+                                                    ?   "green"
+                                                    :   "red";
+
+                                    $strColor2 = $mapDataCurrentAPcat['variants_keyed'][$strVariant]['dbSNP_sample_2']
+                                                    ==  $mapDataCurrentAPcat['variants_keyed'][$strVariant]['23andMe_normal']
+                                                    ?   "green"
+                                                    :   "red";
+
+   //        	                      echo "<span style='color:$strColor1;'>" . htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['23andme_risk']) . "</span>";
+                                  echo "<span style='color:$strColor1;'>" . htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['dbSNP_sample_1']) . "</span>";
+                                  echo "<span style='color:$strColor2;'>" . htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['dbSNP_sample_2']) . "</span>";
+                                ?>
+                            </td>
+                        </tr>
+                    <?php
+                }
+            ?>
+        </table>
+
+        <h4><i>Research references cited by genomic companies or research entities:</i></h4>
+
+        <ol>
+            <?php
+                foreach ($mapDataCurrentAPcat['studies'] as $key => $field_pubmedid) {
+                    $study = $mapDataCurrentAPcat['studies_keyed'][$field_pubmedid];
+                    $cit = $study["citation"];
+                    $citurl = $study["url"];
+                    ?>
+                        <li>
+                            <a href='<?=htmlentities($citurl)?>'><?=htmlentities($cit)?></a>
+                        </li>
+                    <?php
+                }
+            ?>
+        </ol>
+    </div>
+
+
+
+     <?php
+     }
+ ?>
+
 <!-- The following includes a JavaScript file for the Dojo-based variant info generation widget. -->
 <script type='text/javascript'>
     dojo.require('DIYgenomics.gen_data.VariantsInfoWidget');
     dojo.require('DIYgenomics.gen_data.VariantsInfoForDrugsWidget');
+    dojo.require('DIYgenomics.gen_data.VariantsInfoForAthperfWidget');
 </script>
