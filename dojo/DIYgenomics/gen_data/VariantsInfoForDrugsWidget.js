@@ -535,7 +535,7 @@ dojo.declare(
                                                                     var strDrug = that.data.drugs[i];
                                                                     if (!strDrug) continue;
 
-                                                                    var dataDrug = that.data.conditions_keyed[strDrug];
+                                                                    var dataDrug = that.data.drugs_keyed[strDrug];
                                                                     if (!dataDrug ||
                                                                         !dataDrug.drug_data ||
                                                                         !dataDrug.drug_data.variants ||
@@ -570,7 +570,7 @@ dojo.declare(
                                             var strDrug = this.data.drugs[i];
                                             if (!strDrug) continue;
 
-                                            var dataDrug = this.data.conditions_keyed[strDrug];
+                                            var dataDrug = this.data.drugs_keyed[strDrug];
                                             if (!dataDrug ||
                                                 !dataDrug.drug_data ||
                                                 !dataDrug.drug_data.variants ||
