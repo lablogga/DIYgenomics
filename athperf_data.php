@@ -42,7 +42,7 @@
      *  Returns the Athletic Performance category ID that the user is currently looking at.
      */
     function getCurrentAPcatID() {
-        $APCAT = $_GET["APcat"];
+        $APCAT = $_GET["apcat"];
         if ($APCAT == "") {
           $APCAT = 1;
         }

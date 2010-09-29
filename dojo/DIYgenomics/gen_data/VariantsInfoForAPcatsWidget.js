@@ -4,7 +4,7 @@
  * Copyright (C) 2010 Marat Nepomnyashy     maratbn@gmail
  * All rights reserved.
  *
- * Module:          VariantsInfoForDrugsWidget.js
+ * Module:          VariantsInfoForAPcatsWidget.js
  * Description:     The Dojo widget for the genome variants info. 
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-dojo.provide('DIYgenomics.gen_data.VariantsInfoForDrugsWidget');
+dojo.provide('DIYgenomics.gen_data.VariantsInfoForAPcatsWidget');
 
 dojo.require('dijit._Templated');
 dojo.require('dijit._Widget');
@@ -39,10 +39,10 @@ dojo.require('dojox.html.entities');
 dojo.require('dojox.timing');
 
 dojo.declare(
-    'DIYgenomics.gen_data.VariantsInfoForDrugsWidget',
+    'DIYgenomics.gen_data.VariantsInfoForAPcatsWidget',
     [dijit._Widget, dijit._Templated],
     {
-        drug:                       "",
+        apcat:                      "",
         idReplace:                  "",
 
         _urlFILEfox:                'https://addons.mozilla.org/en-US/firefox/addon/156946/',
@@ -53,11 +53,11 @@ dojo.declare(
                                             "</div>",
                                             "<div dojoAttachPoint='_divContent' style='display:none;'>",
                                                 "<div class='selection_combobox'>",
-                                                    "<select dojoAttachPoint='_selectDrugs' dojoAttachEvent='onchange:onSelectedDrug'>",
+                                                    "<select dojoAttachPoint='_selectAPcats' dojoAttachEvent='onchange:onSelectedAPcat'>",
                                                     "</select>",
                                                 "</div>",
                                                 "<h3>Variants reviewed for ",
-                                                    "<span dojoAttachPoint='_spanDrug'>${drug}</span>",
+                                                    "<span dojoAttachPoint='_spanAPcat'>${apcat}</span>",
                                                 "</h3>",
                                                 "<h4 dojoAttachPoint='_h4Controls' style='display:none;text-align:center;'>",
                                                     "<span dojoAttachPoint='_spanVYD' style='display:none;'>",
@@ -137,7 +137,7 @@ dojo.declare(
                                         dojo.xhrGet(
                                                 {
                                                     handleAs:   'json',
-                                                    url:        'gen_data_all_pharma.php',
+                                                    url:        'gen_data_all_athperf.php',
                                                     error:      function(error) {
                                                                     that._updateStatus(
                                                                             "Encountered error loading reviewed variants data..."
@@ -158,8 +158,8 @@ dojo.declare(
 
                                         this._processVariants();
 
-                                        this._fillDrugsCB();
-                                        this._displayCurrentDrug();
+                                        this._fillAPcatsCB();
+                                        this._displayCurrentAPcat();
 
                                         this._updateStatus("Completed loading and processing reviewed variants data.");
                                         dojo.style(this._divContent, 'display', "");
@@ -187,28 +187,28 @@ dojo.declare(
                                         dojo.style(this._h4Controls, 'display', "");
                                     },
 
-        onSelectedDrug:             function() {
-                                        this.drug = dojo.attr(this._selectDrugs, 'value');
-                                        this._displayCurrentDrug();
+        onSelectedAPcat:             function() {
+                                        this.apcat = dojo.attr(this._selectAPcats, 'value');
+                                        this._displayCurrentAPcat();
                                     },
 
         _processVariants:           function() {
                                         mapRelevantVariants = {};
 
-                                        if (!this.data || !this.data.drugs || !this.data.drugs_keyed) return;
+                                        if (!this.data || !this.data.apcats || !this.data.apcats_keyed) return;
 
-                                        for (var i = 0; i < this.data.drugs.length; i++) {
-                                            var strDrug = this.data.drugs[i];
-                                            if (!strDrug) continue;
+                                        for (var i = 0; i < this.data.apcats.length; i++) {
+                                            var strAPcat = this.data.apcats[i];
+                                            if (!strAPcat) continue;
 
-                                            var dataDrug = this.data.drugs_keyed[strDrug];
-                                            if (!dataDrug ||
-                                                !dataDrug.drug_data ||
-                                                !dataDrug.drug_data.variants ||
-                                                !dataDrug.drug_data.variants_keyed) continue;
+                                            var dataAPcat = this.data.apcats_keyed[strAPcat];
+                                            if (!dataAPcat ||
+                                                !dataAPcat.apcat_data ||
+                                                !dataAPcat.apcat_data.variants ||
+                                                !dataAPcat.apcat_data.variants_keyed) continue;
 
-                                            for (var j = 0; j < dataDrug.drug_data.variants.length; j++) {
-                                                var strVariant = dataDrug.drug_data.variants[j];
+                                            for (var j = 0; j < dataAPcat.apcat_data.variants.length; j++) {
+                                                var strVariant = dataAPcat.apcat_data.variants[j];
                                                 if (!strVariant) continue;
 
                                                 mapRelevantVariants[strVariant] = true;
@@ -224,48 +224,48 @@ dojo.declare(
                                         }
                                     },
 
-        _displayCurrentDrug:   function() {
-                                        this._spanDrug.innerHTML = this.drug;
+        _displayCurrentAPcat:   function() {
+                                        this._spanAPcat.innerHTML = this.apcat;
                                         this._fillVariantsTable();
                                         this._fillReferencesList();
                                     },
 
                                     /**
-                                     *  Private function to initialize the drugs combo box.
+                                     *  Private function to initialize the apcats combo box.
                                      */
-        _fillDrugsCB:          function() {
-                                        if (!this.data || !this.data.drugs || !this.data.drugs.length) return;
+        _fillAPcatsCB:          function() {
+                                        if (!this.data || !this.data.apcats || !this.data.apcats.length) return;
 
                                         var that = this;
 
-                                        function _addDrug(strDrug) {
-                                            var strDrugEncoded = dojox.html.entities.encode(strDrug);
+                                        function _addAPcat(strAPcat) {
+                                            var strAPcatEncoded = dojox.html.entities.encode(strAPcat);
 
                                             var elOption = dojo.create(
                                                             'option',
                                                             {
-                                                                innerHTML:  strDrugEncoded,
-                                                                value:      strDrugEncoded
+                                                                innerHTML:  strAPcatEncoded,
+                                                                value:      strAPcatEncoded
                                                             });
 
-                                            if (that.drug == strDrug) elOption.selected = 'selected';
+                                            if (that.apcat == strAPcat) elOption.selected = 'selected';
 
-                                            dojo.place(elOption, that._selectDrugs);
+                                            dojo.place(elOption, that._selectAPcats);
                                         }                                
 
-                                        for (var i = 0; i < this.data.drugs.length; i++) {
-                                            _addDrug(this.data.drugs[i]);
+                                        for (var i = 0; i < this.data.apcats.length; i++) {
+                                            _addAPcat(this.data.apcats[i]);
                                         }
                                     },
 
         _fillReferencesList:        function() {
                                         this._clearChildNodes(this._olReferences);
 
-                                        var drug_data =    this.data &&
-                                                                this.data.drugs_keyed &&
-                                                                this.data.drugs_keyed[this.drug] &&
-                                                                this.data.drugs_keyed[this.drug].drug_data;
-                                        if (!drug_data || !drug_data.studies || !drug_data.studies_keyed) return;
+                                        var apcat_data =    this.data &&
+                                                                this.data.apcats_keyed &&
+                                                                this.data.apcats_keyed[this.apcat] &&
+                                                                this.data.apcats_keyed[this.apcat].apcat_data;
+                                        if (!apcat_data || !apcat_data.studies || !apcat_data.studies_keyed) return;
 
                                         var that = this;
 
@@ -281,11 +281,11 @@ dojo.declare(
                                                                 ].join("");
                                         }
 
-                                        for (var i = 0; i < drug_data.studies.length; i++) {
-                                            var strStudy = drug_data.studies[i];
+                                        for (var i = 0; i < apcat_data.studies.length; i++) {
+                                            var strStudy = apcat_data.studies[i];
                                             if (!strStudy) continue;
 
-                                            _appendStudy(drug_data.studies_keyed[strStudy]);
+                                            _appendStudy(apcat_data.studies_keyed[strStudy]);
                                         }
                                     },
 
@@ -293,8 +293,8 @@ dojo.declare(
                                         this._clearChildNodes(this._trVariantsTableHeader);
                                         this._clearChildNodes(this._trVariantsTableBody);
 
-                                        var drug = this.data && this.data.drugs_keyed && this.data.drugs_keyed[this.drug];
-                                        if (!drug) return;
+                                        var apcat = this.data && this.data.apcats_keyed && this.data.apcats_keyed[this.apcat];
+                                        if (!apcat) return;
 
                                         var that = this;
 
@@ -313,7 +313,7 @@ dojo.declare(
                                                     that._trVariantsTableHeader);
                                         }
 
-                                        var arrEntities = ['PharmGKB', 'Navigenics', '23andMe', 'Pathway Genomics'];
+                                        var arrEntities = ['PharmGKB', 'Navigenics', '23andMe', 'DIYgenomics'];
 
                                         _addHeaderColumn('Locus');
                                         _addHeaderColumn('Gene');
@@ -321,9 +321,9 @@ dojo.declare(
 
                                         for (var i = 0; i < arrEntities.length; i++) {
                                             var strEntity = arrEntities[i];
-                                            var strLink =   drug.drug_data.entities_keyed &&
-                                                            drug.drug_data.entities_keyed[strEntity] &&
-                                                            drug.drug_data.entities_keyed[strEntity].entity_drug_url;
+                                            var strLink =   apcat.apcat_data.entities_keyed &&
+                                                            apcat.apcat_data.entities_keyed[strEntity] &&
+                                                            apcat.apcat_data.entities_keyed[strEntity].entity_apcat_url;
                                             _addHeaderColumn(strEntity, strLink);
                                         }
 
@@ -331,10 +331,10 @@ dojo.declare(
                                         if (!this._isPrivateDataLoaded) _addHeaderColumn('Sample data');
                                         if (this._isPrivateDataLoaded) _addHeaderColumn('Your private data');
 
-                                        var arrVariants =   drug.drug_data &&
-                                                            drug.drug_data.variants;
+                                        var arrVariants =   apcat.apcat_data &&
+                                                            apcat.apcat_data.variants;
 
-                                        if (!arrVariants || !drug.drug_data.variants_keyed) return;
+                                        if (!arrVariants || !apcat.apcat_data.variants_keyed) return;
 
                                         function _addVariantRow(dataVariant, strCSSClass) {
                                             if (!dataVariant) return;
@@ -386,8 +386,8 @@ dojo.declare(
                                                             dataVariant.studies_keyed[strStudy].entities &&
                                                             dataVariant.studies_keyed[strStudy].entities[strEntity]) {
                                                             if (totalStudies > 0) arrHTMLEntityColumn.push(",");
-                                                            arrHTMLEntityColumn.push(that._getAnchorOpeningTag(drug.drug_data.studies_keyed[strStudy].url));
-                                                            arrHTMLEntityColumn.push(dojox.html.entities.encode("" + drug.drug_data.studies_keyed[strStudy].number));
+                                                            arrHTMLEntityColumn.push(that._getAnchorOpeningTag(apcat.apcat_data.studies_keyed[strStudy].url));
+                                                            arrHTMLEntityColumn.push(dojox.html.entities.encode("" + apcat.apcat_data.studies_keyed[strStudy].number));
                                                             arrHTMLEntityColumn.push("</a>");
                                                             totalStudies++;
                                                         }
@@ -433,7 +433,7 @@ dojo.declare(
 
                                         for (var i = 0; i < arrVariants.length; i++) {
                                             var strVariant = arrVariants[i];
-                                            var dataVariant = drug.drug_data.variants_keyed[strVariant];
+                                            var dataVariant = apcat.apcat_data.variants_keyed[strVariant];
                                             if (!dataVariant) continue;
                                             _addVariantRow(dataVariant, i % 2 == 0 ? 'vtr_even' : 'vtr_odd');
                                         }
@@ -469,7 +469,7 @@ dojo.declare(
                                                                                                             // to avoid an error message!
                                                                 'upload_policy_derived_data_never',         // Specifying a valid the derived data upload policy
                                                                                                             // to avoid an error message!
-                                                                "DIYgenomics Pharmacogenomics Drug Response Web Application",  // Company / JavaScript app name
+                                                                "DIYgenomics Athletic Performance Web Application",  // Company / JavaScript app name
                                                                                                             // Additional message to the user
                                                                 "Please specify your genome file from 23andMe.  " +
                                                                 "It should be a basic text file with each line formatted like this:\r\n"+
@@ -502,7 +502,7 @@ dojo.declare(
                                                             }
 
                                                             // This just makes sure that the widget data is healthy.
-                                                            if (!that.data || !that.data.drugs || !that.data.drugs_keyed) throw new Error("Logic error.");
+                                                            if (!that.data || !that.data.apcats || !that.data.apcats_keyed) throw new Error("Logic error.");
 
                                                             // Cycling through 5000 lines of user private genome data at a time:
                                                             for (var i = 0; i < 5000; i++, lineCurrent++) {
@@ -529,21 +529,21 @@ dojo.declare(
                                                                 if (!mapRelevantVariants[strTokenFirst]) continue;          // Not a relevant variant.
 
                                                                 // After this point we found a relevant variant, time to save the user data to it.
-                                                                // But need to cycle through all the drugs to find out which drug(s) the
-                                                                // variant is applicable to, as one variant may be applicable to multiple drugs.
-                                                                for (var i = 0; i < that.data.drugs.length; i++) {
-                                                                    var strDrug = that.data.drugs[i];
-                                                                    if (!strDrug) continue;
+                                                                // But need to cycle through all the apcats to find out which apcat(s) the
+                                                                // variant is applicable to, as one variant may be applicable to multiple apcats.
+                                                                for (var i = 0; i < that.data.apcats.length; i++) {
+                                                                    var strAPcat = that.data.apcats[i];
+                                                                    if (!strAPcat) continue;
 
-                                                                    var dataDrug = that.data.drugs_keyed[strDrug];
-                                                                    if (!dataDrug ||
-                                                                        !dataDrug.drug_data ||
-                                                                        !dataDrug.drug_data.variants ||
-                                                                        !dataDrug.drug_data.variants_keyed) continue;
+                                                                    var dataAPcat = that.data.apcats_keyed[strAPcat];
+                                                                    if (!dataAPcat ||
+                                                                        !dataAPcat.apcat_data ||
+                                                                        !dataAPcat.apcat_data.variants ||
+                                                                        !dataAPcat.apcat_data.variants_keyed) continue;
 
-                                                                    if (dataDrug.drug_data.variants_keyed[strTokenFirst]) {
-                                                                        // Looks like the relevant variant is applicable to this drug.
-                                                                        dataDrug.drug_data.variants_keyed[strTokenFirst].dbSNP_user = fileUserGenome.getTokenOnLine(3, lineCurrent);
+                                                                    if (dataAPcat.apcat_data.variants_keyed[strTokenFirst]) {
+                                                                        // Looks like the relevant variant is applicable to this apcat.
+                                                                        dataAPcat.apcat_data.variants_keyed[strTokenFirst].dbSNP_user = fileUserGenome.getTokenOnLine(3, lineCurrent);
                                                                     }
                                                                 }
 
@@ -564,23 +564,23 @@ dojo.declare(
                                     },
 
         _purgeUserPrivateData:      function() {
-                                        if (!this.data || !this.data.drugs || !this.data.drugs_keyed) throw new Error("Logic error.");
+                                        if (!this.data || !this.data.apcats || !this.data.apcats_keyed) throw new Error("Logic error.");
 
-                                        for (var i = 0; i < this.data.drugs.length; i++) {
-                                            var strDrug = this.data.drugs[i];
-                                            if (!strDrug) continue;
+                                        for (var i = 0; i < this.data.apcats.length; i++) {
+                                            var strAPcat = this.data.apcats[i];
+                                            if (!strAPcat) continue;
 
-                                            var dataDrug = this.data.drugs_keyed[strDrug];
-                                            if (!dataDrug ||
-                                                !dataDrug.drug_data ||
-                                                !dataDrug.drug_data.variants ||
-                                                !dataDrug.drug_data.variants_keyed) continue;
+                                            var dataAPcat = this.data.apcats_keyed[strAPcat];
+                                            if (!dataAPcat ||
+                                                !dataAPcat.apcat_data ||
+                                                !dataAPcat.apcat_data.variants ||
+                                                !dataAPcat.apcat_data.variants_keyed) continue;
 
-                                            for (var j = 0; j < dataDrug.drug_data.variants.length; j++) {
-                                                var strVariant = dataDrug.drug_data.variants[j];
+                                            for (var j = 0; j < dataAPcat.apcat_data.variants.length; j++) {
+                                                var strVariant = dataAPcat.apcat_data.variants[j];
                                                 if (!strVariant) continue;
 
-                                                dataDrug.drug_data.variants_keyed[strVariant].dbSNP_user = null;
+                                                dataAPcat.apcat_data.variants_keyed[strVariant].dbSNP_user = null;
                                             }
                                         }
 

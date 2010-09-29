@@ -395,8 +395,8 @@
 
     <!-- The following generates the variant info via Dojo.  The dojo rendering will hide the PHP rendering below after it completely initializes. -->
     <div
-        dojoType='DIYgenomics.gen_data.VariantsInfoForAthperfWidget'
-        condition='<?=htmlentities($strAPcat, ENT_QUOTES)?>'
+        dojoType='DIYgenomics.gen_data.VariantsInfoForAPcatsWidget'
+        apcat='<?=htmlentities($strAPcat, ENT_QUOTES)?>'
         idReplace='<?=$idTable?>'></div>
 
     <!-- The following generates the variant info via PHP.  The content is still rendered server-side to be indexable by search engines. -->
@@ -417,11 +417,11 @@
                 <th>Gene</th>
                 <th>Variant</th>
                 <?php
-  //                  $arrEntityColumns = array('deCODEme', 'Navigenics', '23andMe');
-                    $arrEntityColumns = array('PharmGKB', 'Navigenics', '23andMe', 'DIYgenomics');  //4 different entities, in different order, for athperf
+  //                $arrEntityColumns = array('deCODEme', 'Navigenics', '23andMe');
+                    $arrEntityColumns = array('PharmGKB', 'Navigenics', '23andMe', 'DIYgenomics');  //4 different entities, in different order, for Pharma
                     foreach ($arrEntityColumns as $strEntity) {
                         ?>
-                            <th><a href='<?=htmlentities($mapDataCurrentAPcat['entities_keyed'][$strEntity]['entity_APcat_url'])?>'><?=htmlentities($strEntity)?></a></th>
+                            <th><a href='<?=htmlentities($mapDataCurrentAPcat['entities_keyed'][$strEntity]['entity_apcat_url'])?>'><?=htmlentities($strEntity)?></a></th>
                         <?php
                     }
                 ?>
@@ -525,5 +525,5 @@
 <script type='text/javascript'>
     dojo.require('DIYgenomics.gen_data.VariantsInfoWidget');
     dojo.require('DIYgenomics.gen_data.VariantsInfoForDrugsWidget');
-    dojo.require('DIYgenomics.gen_data.VariantsInfoForAthperfWidget');
+    dojo.require('DIYgenomics.gen_data.VariantsInfoForAPcatsWidget');
 </script>
