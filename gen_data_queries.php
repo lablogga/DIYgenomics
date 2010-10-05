@@ -820,4 +820,373 @@
     }
 
 
+
+ /**
+   *  The same three queries for the athletic performance app
+   */
+
+   /**
+     *  Returns an array of athletic performance categories (apcats) that the user can browse through.
+     */
+    function queryArrayAPcats() {
+        /*  QUERY THE DATABASE - QUERY 3(APCAT LIST)
+                Returns a list like this:
+                1   Achilles tendon strength
+                2   Endurance
+                3   Energy
+                4   Heart capacity
+                5   Ligament strength
+                6   Lung capacity
+                7   Metabolism
+                8   Muscle fatigue
+                9   Muscle generation
+                10  Muscle performance
+                11  Muscle repair
+                12  Power
+                13  Recovery
+                14  Strength
+        */
+
+
+     $QueryAPcats = mysql_query("SELECT 7_athletic_performance_categories.Primary, 7_athletic_performance_categories.APcat FROM 7_athletic_performance_categories;")
+                            or die("<p>Unable to query a database table for conditions.  Error code: " . mysql_errno() . "</p>");
+
+        //READ QUERY 3 RESULTS INTO ARRAY
+        // APcats holds rows {APcat_ix, APcat_name}
+        $APcats = array();
+        while ($APcatRow = mysql_fetch_array($QueryAPcats)) {
+            $APcats[] = $APcatRow;
+        }
+
+        return $APcats;
+    }
+
+    /**
+     *  This function queries the database for the data associated with the specified apcat id, and
+     *  returns that data in a hierarchial data structure.
+     *
+     *  The data structure looks like this:
+     *
+     *  {
+     *      entities:                           ["PharmGKB", "Navigenics"],
+     *      entities_keyed: {
+     *          "PharmGKB": {
+     *              "entity":                   "PharmGKB",
+     *              "entity_cond_url":          "http://www.pharmgkb.org/search/search.action?typeFilter=&exactMatch=false&query=abacavir"
+     *          },
+     *          "Navigenics": {
+     *              "entity":                   "Navigenics",
+     *              "entity_cond_url":          "http://www.navigenics.com/demo/for_scientists/d/alzheimers_disease/"
+     *          }
+     *      },
+     *      studies:                            ["17474819", "9343467", "19734902"],
+     *      studies_keyed: {
+     *          "17474819": {
+     *              "number":                   1,
+     *              "pubmedid":                 "17474819",
+     *              "url":                      "http://www.ncbi.nlm.nih.gov/pubmed/17474819",
+     *              "citation":                 "Coon KD et al.; A high-density whole-genome association study reveals that APOE is the major susceptibility gene for sporadic late-onset Alzheimer's disease; J ClinPsychiatry; 2007 Apr;68(4):613-8."
+     *          },
+     *          "9343467": {
+     *              "number":                   2,
+     *              "pubmedid":                 "9343467",
+     *              "url":                      "http://www.ncbi.nlm.nih.gov/pubmed/9343467",
+     *              "citation":                 "Farrer LA et al.; Effects of age sex and ethnicity on the association between apolipoprotein E genotype and Alzheimer disease. A meta-analysis. APOE and Alzheimer Disease Meta Analysis Consortium; JAMA; 1997 Oct 22-29;278(16):1349-56."
+     *          },
+     *          "19734902": {
+     *              "number":                   3,
+     *              "pubmedid":                 "19734902",
+     *              "url":                      "http://www.ncbi.nlm.nih.gov/pubmed/19734902",
+     *              "citation":                 "Harold D et al.; Genome-wide association study identifies variants at CLU and PICALM associated with Alzheimer's disease; Nat Genet; 2009 Oct;41(10):1088-93."
+     *          }
+     *      },
+     *      variants:                           ["rs11136000", "rs429358", "rs7412"],
+     *      variants_keyed: {
+     *          "rs11136000": {
+     *              "dbSNP_normal":             "C",
+     *              "dbSNP_risk":               "T",
+     *              "dbSNP_sample_1":           "T",
+     *              "dbSNP_sample_2":           "T",
+     *              "gene":                     "CLU",
+     *              "gene_url":                 "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=search&term=CLU",
+     *              "locus":                    "8p21.1",
+     *              "locus_url":                "http://www.ncbi.nlm.nih.gov/Omim/getmap.cgi?chromosome=8p21.1",
+     *              "studies":                  ["19734902"],
+     *              "studies_keyed": {
+     *                  "19734902": [
+     *                      "entities": [
+     *                          "deCODEme":     true
+     *                      ]
+     *                  ]
+     *              },
+     *              "variant":                  "rs11136000",
+     *              "variant_url":              "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs11136000"
+     *          },
+     *          "rs429358": {
+     *              "dbSNP_normal":             "C",
+     *              "dbSNP_risk":               "T",
+     *              "dbSNP_sample_1":           "",
+     *              "dbSNP_sample_2":           "",
+     *              "gene":                     "APOE",
+     *              "gene_url":                 "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=search&term=APOE",
+     *              "locus":                    "19q13.32",
+     *              "locus_url":                "http://www.ncbi.nlm.nih.gov/Omim/getmap.cgi?chromosome=19q13.32",
+     *              "studies":                  ["17474819", "9343467"],
+     *              "studies_keyed": {
+     *                  "17474819": [
+     *                      "entities": [
+     *                          "Navigenics":   true
+     *                      ]
+     *                  ],
+     *                  "9343467": [
+     *                      "entities": [
+     *                          "deCODEme":     true
+     *                      ]
+     *                  ]
+     *              },
+     *              "variant":                  "rs429358",
+     *              "variant_url":              "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs429358"
+     *          },
+     *          "rs7412": {
+     *              "dbSNP_normal":             "C",
+     *              "dbSNP_risk":               "T",
+     *              "dbSNP_sample_1":           "T",
+     *              "dbSNP_sample_2":           "T",
+     *              "gene":                     "APOE",
+     *              "gene_url":                 "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=search&term=APOE",
+     *              "locus":                    "19q13.32",
+     *              "locus_url":                "http://www.ncbi.nlm.nih.gov/Omim/getmap.cgi?chromosome=19q13.32",
+     *              "studies":                  ["17474819", "9343467"],
+     *              "studies_keyed": {
+     *                  "17474819": [
+     *                      "entities": [
+     *                          "Navigenics":   true
+     *                      ]
+     *                  ],
+     *                  "9343467": [
+     *                      "entities": [
+     *                          "deCODEme":     true
+     *                      ]
+     *                  ]
+     *              },
+     *              "variant":                  "rs7412",
+     *              "variant_url":              "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs7412"
+     *          }
+     *      }
+     *  }
+     */
+    function queryDataForAPcat($idAPcat) {
+
+        $strQueryStudiesInfo = "SELECT 1_studies.PMID,"
+                            . " 1_studies.PMID_URL,"
+                            . " 1_studies.Citation,"
+                            . " 3_variants.Variant,"
+                            . " 3_variants.Variant_URL,"
+                            . " 3_variants.Locus,"
+                            . " 3_variants.Locus_URL,"
+                            . " 3_variants.Gene,"
+                            . " 3_variants.Gene_URL,"
+                            . " 3_variants.dbSNP_normal,"
+                            . " 3_variants.dbSNP_risk,"
+                            . " 3_variants.23andMe_1,"
+                            . " 3_variants.23andMe_2,"
+                            . " 3_variants.23andMe_normal,"
+                            . " 3_variants.23andMe_risk,"
+                            . " 4_entities.Entity"
+                            . " FROM 1_studies"
+                            . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
+                            . " JOIN 3_variants ON 3_variants.Primary = 8_map_variant_condition_entity_study.Variant_index"
+                            . " JOIN 4_entities ON 4_entities.Primary = 8_map_variant_condition_entity_study.Entity_index"
+                            . " WHERE 8_map_variant_condition_entity_study.Athperf_index = " . $idAPcat
+                            . " ORDER BY 1_studies.Citation";
+
+
+        $resultQueryStudiesInfo = mysql_query($strQueryStudiesInfo)
+            or die("<p>Unable to query the database for studies information.  Error code: " . mysql_errno() . "</p>");
+
+        $mapDataCurrentAPcat = array(
+                                        'entities'          => array(),
+                                        'entities_keyed'    => array(),
+                                        'studies'           => array(),
+                                        'studies_keyed'     => array(),
+                                        'variants'          => array(),
+                                        'variants_keyed'    => array());
+
+        while ($arrStudyInfo = mysql_fetch_array($resultQueryStudiesInfo)) {
+            $field_pubmedid         = $arrStudyInfo[0];
+            $field_url              = $arrStudyInfo[1];
+            $field_citation         = $arrStudyInfo[2];
+            $field_variant          = $arrStudyInfo[3];
+            $field_variant_url      = $arrStudyInfo[4];
+            $field_locus            = $arrStudyInfo[5];
+            $field_locus_url        = $arrStudyInfo[6];
+            $field_gene             = $arrStudyInfo[7];
+            $field_gene_url         = $arrStudyInfo[8];
+            $field_dbSNP_normal     = $arrStudyInfo[9];
+            $field_dbSNP_risk       = $arrStudyInfo[10];
+            $field_23andMe_1        = $arrStudyInfo[11];
+            $field_23andMe_2        = $arrStudyInfo[12];
+            $field_23andMe_normal   = $arrStudyInfo[13];
+            $field_23andMe_risk     = $arrStudyInfo[14];
+            $field_entity           = $arrStudyInfo[15];
+
+            if (!$mapDataCurrentAPcat['entities_keyed'][$field_entity]) {
+                $mapDataCurrentAPcat['entities_keyed'][$field_entity] = array(
+                                                                                'entity'        => $field_entity);
+                $mapDataCurrentAPcat['entities'][] = $field_entity;
+            }
+
+            if (!$mapDataCurrentAPcat['studies_keyed'][$field_pubmedid]) {
+                $mapDataCurrentAPcat['studies'][] = $field_pubmedid;
+                $mapDataCurrentAPcat['studies_keyed'][$field_pubmedid] = array(
+                                                                                'number'        => count($mapDataCurrentAPcat['studies']),
+                                                                                'pubmedid'      => $field_pubmedid,
+                                                                                'url'           => $field_url,
+                                                                                'citation'      => $field_citation);
+            }
+
+            if (!$mapDataCurrentAPcat['variants_keyed'][$field_variant]) {
+                $mapDataCurrentAPcat['variants_keyed'][$field_variant] = array(
+                                                                                'gene'            => $field_gene,
+                                                                                'gene_url'        => $field_gene_url,
+                                                                                'locus'           => $field_locus,
+                                                                                'locus_url'       => $field_locus_url,
+                                                                                'studies'         => array(),
+                                                                                'variant'         => $field_variant,
+                                                                                'variant_url'     => $field_variant_url,
+                                                                                'dbSNP_normal'    => $field_dbSNP_normal,
+                                                                                'dbSNP_risk'      => $field_dbSNP_risk,
+                                                                                'dbSNP_sample_1'  => $field_23andMe_1,
+                                                                                'dbSNP_sample_2'  => $field_23andMe_2,
+                                                                                '23andMe_normal'  => $field_23andMe_normal,
+                                                                                '23andMe_risk'    => $field_23andMe_risk);
+                $mapDataCurrentAPcat['variants'][] = $field_variant;
+            }
+
+            if (!$mapDataCurrentAPcat['variants_keyed'][$field_variant]['studies_keyed'][$field_pubmedid]) {
+                $mapDataCurrentAPcat['variants_keyed'][$field_variant]['studies_keyed'][$field_pubmedid]
+                                                                            = array(
+                                                                                'entities'      => array());
+                $mapDataCurrentAPcat['variants_keyed'][$field_variant]['studies'][] = $field_pubmedid;
+            }
+
+            if (!$mapDataCurrentAPcat['variants_keyed'][$field_variant]['studies_keyed'][$field_pubmedid]['entities'][$field_entity]) {
+                $mapDataCurrentAPcat['variants_keyed'][$field_variant]['studies_keyed'][$field_pubmedid]['entities'][$field_entity]
+                                                                            = true;
+            }
+        }
+
+        //SORT BY LOCUS
+        usort(
+            $mapDataCurrentAPcat['variants'],
+            function($strVariant1, $strVariant2) use ($mapDataCurrentAPcat) {
+                $cmp = strnatcmp(
+                            $mapDataCurrentAPcat['variants_keyed'][$strVariant1]['locus'],
+                            $mapDataCurrentAPcat['variants_keyed'][$strVariant2]['locus']);
+                if ($cmp <> 0) return $cmp;
+
+                return strcmp($strVariant1, $strVariant2);
+            });
+
+        // Query the apcat URLs from the database:
+        $strQueryAPcatURLs = "SELECT 4_entities.Entity, 6_map_entity_condition.URL"
+                                    . " FROM 6_map_entity_condition JOIN 4_entities"
+                                    . " WHERE Athperf_index = " . $idAPcat . " AND 6_map_entity_condition.Entity_index = 4_entities.Primary";
+        $resultQueryAPcatURLs = mysql_query($strQueryAPcatURLs)
+            or die("<p>Unable to query the database for apcats.  Error code: " . mysql_errno() . "</p>");
+
+        // Process the query results into the current apcat data:
+        while ($arrAPcatURL = mysql_fetch_array($resultQueryAPcatURLs)) {
+            $field_entity           = $arrAPcatURL[0];
+            $field_entity_cond_url  = $arrAPcatURL[1];
+
+            if ($mapDataCurrentAPcat['entities_keyed'][$field_entity]) {
+                $mapDataCurrentAPcat['entities_keyed'][$field_entity]['entity_apcat_url'] = $field_entity_apcat_url;
+            }
+        }
+
+        return $mapDataCurrentAPcat;
+    }
+
+
+    /**
+     *  Queries the database for the data containing all the information on all the apcats
+     *  and their associated variants and related studies, and returns that data in a hierarchial
+     *  data structure.
+     *
+     *  The data structure looks like this:
+     *
+     *  {
+     *      apcats:                         [
+     *                                              "Achilles tendon strength",
+     *                                              "Endurance",
+     *                                              "Energy",
+     *                                              ".",
+     *                                              ".",
+     *                                              ".",
+     *                                              "Recovery",
+     *                                              "Strength"
+     *                                          ],
+     *      apcats_keyed: {
+     *          "Achilles tendon strength": {
+     *              id:                         1,
+     *              apcat_data:                  // data structure from queryDataForAPcat(id)
+     *          },
+     *          "Endurance": {
+     *              id:                         2,
+     *              apcat_data:                  // data structure from queryDataForAPcat(id)
+     *          },
+     *          "Energy": {
+     *              id:                         3,
+     *              apcat_data:                  // data structure from queryDataForAPcat(id)
+     *          },
+     *          "Heart capacity": {
+     *              id:                         4,
+     *              apcat_data:                  // data structure from queryDataForAPcat(id)
+     *          },
+     *          ".": {
+     *              id:                         5,
+     *              apcat_data:                  // data structure from queryDataForAPcat(id)
+     *          },
+     *          ".": {
+     *              id:                         6,
+     *              apcat_data:                  // data structure from queryDataForAPcat(id)
+     *          },
+     *          ".": {
+     *              id:                         7,
+     *              apcat_data:                  // data structure from queryDataForAPcat(id)
+     *          },
+     *          "Recovery": {
+     *              id:                         8,
+     *              apcat_data:                  // data structure from queryDataForAPcat(id)
+     *          },
+     *          "Strength": {
+     *              id:                         9,
+     *              apcat_data:                  // data structure from queryDataForAPcat(id)
+     *          }
+     *      }
+     *  }
+     */
+    function queryDataForAPcatsAll() {
+        $arrAPcats = queryArrayAPcats();
+
+        $mapDataAPcats = array(
+                                'apcats'        => array(),
+                                'apcats_keyed'  => array());
+
+        foreach ($arrAPcats as $arrAPcat) {
+            $idAPcat = $arrAPcat[0];
+            $strAPcat = $arrAPcat[1];
+
+            $mapDataAPcats['apcats'][] = $strAPcat;
+            $mapDataAPcats['apcats_keyed'][$strAPcat] = array(
+                                                                        'id'                => $idAPcat,
+                                                                        'apcat_data'         => queryDataForAPcat($idAPcat));
+        }
+
+        return $mapDataAPcats;
+    }
+
+
+
     ?>
