@@ -124,6 +124,12 @@
                 <p>
                    A list of the genes and variants that research studies link to fourteen different categories
                    of athletic performance including strength, endurance, muscle development, lung capacity, and recovery.
+
+				   <!-- ============== PDF Link =============== -->
+				   <a href="http://www.DIYgenomics.org/files/DIYgenomics_Athletic_Performance_Report.pdf">
+				   <img src="http://www.DIYgenomics.org/images/icon-pdf.jpg" width="17" height="17" alt="image" title="image"
+				   style="float:center; margin-left: 0px; margin-top: 0px; border-width: 0px;"/>
+					Personalized report</a> (based on Sample data)
                 </p>
                 <p>
                     NOTE: This information is provided by non-medical professionals and
