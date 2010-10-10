@@ -61,11 +61,11 @@
         <meta name="description" content="DIYgenomics Athletic Performance Web Application" />
         <meta name="keywords" content="genomics, genome, personal genomes, athletic performance, personal genome, citizen science, science, technology, direct-to-consumer, consumer genomics, genomic testing, genetic testing, research" />
 
-        <!--  The following includes the Dojo release 1.4.3 script from '/dojo-release-1.4.3/dojo/dojo.js'
+        <!--  The following includes the Dojo release 1.5.0 script from '/dojo-release-1.5.0/dojo/dojo.js'
               and will access non-Dojo-specific modules from '/dojo/DIYgenomics/'. -->
         <script
             type='text/javascript'
-            src='/dojo-release-1.4.3/dojo/dojo.js'
+            src='/dojo-release-1.5.0/dojo/dojo.js'
             djConfig="parseOnLoad: true, modulePaths:{'DIYgenomics':'/dojo/DIYgenomics/'}">
         </script>
 
