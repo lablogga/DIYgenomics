@@ -70,7 +70,7 @@
         <script
             type='text/javascript'
             src='/dojo-release-1.5.0/dojo/dojo.js'
-            djConfig="debugAtAllCosts: true, parseOnLoad: true, modulePaths:{'DIYgenomics':'/dojo_h5ile/DIYgenomics/'}">
+            djConfig="debugAtAllCosts: true, parseOnLoad: true, modulePaths:{'DIYgenomics':'/dojo_master/DIYgenomics/'}">
         </script>
 
          <!-- Favicon Information -->
