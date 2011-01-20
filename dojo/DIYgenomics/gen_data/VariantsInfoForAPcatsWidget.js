@@ -45,9 +45,6 @@ dojo.declare(
         apcat:                      "",
         idReplace:                  "",
 
-        _urlFILEfox:                'https://addons.mozilla.org/en-US/firefox/addon/156946/',
-        _versionFILEfoxMin:         '0.2.3',
-
         templateString:             [   "<div>",
                                             "<div dojoAttachPoint='_divStatus'>",
                                             "</div>",
@@ -62,6 +59,19 @@ dojo.declare(
                                                 "<h4 dojoAttachPoint='_h4Controls' style='display:none;text-align:center;'>",
                                                     "<span dojoAttachPoint='_spanVYD' style='display:none;'>",
                                                         "<a href='#' dojoAttachEvent='onclick:_onClickVYD'>Privately view your own data</a>",
+                                                    "</span>",
+                                                    "<span dojoAttachPoint='_spanVYD_Instructions' style='display:none;'>",
+                                                      "<p style='font-size:9pt;text-align:left;'>",
+                                                        "Please click 'Browse...' and select your genome file from 23andMe.  ",
+                                                        "It should be a basic text file with each line formatted like this:",
+                                                        "<br />",
+                                                        "<code>",
+                                                          "rsid &lt;TAB&gt; chromosome &lt;TAB&gt; position &lt;TAB&gt; genotype",
+                                                        "</code>",
+                                                      "</p>",
+                                                      "<span dojoAttachPoint='_elLoadFile'></span>",
+                                                      "<input type='button' value='Cancel' dojoAttachEvent='onclick:_onClickCancelLoadFile'>",
+                                                      "</input>",
                                                     "</span>",
                                                     "<span dojoAttachPoint='_spanVYDW' style='display:none;'>",
                                                         "Loading your genome data file...  Please wait...",
@@ -82,34 +92,16 @@ dojo.declare(
                                                         "<span dojoAttachPoint='_spanPYD_Relevant'>0</span>",
                                                         " relevant variants.)",
                                                     "</span>",
-                                                    "<span dojoAttachPoint='_spanIFF' style='display:none;'>",
-                                                        "Install the ",
-                                                        "<a href='${_urlFILEfox}' target='_blank'>",
-                                                            "FILEfox",
-                                                        "</a>",
-                                                        " extension to privately view your own data.",
-                                                    "</span>",
-                                                    "<span dojoAttachPoint='_spanUPFF' style='display:none;'>",
-                                                        "Upgrade your ",
-                                                        "<a href='${_urlFILEfox}' target='_blank'>",
-                                                            "FILEfox",
-                                                        "</a>",
-                                                        " extension to at least version ${_versionFILEfoxMin} to privately view your own data.",
-                                                        "<br>",
-                                                        "(You have an old version ",
-                                                        "<span dojoAttachPoint='_spanUPFFOV'></span>",
-                                                        " installed.)",
-                                                    "</span>",
                                                     "<span dojoAttachPoint='_spanUFF' style='display:none;'>",
-                                                        "Use ",
-                                                        "<a href='http://www.getfirefox.com/' target='_blank'>",
-                                                            "Firefox",
-                                                        "</a>",
-                                                        " with the ",
-                                                        "<a href='${_urlFILEfox}' target='_blank'>",
-                                                            "FILEfox",
-                                                        "</a>",
-                                                        " extension to privately view your own data.",
+                                                      "Use the latest version of ",
+                                                       "<a href='http://www.google.com/chrome' target='_blank'>",
+                                                        "Chrome",
+                                                      "</a>",
+                                                      " or ",
+                                                      "<a href='http://www.getfirefox.com/' target='_blank'>",
+                                                        "Firefox",
+                                                      "</a>",
+                                                      " to privately view your own data.",
                                                     "</span>",
                                                 "</h4>",
                                                 "<table class='variants_table' cellpadding='0' cellspacing='0'>",
@@ -149,6 +141,8 @@ dojo.declare(
                                                                     that.onLoadedData(data);
                                                                 }
                                                 });
+
+                                        this._refreshFileInput();
                                     },
 
         onLoadedData:               function(data) {
@@ -170,24 +164,15 @@ dojo.declare(
                                             if (elReplace) dojo.style(elReplace, 'display', 'none');
                                         }
 
-                                        if (dojo.isFF) {
-                                            if (window.nsFILEfox) {
-                                                if (nsFILEfox.isVersionAtLeast && nsFILEfox.isVersionAtLeast(this._versionFILEfoxMin)) {
-                                                    dojo.style(this._spanVYD, 'display', "");
-                                                } else {
-                                                    dojo.style(this._spanUPFF, 'display', "");
-                                                    this._spanUPFFOV.innerHTML = nsFILEfox.getVersion();
-                                                }
-                                            } else {
-                                                dojo.style(this._spanIFF, 'display', "");
-                                            }
+                                        if (h5ile.isFileAPISupported()) {
+                                            dojo.style(this._spanVYD, 'display', "");
                                         } else {
                                             dojo.style(this._spanUFF, 'display', "");
                                         }
                                         dojo.style(this._h4Controls, 'display', "");
                                     },
 
-        onSelectedAPcat:             function() {
+        onSelectedAPcat:        function() {
                                         this.apcat = dojo.attr(this._selectAPcats, 'value');
                                         this._displayCurrentAPcat();
                                     },
@@ -313,7 +298,7 @@ dojo.declare(
                                                     that._trVariantsTableHeader);
                                         }
 
-                                        var arrEntities = ['PharmGKB', 'Navigenics', '23andMe', 'DIYgenomics'];
+                                        var arrEntities = ['deCODEme', 'Navigenics', '23andMe', 'DIYgenomics'];
 
                                         _addHeaderColumn('Locus');
                                         _addHeaderColumn('Gene');
@@ -323,7 +308,7 @@ dojo.declare(
                                             var strEntity = arrEntities[i];
                                             var strLink =   apcat.apcat_data.entities_keyed &&
                                                             apcat.apcat_data.entities_keyed[strEntity] &&
-                                                            apcat.apcat_data.entities_keyed[strEntity].entity_apcat_url;
+                                                            apcat.apcat_data.entities_keyed[strEntity].entity_cond_url;
                                             _addHeaderColumn(strEntity, strLink);
                                         }
 
@@ -460,20 +445,21 @@ dojo.declare(
 
         _onClickVYD:                function() {
                                         dojo.style(this._spanVYD, 'display', 'none');
-                                        dojo.style(this._spanVYDW, 'display', "");
+                                        dojo.style(this._spanVYD_Instructions, 'display', "");
+                                    },
 
-                                        // Request a file through FILEfox:
-                                        // (Keeping the returned data object in a private local variable so that other scripts on the page cannot read it.)
-                                        var fileUserGenome = nsFILEfox.requestLoadASCIIFile(
-                                                                'upload_policy_file_never',                 // Specifying a valid file upload policy
-                                                                                                            // to avoid an error message!
-                                                                'upload_policy_derived_data_never',         // Specifying a valid the derived data upload policy
-                                                                                                            // to avoid an error message!
-                                                                "DIYgenomics Athletic Performance Web Application",  // Company / JavaScript app name
-                                                                                                            // Additional message to the user
-                                                                "Please specify your genome file from 23andMe.  " +
-                                                                "It should be a basic text file with each line formatted like this:\r\n"+
-                                                                "rsid <TAB> chromosome <TAB> position <TAB> genotype\r\n");
+        _onClickCancelLoadFile:     function() {
+                                        dojo.style(this._spanVYD, 'display', "");
+                                        dojo.style(this._spanVYD_Instructions, 'display', 'none');
+                                    },
+
+        _onDoneProcessingUserData:  function() {
+                                        this._fillVariantsTable();
+                                        dojo.style(this._spanVYDP, 'display', 'none');
+                                        dojo.style(this._spanPYD, 'display', "");
+                                    },
+
+        _processUserGenomeFile:     function(fileUserGenome) {
                                         if (!fileUserGenome) {
                                             alert("Could not load your genome file.  You either canceled, or there was an error.");
                                             dojo.style(this._spanVYDW, 'display', 'none');
@@ -504,8 +490,8 @@ dojo.declare(
                                                             // This just makes sure that the widget data is healthy.
                                                             if (!that.data || !that.data.apcats || !that.data.apcats_keyed) throw new Error("Logic error.");
 
-                                                            // Cycling through 5000 lines of user private genome data at a time:
-                                                            for (var i = 0; i < 5000; i++, lineCurrent++) {
+                                                            // Cycling through 3000 lines of user private genome data at a time:
+                                                            for (var i = 0; i < 3000; i++, lineCurrent++) {
                                                                 if (lineCurrent == fileUserGenome.totalLines) {
                                                                     timer.stop();
                                                                     that._isPrivateDataLoaded = true;
@@ -557,12 +543,6 @@ dojo.declare(
                                         timer.start();
                                     },
 
-        _onDoneProcessingUserData:  function() {
-                                        this._fillVariantsTable();
-                                        dojo.style(this._spanVYDP, 'display', 'none');
-                                        dojo.style(this._spanPYD, 'display', "");
-                                    },
-
         _purgeUserPrivateData:      function() {
                                         if (!this.data || !this.data.apcats || !this.data.apcats_keyed) throw new Error("Logic error.");
 
@@ -584,7 +564,28 @@ dojo.declare(
                                             }
                                         }
 
+                                        this._refreshFileInput();
                                         this._isPrivateDataLoaded = false;
+                                    },
+
+        _refreshFileInput:          function() {
+                                        dojo.empty(this._elLoadFile);
+
+                                        var that = this;
+
+                                        h5ile.createVisibleFileInput(
+                                            this._elLoadFile,
+                                            {
+                                                loadtext: {
+                                                    onloadend: function(file, file_reader) {
+                                                        that._processUserGenomeFile(h5ile.splitIntoLines(file_reader));
+                                                    },
+                                                    onprogress: function(progress_event) {
+                                                        dojo.style(that._spanVYD_Instructions, 'display', 'none');
+                                                        dojo.style(that._spanVYDW, 'display', "");
+                                                    }
+                                                }
+                                            });
                                     },
 
         _updateStatus:              function(strStatus) {
