@@ -55,7 +55,7 @@
 <html>
     <head>
 
-        <title>PersonalGenomics Application </title>
+        <title>DIYgenomics Application </title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta name="description" content="DIYgenomics Genome Health Risk Web Application" />
         <meta name="keywords" content="genomics, genome, personal genomes, personal genome, citizen science, science, technology, direct-to-consumer, consumer genomics, genomic testing, genetic testing, research" />
@@ -123,17 +123,17 @@
         ?>
 
         <div class='layout'>
-            <h3>DIYgenomics Genome Health Risk Web Application</h3>
+            <h3>DIYgenomics Health Risk Web Application</h3>
             <div>
                 <p>
-                    <b>PersonalGenomics:</b> Side-by-side comparison of consumer genomic services
+                    Side-by-side comparison of consumer genomic services
                     (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
                     (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
                     underlying research reference cited by the company is posted in the table below.
                 </p>
                 <p>
-                    NOTE: This information is provided by non-medical professionals.
-                    This software is not intended to diagnose, treat, cure, or prevent any disease.
+                    NOTE: The information on this page is intended for research and educational
+                    purposes only, and is not for diagnostic use.
                 </p>
             </div>
 
