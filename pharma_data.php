@@ -55,7 +55,7 @@
 <html>
     <head>
 
-        <title>PersonalPharmacogenomics Application </title>
+        <title>DIYgenomics Application </title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta name="description" content="DIYgenomics Genome Drug Reponse Web Application" />
         <meta name="keywords" content="genomics, genome, personal genomes, personal genome, citizen science, science, technology, direct-to-consumer, consumer genomics, genomic testing, genetic testing, research" />
@@ -126,8 +126,8 @@
             <h3>DIYgenomics Drug Reponse Web Application</h3>
             <div>
                 <p>
-                    <b>PersonalPharmacogenomics:</b> Side-by-side comparison of locus, gene and variant
-                    information for about 250 drugs (clopidogrel (Plavix), morphine, sildenafil
+                    Side-by-side comparison of locus, gene and variant
+                    information for 200 drugs (clopidogrel (Plavix), morphine, sildenafil
                     (Viagra), warfarin, etc.). If a variant is reviewed, the underlying research
                     references cited are posted in the table below. 'Sample data' is information from
                     one person's 23andme file; not all the variants reviewed for drugs are genotyped currently
@@ -137,8 +137,8 @@
                     FDA has validated genomic biomarkers</a> for this drug.
 				</p>
                 <p>
-                    NOTE: This information is provided by non-medical professionals and
-                    is not intended to diagnose, treat, cure, or prevent any disease.
+                    NOTE: The information on this page is intended for research and educational
+                    purposes only, and is not for diagnostic use.
                 </p>
             </div>
 
