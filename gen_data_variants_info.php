@@ -96,6 +96,7 @@
                 ?>
                 <th><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
                 <th>Sample data</th>
+                <th>Rank</th>
             </tr>
             <?php
                 for ($i = 0; $i < count($mapDataCurrentCondition['variants']); $i++) {
@@ -159,7 +160,10 @@
                                     echo "<span style='color:$strColor2;'>" . htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['dbSNP_sample_2']) . "</span>";
                                 ?>
                             </td>
-                        </tr>
+                            <td>
+                            <?=htmlentities($mapDataCurrentCondition['variants_keyed'][$strVariant]['rank'])?>
+                            </td>
+                       </tr>
                     <?php
                 }
             ?>
@@ -259,6 +263,7 @@
                 ?>
                 <th><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
                 <th>Sample data</th>
+                <th>Rank</th>
             </tr>
             <?php
                 for ($i = 0; $i < count($mapDataCurrentDrug['variants']); $i++) {
@@ -321,6 +326,9 @@
                                     echo "<span style='color:$strColor1;'>" . htmlentities($mapDataCurrentDrug['variants_keyed'][$strVariant]['dbSNP_sample_1']) . "</span>";
                                     echo "<span style='color:$strColor2;'>" . htmlentities($mapDataCurrentDrug['variants_keyed'][$strVariant]['dbSNP_sample_2']) . "</span>";
                                 ?>
+                            </td>
+                            <td>
+                            <?=htmlentities($mapDataCurrentDrug['variants_keyed'][$strVariant]['rank'])?>
                             </td>
                         </tr>
                     <?php
