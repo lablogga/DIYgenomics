@@ -435,6 +435,7 @@
                 ?>
                 <th><a href='http://www.ncbi.nlm.nih.gov/projects/SNP'>dbSNP (Nrml/Rsk)</a></th>
                 <th>Sample data</th>
+                <th>Rank</th>
             </tr>
             <?php
                 for ($i = 0; $i < count($mapDataCurrentAPcat['variants']); $i++) {
@@ -498,6 +499,9 @@
                                   echo "<span style='color:$strColor1;'>" . htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['dbSNP_sample_1']) . "</span>";
                                   echo "<span style='color:$strColor2;'>" . htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['dbSNP_sample_2']) . "</span>";
                                 ?>
+                            </td>
+                            <td>
+                            <?=htmlentities($mapDataCurrentAPcat['variants_keyed'][$strVariant]['rank'])?>
                             </td>
                         </tr>
                     <?php
