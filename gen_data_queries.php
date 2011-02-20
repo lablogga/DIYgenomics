@@ -206,6 +206,7 @@
                             . " 3_variants.23andMe_2,"
                             . " 3_variants.23andMe_normal,"
                             . " 3_variants.23andMe_risk,"
+                            . " 3_variants.Rank,"
                             . " 4_entities.Entity"
                             . " FROM 1_studies"
                             . " JOIN 8_map_variant_condition_entity_study ON 1_studies.Primary = 8_map_variant_condition_entity_study.Study_index"
@@ -241,7 +242,8 @@
             $field_23andMe_2        = $arrStudyInfo[12];
             $field_23andMe_normal   = $arrStudyInfo[13];
             $field_23andMe_risk     = $arrStudyInfo[14];
-            $field_entity           = $arrStudyInfo[15];
+            $field_rank             = $arrStudyInfo[15];
+            $field_entity           = $arrStudyInfo[16];
 
             if (!$mapDataCurrentCondition['entities_keyed'][$field_entity]) {
                 $mapDataCurrentCondition['entities_keyed'][$field_entity] = array(
@@ -272,7 +274,8 @@
                                                                                 'dbSNP_sample_1'  => $field_23andMe_1,
                                                                                 'dbSNP_sample_2'  => $field_23andMe_2,
                                                                                 '23andMe_normal'  => $field_23andMe_normal,
-                                                                                '23andMe_risk'    => $field_23andMe_risk);
+                                                                                '23andMe_risk'    => $field_23andMe_risk,
+                                                                                'rank'            => $field_rank);
 
                 $mapDataCurrentCondition['variants'][] = $field_variant;
             }

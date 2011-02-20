@@ -127,9 +127,14 @@
             <div>
                 <p>
                     Side-by-side comparison of consumer genomic services
-                    (deCODEme, Navigenics and 23andme) by locus, gene and variant for 20 conditions
+                    (deCODEme, Navigenics, and 23andme) by locus, gene, and variant for 20 conditions
                     (diabetes, cancers, heart disease, etc.). If a company reviews the variant, the
-                    underlying research reference cited by the company is posted in the table below.
+                    underlying research reference is posted in the table below.
+                    'Sample data' displays the normal allele in green, the risk allele in red
+                    (<a href="http://www.diygenomics.org/files/risk_allele_health_risk.xls">risk allele identification methodology</a>).
+                    'Rank' is a composite score assigned to the variant by DIYgenomics per 
+                    journal ranking, number of cases and controls, p-value, and odds ratio
+                    (<a href="http://www.diygenomics.org/files/rank.xls">rank assessment methodology</a>).
                 </p>
                 <p>
                     NOTE: The information on this page is intended for research and educational
