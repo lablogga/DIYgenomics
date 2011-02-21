@@ -316,6 +316,8 @@ dojo.declare(
                                         if (!this._isPrivateDataLoaded) _addHeaderColumn('Sample data');
                                         if (this._isPrivateDataLoaded) _addHeaderColumn('Your private data');
 
+                                        _addHeaderColumn('Rank');
+
                                         var arrVariants =   drug.drug_data &&
                                                             drug.drug_data.variants;
 
@@ -414,6 +416,9 @@ dojo.declare(
                                                 }
                                                 _addVariantColumn(htmlPrivateData);
                                             }
+
+                                            _addVariantColumn([dojox.html.entities.encode(dataVariant.rank)]); 
+
                                         }
 
                                         for (var i = 0; i < arrVariants.length; i++) {

@@ -134,7 +134,10 @@
                    <a href="http://www.DIYgenomics.org/files/DIYgenomics_Athletic_Performance_Report.pdf">
                    <img src="http://www.DIYgenomics.org/images/icon-pdf.jpg" width="17" height="17" alt="image" title="image"
                    style="float:center; margin-left: 0px; margin-top: 0px; border-width: 0px;"/>
-                    Personalized report</a> (based on Sample data)
+                    Personalized report</a> (based on Sample data).
+                    'Rank' is a composite score assigned to the variant by DIYgenomics per 
+                    journal ranking, number of cases and controls, p-value, and odds ratio
+                    (<a href="http://www.diygenomics.org/files/rank.xls">rank assessment methodology</a>).
                 </p>
                 <p>
                     NOTE: The information on this page is intended for research and educational
