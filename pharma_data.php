@@ -134,7 +134,10 @@
                     by 23andme. One or two variant mutations could be interpreted as the usual dose
                     of the drug possibly being 'less efficacious.' Green is the normal genotype, red is the mutation.
                     * means that the <a href="http://www.fda.gov/Drugs/ScienceResearch/ResearchAreas/Pharmacogenetics/ucm083378.htm">
-                    FDA has validated genomic biomarkers</a> for this drug.
+                    FDA has validated genomic biomarkers</a> for this drug. 
+                    'Rank' is a composite score assigned to the variant by DIYgenomics per 
+                    journal ranking, number of cases and controls, p-value, and odds ratio
+                    (<a href="http://www.diygenomics.org/files/rank.xls">rank assessment methodology</a>).
 				</p>
                 <p>
                     NOTE: The information on this page is intended for research and educational
